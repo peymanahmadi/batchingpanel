@@ -7,11 +7,16 @@ import morgan from "morgan";
 // db and authenticateUser
 import connectDB from "./db/connect.js";
 
+// Routers
+import customerRouter from "./routes/customersRoutes.js";
+
 if (process.env.NODE_ENV !== "production") {
   app.use(morgan("dev"));
 }
 
 app.use(express.json());
+
+app.use("/api/v1/customers", customerRouter);
 
 const port = process.env.PORT || 5000;
 
