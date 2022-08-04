@@ -9,6 +9,10 @@ import connectDB from "./db/connect.js";
 
 // Routers
 import customerRouter from "./routes/customersRoutes.js";
+import authRouter from "./routes/authRoutes.js";
+
+// middleware
+import errorHandlerMiddleware from "./middleware/error-handler.js";
 
 if (process.env.NODE_ENV !== "production") {
   app.use(morgan("dev"));
@@ -17,6 +21,9 @@ if (process.env.NODE_ENV !== "production") {
 app.use(express.json());
 
 app.use("/api/v1/customers", customerRouter);
+app.use("/api/v1/auth", authRouter);
+
+app.use(errorHandlerMiddleware);
 
 const port = process.env.PORT || 5000;
 
