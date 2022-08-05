@@ -1,6 +1,6 @@
 import User from "../models/User.js";
 import Customer from "../models/Customer.js";
-import { BadRequestError } from "../errors/index.js";
+import { BadRequestError, UnAuthenticatedError } from "../errors/index.js";
 import mongoose from "mongoose";
 
 const register = async (req, res, next) => {
@@ -30,25 +30,36 @@ const register = async (req, res, next) => {
     return next(error);
   }
 
+  const newUser = new User({
+    commonUserID,
+    firstName,
+    lastName,
+    email,
+    password,
+    jobTitle,
+    customerIDs,
+  });
+
   try {
-    const user = await User.create({
-      commonUserID,
-      firstName,
-      lastName,
-      email,
-      password,
-      jobTitle,
-      customerIDs,
-    });
+    const session = await mongoose.startSession();
+    session.startTransaction();
+    await newUser.save({ session });
+
+    for (let ids of customerIDs) {
+      let customer = await Customer.findById(ids);
+      customer.adminIDs.push(newUser);
+      await customer.save({ session });
+    }
+    session.commitTransaction();
 
     res.status(201).json({
-      user: {
-        commonUserID: user.commonUserID,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
-        jobTitle: user.jobTitle,
-        customerIDs: user.customerIDs,
+      newUser: {
+        commonUserID: newUser.commonUserID,
+        firstName: newUser.firstName,
+        lastName: newUser.lastName,
+        email: newUser.email,
+        jobTitle: newUser.jobTitle,
+        customerIDs: newUser.customerIDs,
       },
     });
   } catch (err) {
@@ -56,4 +67,29 @@ const register = async (req, res, next) => {
   }
 };
 
-export { register };
+const login = async (req, res, next) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    const error = new BadRequestError("Please provide all required values");
+    return next(error);
+  }
+
+  const user = await User.findOne({ email }).select("+password");
+  if (!user) {
+    const error = new UnAuthenticatedError("Invalid Credentials");
+    return next(error);
+  }
+
+  const isPasswordCorrect = await user.comparePassword(password);
+  if (!isPasswordCorrect) {
+    const error = new UnAuthenticatedError("Invalid Credentials");
+    return next(error);
+  }
+
+  const token = user.createJWT();
+  user.password = undefined;
+  res.status(200).json({ user, token });
+};
+
+export { register, login };
