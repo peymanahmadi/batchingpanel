@@ -1,0 +1,99 @@
+$border-radius: 0.25rem;
+$nav-height: 6rem;
+
+$small-text: 0.875rem;
+$extra-small-text: 0.7em;
+
+$max-width: 1120px;
+$fixed-width: 500px;
+$fluid-width: 90vw;
+
+$transition: 0.3s ease-in-out all;
+
+// blue
+$blue-50: #afc3ff;
+$blue-100: #a0b6f3;
+$blue-200: #91a9e8;
+$blue-300: #839cdc;
+$blue-400: #748fd0;
+$blue-500: #6583c5;
+$blue-600: #5676b9;
+$blue-700: #4869ad;
+$blue-800: #395ca2;
+$blue-900: #2a4f96;
+
+// orange
+$orange-50: #f5ab77;
+$orange-100: #f1a46e;
+$orange-200: #ec9d65;
+$orange-300: #e8955c;
+$orange-400: #e38e53;
+$orange-500: #df874b;
+$orange-600: #da8042;
+$orange-700: #d67839;
+$orange-800: #d17130;
+$orange-900: #cd6a27;
+
+// grey
+$grey-50: #f0f4f8;
+$grey-100: #d9e2ec;
+$grey-200: #bcccdc;
+$grey-300: #9fb3c8;
+$grey-400: #829ab1;
+$grey-500: #627d98;
+$grey-600: #486581;
+$grey-700: #334e68;
+$grey-800: #243b53;
+$grey-900: #102a43;
+
+// rest of the colors
+$black: #222;
+$white: #fff;
+
+$red-light: #f8d7da;
+$red-dark: #842029;
+
+$green-light: #d1e7dd;
+$green-dark: #0f5132;
+
+$blue-light: #6d89cb;
+$blue-dark: #2a4f96;
+
+$background-color: $grey-50;
+$text-color: $grey-900;
+
+// box shadow
+$shadow-1: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+$shadow-2: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+$shadow-3: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+  0 4px 6px -2px rgba(0, 0, 0, 0.05);
+$shadow-4: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+  0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+// palletes
+
+// 1. primary
+$primary-light: #42a5f5;
+$primary-main: #1976d2;
+$primary-dark: #1565c0;
+
+// 2. secondary
+$secondary-light: #ba68c8;
+$secondary-main: #9c27b0;
+$secondary-dark: #7b1fa2;
+// 3. error
+$error-light: #ef5350;
+$error-main: #d32f2f;
+$error-dark: #c62828;
+// 4. warning
+$warning-light: #ff9800;
+$warning-main: #ed6c02;
+$warning-dark: #e65100;
+// 5. info
+$info-light: #03a9f4;
+$info-main: #0288d1;
+$info-dark: #01579b;
+// 6. success
+$success-light: #4caf50;
+$success-main: #2e7d32;
+$success-dark: #1b5e20;

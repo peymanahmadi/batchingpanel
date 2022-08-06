@@ -1,0 +1,42 @@
+@use "../abstracts/index" as *;
+
+.landing {
+  nav {
+    width: $fluid-width;
+    max-width: $max-width;
+    margin: 0 auto;
+    height: $nav-height;
+    display: flex;
+    align-items: center;
+    // background-color: red;
+    justify-content: space-between;
+  }
+  .page {
+    min-height: calc(100vh - $nav-height);
+    display: grid;
+    align-items: center;
+    // margin-top: -3rem;
+    // background-color: aqua;
+  }
+  h1 {
+    font-weight: 700;
+    span {
+      color: $blue-500;
+    }
+  }
+  p {
+    color: $grey-600;
+  }
+  .main-img {
+    display: none;
+  }
+  @media (min-width: 992px) {
+    .page {
+      grid-template-columns: 1fr 1fr;
+      column-gap: 3rem;
+    }
+    .main-img {
+      display: block;
+    }
+  }
+}

@@ -1,5 +1,12 @@
+import "./assets/sass/main.scss";
+import Landing from "./pages/Landing";
+
 const App = () => {
-  return <div></div>;
+  return (
+    <div>
+      <Landing />
+    </div>
+  );
 };
 
 export default App;

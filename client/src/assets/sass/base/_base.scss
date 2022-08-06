@@ -1,0 +1,36 @@
+// -----------------------------------------------------------------------------
+// This file contains very basic styles.
+// -----------------------------------------------------------------------------
+@use "../abstracts/index" as *;
+@use "../base/fonts" as bf;
+
+html {
+  font-size: 100%;
+}
+
+*,
+::after,
+::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: $background-color;
+  font-family: bf.$FiraSans;
+  line-height: 1.75;
+  color: $text-color;
+}
+
+.img {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.container {
+  width: $fluid-width;
+  max-width: $max-width;
+  margin: 0 auto;
+}
