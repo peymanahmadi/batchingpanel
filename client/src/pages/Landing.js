@@ -1,21 +1,21 @@
 import main from "../assets/images/main.svg";
 import { Logo } from "../components";
+import { useTranslation } from "react-i18next";
 
 const Landing = () => {
+  const { t } = useTranslation();
   return (
     <main className="landing">
       <nav>
         <Logo />
         <div>
           <button>EN</button>
-          <button>FA</button>
+          <button>PE</button>
         </div>
       </nav>
       <div className="container page">
         <div className="info">
-          <h1>
-            <span>Batching</span> System Automation
-          </h1>
+          <h1>{t("landingTitle")}</h1>
           <p>
             Manage your business by installing Automatic Batching System
             packages at your feed mill factory. It is so advanced yet simple and

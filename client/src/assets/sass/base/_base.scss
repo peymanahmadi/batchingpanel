@@ -18,9 +18,17 @@ html {
 
 body {
   background: $background-color;
-  font-family: bf.$FiraSans;
+  // font-family: bf.$FiraSans;
   line-height: 1.75;
   color: $text-color;
+}
+
+.english-font {
+  font-family: bf.$FiraSans;
+}
+
+.farsi-font {
+  font-family: bf.$Vazir;
 }
 
 .img {
