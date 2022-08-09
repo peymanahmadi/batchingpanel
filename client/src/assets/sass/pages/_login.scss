@@ -1,0 +1,21 @@
+@use "../abstracts/index" as *;
+
+.login-page {
+  display: grid;
+  align-items: center;
+  .logo {
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 1.38rem;
+  }
+  .form {
+    max-width: 400px;
+    border-top: 5px solid $blue-400;
+  }
+  h3 {
+    text-align: center;
+  }
+  .btn {
+    margin-top: 1rem;
+  }
+}
