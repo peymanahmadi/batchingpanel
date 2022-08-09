@@ -1,0 +1,26 @@
+@use "../abstracts/index" as *;
+
+.error-page {
+  text-align: center;
+  img {
+    max-width: 600px;
+    display: block;
+    margin-bottom: 2rem;
+  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  h3 {
+    margin-bottom: 0.5rem;
+  }
+  p {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    color: $grey-500;
+  }
+  a {
+    color: $blue-500;
+    text-decoration: underline;
+    text-transform: capitalize;
+  }
+}

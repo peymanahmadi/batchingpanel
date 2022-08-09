@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const Landing = () => {
   const { t } = useTranslation();
   return (
-    <main className="landing">
+    <main className="landing-page">
       <nav>
         <Logo />
         <div>
