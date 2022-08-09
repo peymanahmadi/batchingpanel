@@ -1,6 +1,7 @@
 import main from "../assets/images/main.svg";
 import { Logo } from "../components";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
 const Landing = () => {
   const { t } = useTranslation();
@@ -21,6 +22,9 @@ const Landing = () => {
             packages at your feed mill factory. It is so advanced yet simple and
             smart to control and use for your teams.
           </p>
+          <Link to="/login">
+            <button>{t("login")}</button>
+          </Link>
         </div>
         <img
           src={main}

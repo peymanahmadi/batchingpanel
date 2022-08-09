@@ -26,8 +26,8 @@ i18n
   .init({
     debug: process.env.NODE_ENV,
     resources,
-    // fallbackLng: "en",
-    lng: "fa",
+    fallbackLng: "en",
+    lng: "en",
     interpolation: { escapeValue: false }, // not needed for react as it escapes by default
   });
 
