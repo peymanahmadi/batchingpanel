@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Logo } from "../components";
+import { Logo, FormRow } from "../components";
 
 const initialState = {
   email: "",
@@ -23,18 +23,20 @@ const Login = () => {
       <form className="form" onSubmit={onSubmit}>
         <Logo />
         <h3>Login</h3>
-        <div className="form-row">
-          <label htmlFor="email" className="form-label">
-            email
-          </label>
-          <input
-            type="email"
-            name="email"
-            value={values.email}
-            onChange={handleChange}
-            className="form-input"
-          />
-        </div>
+        {/* email input */}
+        <FormRow
+          type="text"
+          name="email"
+          value={values.email}
+          handleChange={handleChange}
+        />
+        {/* password input */}
+        <FormRow
+          type="password"
+          name="password"
+          value={values.password}
+          handleChange={handleChange}
+        />
         <button type="submit" className="btn btn-block">
           login
         </button>
