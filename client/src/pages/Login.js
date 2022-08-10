@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import { Logo, FormRow } from "../components";
+import { Logo, FormRow, Alert } from "../components";
 
 const initialState = {
   email: "",
   password: "",
+  showAlert: true,
 };
 
 const Login = () => {
@@ -23,6 +24,7 @@ const Login = () => {
       <form className="form" onSubmit={onSubmit}>
         <Logo />
         <h3>Login</h3>
+        {values.showAlert && <Alert />}
         {/* email input */}
         <FormRow
           type="text"
