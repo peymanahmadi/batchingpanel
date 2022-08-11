@@ -1,30 +1,37 @@
 import { useState, useEffect } from "react";
 import { Logo, FormRow, Alert } from "../components";
+import { useAppContext } from "../context/appContext";
 
 const initialState = {
   email: "",
   password: "",
-  showAlert: true,
 };
 
 const Login = () => {
   const [values, setValues] = useState(initialState);
+  const { isLoading, showAlert, displayAlert } = useAppContext();
   // global state and useNavigate
 
   const handleChange = (e) => {
-    console.log(e.target);
+    setValues({ ...values, [e.target.name]: e.target.value });
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(e.target);
+    const { email, password } = values;
+    if (!email || !password) {
+      displayAlert();
+      return;
+    }
+    console.log(values);
   };
+
   return (
     <section className="login-page full-page">
       <form className="form" onSubmit={onSubmit}>
         <Logo />
         <h3>Login</h3>
-        {values.showAlert && <Alert />}
+        {showAlert && <Alert />}
         {/* email input */}
         <FormRow
           type="text"
