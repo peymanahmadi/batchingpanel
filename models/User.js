@@ -2,6 +2,8 @@ import mongoose from "mongoose";
 import validator from "validator";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import connectDB from "../db/connect.js";
+// let db;
 
 const UserSchema = new mongoose.Schema(
   {
@@ -74,4 +76,35 @@ UserSchema.methods.comparePassword = async function (candidatePassword) {
   return isMatch;
 };
 
-export default mongoose.model("User", UserSchema);
+// const getDb = async () => {
+//   return db ? db : await connectDB(process.env.MONGO_URL);
+// };
+
+// const getUserModel = async () => {
+//   const batchingDb = await getDb();
+//   return batchingDb.model("User", UserSchema);
+// };
+
+// const getUserDB = async (userCodeName) => {
+//   const dbName = `batching-${userCodeName}`;
+//   const url = process.env.MONGO_URL.replace(
+//     "batching",
+//     `batching_${userCodeName}`
+//   );
+//   db = db ? db : await connectDB(url);
+//   let userDb = db.useDb(dbName);
+//   return userDb;
+// };
+
+// const getUserModel = async (userCodeName) => {
+//   const userDb = await getUserDB(userCodeName);
+//   return userDb.model("User", UserSchema);
+// };
+
+// const User =
+
+export default UserSchema;
+
+// export default mongoose.model("User", UserSchema);
+
+// export default getUserModel;

@@ -1,7 +1,10 @@
+import mongoose from "mongoose";
+import connectDB from "../db/connect.js";
 import User from "../models/User.js";
+// import getUserModel from "../models/User.js";
 import Customer from "../models/Customer.js";
 import { BadRequestError, UnAuthenticatedError } from "../errors/index.js";
-import mongoose from "mongoose";
+import conn from "../db/batching.js";
 
 const register = async (req, res, next) => {
   const {
@@ -68,6 +71,7 @@ const register = async (req, res, next) => {
 };
 
 const login = async (req, res, next) => {
+  console.log("login");
   const { email, password } = req.body;
 
   if (!email || !password) {
@@ -75,7 +79,13 @@ const login = async (req, res, next) => {
     return next(error);
   }
 
-  const user = await User.findOne({ email }).select("+password");
+  const userModel = conn.model("User");
+
+  const user = await userModel
+    .findOne({ email })
+    .select("+password")
+    .populate("customerIDs");
+
   if (!user) {
     const error = new UnAuthenticatedError("Invalid Credentials");
     return next(error);
