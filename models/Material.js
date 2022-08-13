@@ -8,7 +8,7 @@ const materialSchema = new mongoose.Schema(
     },
     name: {
       type: String,
-      required: [true, "Please provide material name"],
+      required: [true, "Please provide a material name"],
       minLength: 2,
       maxLength: 35,
       trim: true,
