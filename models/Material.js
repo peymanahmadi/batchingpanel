@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const materialSchema = new mongoose.Schema(
   {
-    commomMaterialID: {
+    commonMaterialID: {
       type: Number,
       unique: true,
     },

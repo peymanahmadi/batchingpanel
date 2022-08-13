@@ -6,9 +6,7 @@ import jwt from "jsonwebtoken";
 const userSchema = new mongoose.Schema(
   {
     // commonUserID is an id common with automatic batching system software user id.
-    commonUserID: {
-      type: Number,
-    },
+    commonUserID: Number,
     firstName: {
       type: String,
       required: [true, "Please provide first name"],

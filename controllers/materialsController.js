@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import Material from "../models/Material.js";
+import dotenv from "dotenv";
+dotenv.config();
 import { BadRequestError } from "../errors/index.js";
 import createTenantConnection from "../db/batchingTenant.js";
 
@@ -12,22 +12,32 @@ const getMaterialByID = async (req, res, next) => {
 };
 
 const createMaterial = async (req, res, next) => {
-  const { tenant, commonMaterialID, name, description, available } = req.body;
-  if (!name) {
+  const { customerCodeName, commonMaterialID, name, description, available } =
+    req.body;
+
+  if (!commonMaterialID || !name) {
     const error = new BadRequestError("Please provide all required values");
     return next(error);
   }
 
-  const conn = createTenantConnection(process.env.RAW_MONGO_URL);
-  console.log(conn);
-  const materialModel = conn.model("Material");
+  const conn = createTenantConnection(
+    process.env.TENANT_MONGO_URI,
+    `batching_${customerCodeName}`
+  );
 
-  // const material = new Material({
-  //   commonMaterialID,
-  //   name,
-  //   description,
-  //   available,
-  // });
+  const materialModel = conn.model("Material");
+  const cmIDAlreadyExists = await materialModel.findOne({ commonMaterialID });
+  if (cmIDAlreadyExists) {
+    const error = new BadRequestError("commonMaterialID already in use");
+    return next(error);
+  }
+
+  const nameAlreadyExists = await materialModel.findOne({ name });
+  if (nameAlreadyExists) {
+    const error = new BadRequestError("name already in use");
+    return next(error);
+  }
+
   const materialMod = new materialModel({
     commonMaterialID,
     name,
