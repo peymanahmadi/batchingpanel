@@ -1,10 +1,9 @@
 import mongoose from "mongoose";
-import connectDB from "../db/connect.js";
-import User from "../models/User.js";
-// import getUserModel from "../models/User.js";
-import Customer from "../models/Customer.js";
 import { BadRequestError, UnAuthenticatedError } from "../errors/index.js";
-import conn from "../db/batching.js";
+import conn from "../db/batchingAdmin.js";
+
+const userModel = conn.model("User");
+const customerModel = conn.model("Customer");
 
 const register = async (req, res, next) => {
   const {
@@ -22,7 +21,15 @@ const register = async (req, res, next) => {
     return next(error);
   }
 
-  const userAlreadyExists = await User.findOne({ email });
+  if (commonUserID) {
+    const cuIDAlreadyExists = await userModel.findOne({ commonUserID });
+    if (cuIDAlreadyExists) {
+      const error = new BadRequestError("commonUserID already in use");
+      return next(error);
+    }
+  }
+
+  const userAlreadyExists = await userModel.findOne({ email });
   if (userAlreadyExists) {
     const error = new BadRequestError("Email already in use");
     return next(error);
@@ -33,7 +40,7 @@ const register = async (req, res, next) => {
     return next(error);
   }
 
-  const newUser = new User({
+  const newUser = new userModel({
     commonUserID,
     firstName,
     lastName,
@@ -44,12 +51,12 @@ const register = async (req, res, next) => {
   });
 
   try {
-    const session = await mongoose.startSession();
+    const session = await conn.startSession();
     session.startTransaction();
     await newUser.save({ session });
 
     for (let ids of customerIDs) {
-      let customer = await Customer.findById(ids);
+      let customer = await customerModel.findById(ids);
       customer.adminIDs.push(newUser);
       await customer.save({ session });
     }
@@ -65,21 +72,19 @@ const register = async (req, res, next) => {
         customerIDs: newUser.customerIDs,
       },
     });
-  } catch (err) {
-    return next(err);
+  } catch (error) {
+    console.log(error);
+    return next(error);
   }
 };
 
 const login = async (req, res, next) => {
-  console.log("login");
   const { email, password } = req.body;
 
   if (!email || !password) {
     const error = new BadRequestError("Please provide all required values");
     return next(error);
   }
-
-  const userModel = conn.model("User");
 
   const user = await userModel
     .findOne({ email })

@@ -1,12 +1,11 @@
 import mongoose from "mongoose";
-import UserSchema from "../models/User.js";
+import userSchema from "../models/User.js";
 import customerSchema from "../models/Customer.js";
 import dotenv from "dotenv";
 dotenv.config();
 
-console.log(process.env.MONGO_URL);
-const conn = mongoose.createConnection(process.env.MONGO_URL);
-conn.model("User", UserSchema);
+const conn = mongoose.createConnection(process.env.MONGO_URI);
+conn.model("User", userSchema);
 conn.model("Customer", customerSchema);
 
 export default conn;

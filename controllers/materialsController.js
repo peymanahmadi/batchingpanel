@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import Material from "../models/Material.js";
 import { BadRequestError } from "../errors/index.js";
-import createTenantConnection from "../db/tenant.js";
+import createTenantConnection from "../db/batchingTenant.js";
 
 const getAllMaterials = async (req, res, next) => {
   res.send("get all materials");

@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-// import connectDB from "../db/connect.js";
 
 const customerSchema = new mongoose.Schema(
   {
@@ -21,24 +20,19 @@ const customerSchema = new mongoose.Schema(
     },
     logo: String,
     adminIDs: [{ type: mongoose.Types.ObjectId, ref: "User" }],
+    available: {
+      type: Boolean,
+      default: true,
+    },
+    countdown: {
+      type: Number,
+      required: [true, "Please provide countdown counter value"],
+      min: 1,
+      max: 365,
+      default: 365,
+    },
   },
   { timestamps: true }
 );
 
-// const getDb = async () => {
-//   return db ? db : await connectDB(process.env.MONGO_URL);
-// };
-
-// const getCustomerModel = async () => {
-//   const batchingDb = await getDb();
-//   return batchingDb.model("Customer", customerSchema);
-// };
-// let db;
-// console.log("connectDB: ", connectDB);
-// export default mongoose.model("Customer", customerSchema);
-
 export default customerSchema;
-
-// export default connectDB.model("Customer", customerSchema);
-
-// export default getCustomerModel;

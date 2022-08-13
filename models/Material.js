@@ -1,7 +1,4 @@
 import mongoose from "mongoose";
-// import connectDB from "../db/connect.js";
-
-// let db;
 
 const materialSchema = new mongoose.Schema(
   {
@@ -30,26 +27,4 @@ const materialSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// const getDb = async () => {
-//   return db ? db : await connectDB(process.env.MONGO_URL);
-// };
-
-// const getMaterialModel = async (userCodeName) => {
-//   // const url = process.env.MONGO_URL.replace(
-//   //   "batching",
-//   //   `batching_${userCodeName}`
-//   // );
-//   const tenantDB = connectDB.useDb(`batching_${userCodeName}`);
-//   //   db = db ? db : await connectDB(url);
-//   //   let userDb = db.useDb(dbName);
-//   //   return userDb;
-
-//   // const batchingDb = await getDb();
-//   return tenantDB.model("Material", materialSchema);
-// };
-
-// export default mongoose.model("Material", materialSchema);
-
 export default materialSchema;
-
-// export default getMaterialModel;
