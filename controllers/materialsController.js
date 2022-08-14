@@ -2,6 +2,16 @@ import dotenv from "dotenv";
 dotenv.config();
 import { BadRequestError } from "../errors/index.js";
 import createTenantConnection from "../db/batchingTenant.js";
+let db;
+
+const createConnection = (customerCodeName) => {
+  return db
+    ? db
+    : createTenantConnection(
+        process.env.TENANT_MONGO_URI,
+        `batching_${customerCodeName}`
+      );
+};
 
 const getAllMaterials = async (req, res, next) => {
   res.send("get all materials");
@@ -20,10 +30,7 @@ const createMaterial = async (req, res, next) => {
     return next(error);
   }
 
-  const conn = createTenantConnection(
-    process.env.TENANT_MONGO_URI,
-    `batching_${customerCodeName}`
-  );
+  const conn = createConnection(customerCodeName);
 
   const materialModel = conn.model("Material");
   const cmIDAlreadyExists = await materialModel.findOne({ commonMaterialID });

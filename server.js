@@ -4,9 +4,6 @@ import dotenv from "dotenv";
 dotenv.config();
 import morgan from "morgan";
 
-// db and authenticateUser
-import connectDB from "./db/connect.js";
-
 // Routers
 import customersRouter from "./routes/customersRoutes.js";
 import authRouter from "./routes/authRoutes.js";
