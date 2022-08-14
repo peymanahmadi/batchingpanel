@@ -54,6 +54,13 @@ const userSchema = new mongoose.Schema(
       },
     ],
     lastLoginAt: Date,
+    accessLevel: {
+      isAdmin: Boolean,
+      allowDefineWarehouse: Boolean,
+      allowdefineFormula: Boolean,
+      allowCreateReports: Boolean,
+      allowManageUsers: Boolean,
+    },
   },
   { timestamps: true }
 );

@@ -14,7 +14,16 @@ const register = async (req, res, next) => {
     password,
     jobTitle,
     customerIDs,
+    accessLevel,
   } = req.body;
+
+  let {
+    isAdmin,
+    allowDefineWarehouse,
+    allowDefineFormula,
+    allowCreateReports,
+    allowManageUsers,
+  } = accessLevel;
 
   if (!firstName || !lastName || !email || !password || !customerIDs) {
     const error = new BadRequestError("please provide all required values");
@@ -40,6 +49,12 @@ const register = async (req, res, next) => {
     return next(error);
   }
 
+  if (accessLevel.isAdmin) {
+    for (let keys in accessLevel) {
+      accessLevel[keys] = true;
+    }
+  }
+
   const newUser = new userModel({
     commonUserID,
     firstName,
@@ -48,6 +63,7 @@ const register = async (req, res, next) => {
     password,
     jobTitle,
     customerIDs,
+    accessLevel,
   });
 
   try {
@@ -70,6 +86,7 @@ const register = async (req, res, next) => {
         email: newUser.email,
         jobTitle: newUser.jobTitle,
         customerIDs: newUser.customerIDs,
+        accessLevel: newUser.accessLevel,
       },
     });
   } catch (error) {
