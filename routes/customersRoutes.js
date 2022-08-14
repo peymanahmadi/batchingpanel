@@ -8,8 +8,12 @@ import {
 
 import { createMaterial } from "../controllers/materialsController.js";
 
+import { createFormula } from "../controllers/formulasController.js";
+
 router.route("/").get(getAllCustomers).post(createCustomer);
 
 router.route("/materials").post(createMaterial);
+
+router.route("/formulas").post(createFormula);
 
 export default router;

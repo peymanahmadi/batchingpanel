@@ -17,14 +17,6 @@ const register = async (req, res, next) => {
     accessLevel,
   } = req.body;
 
-  let {
-    isAdmin,
-    allowDefineWarehouse,
-    allowDefineFormula,
-    allowCreateReports,
-    allowManageUsers,
-  } = accessLevel;
-
   if (!firstName || !lastName || !email || !password || !customerIDs) {
     const error = new BadRequestError("please provide all required values");
     return next(error);
@@ -90,7 +82,6 @@ const register = async (req, res, next) => {
       },
     });
   } catch (error) {
-    console.log(error);
     return next(error);
   }
 };
