@@ -34,7 +34,7 @@ const Login = () => {
         {showAlert && <Alert />}
         {/* email input */}
         <FormRow
-          type="text"
+          type="email"
           name="email"
           value={values.email}
           handleChange={handleChange}
@@ -46,7 +46,7 @@ const Login = () => {
           value={values.password}
           handleChange={handleChange}
         />
-        <button type="submit" className="btn btn-block">
+        <button type="submit" className="btn btn-block" disabled={isLoading}>
           login
         </button>
       </form>
