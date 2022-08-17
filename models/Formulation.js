@@ -5,11 +5,16 @@ const formulationSchema = new mongoose.Schema({
     type: mongoose.Types.ObjectId,
     ref: "Formula",
   },
+  version: {
+    type: String,
+    maxLength: 15,
+    trim: true,
+  },
   dateTime: {
     type: Date,
     default: Date.now,
   },
-  creatorID: {
+  userID: {
     type: mongoose.Types.ObjectId,
     ref: "User",
   },
@@ -23,6 +28,7 @@ const formulationSchema = new mongoose.Schema({
         type: { type: mongoose.Types.ObjectId, ref: "Material" },
       },
       weight: Number,
+      percentage: Number,
     },
   ],
   weight: Number,

@@ -17,6 +17,12 @@ const formulaSchema = new mongoose.Schema({
     maxLength: 255,
     trim: true,
   },
+  version: {
+    type: String,
+    maxLength: 15,
+    trim: true,
+    unique: true,
+  },
   available: {
     type: Boolean,
     default: true,

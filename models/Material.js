@@ -10,13 +10,13 @@ const materialSchema = new mongoose.Schema(
       type: String,
       required: [true, "Please provide a material name"],
       minLength: 2,
-      maxLength: 35,
+      maxLength: 50,
       trim: true,
       unique: true,
     },
     description: {
       type: String,
-      maxLength: 255,
+      maxLength: 200,
       trim: true,
     },
     available: {

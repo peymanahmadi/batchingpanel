@@ -5,11 +5,8 @@ import {
   getAllCustomers,
   createCustomer,
 } from "../controllers/customersController.js";
-
 import { createMaterial } from "../controllers/materialsController.js";
-
 import { createFormula } from "../controllers/formulasController.js";
-
 import { createBatching } from "../controllers/batchingsController.js";
 
 router.route("/").get(getAllCustomers).post(createCustomer);
