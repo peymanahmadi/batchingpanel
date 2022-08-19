@@ -1,15 +1,5 @@
 import batchingAdminConn from "../db/batchingAdmin.js";
 import batchingTenantConn from "../db/batchingTenant.js";
-let db;
-
-const createConnection = (customerCodeName) => {
-  return db
-    ? db
-    : batchingTenantConn(
-        process.env.TENANT_MONGO_URI,
-        `batching_${customerCodeName}`
-      );
-};
 
 const createBatching = async (req, res, next) => {
   const {
@@ -28,7 +18,7 @@ const createBatching = async (req, res, next) => {
   const cID = await customerModel.findById(customerID, "codeName");
   const uID = await userModel.findOne({ commonUserID });
 
-  const customerConn = createConnection(cID.codeName);
+  const customerConn = batchingTenantConn(cID.codeName);
   const formulaModel = customerConn.model("Formula");
   const materialModel = customerConn.model("Material");
   const batchingModel = customerConn.model("Batching");

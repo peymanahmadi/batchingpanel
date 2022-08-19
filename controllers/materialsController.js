@@ -1,20 +1,15 @@
-import dotenv from "dotenv";
-dotenv.config();
 import { BadRequestError } from "../errors/index.js";
 import createTenantConnection from "../db/batchingTenant.js";
-let db;
-
-const createConnection = (customerCodeName) => {
-  return db
-    ? db
-    : createTenantConnection(
-        process.env.TENANT_MONGO_URI,
-        `batching_${customerCodeName}`
-      );
-};
 
 const getAllMaterials = async (req, res, next) => {
-  res.send("get all materials");
+  const { customerCodeName } = req.body;
+  const conn = createTenantConnection(customerCodeName);
+  try {
+    const material = await conn.model("Material").find({});
+    res.status(200).json({ material });
+  } catch (error) {
+    return next(error);
+  }
 };
 
 const getMaterialByID = async (req, res, next) => {
@@ -30,7 +25,7 @@ const createMaterial = async (req, res, next) => {
     return next(error);
   }
 
-  const conn = createConnection(customerCodeName);
+  const conn = createTenantConnection(customerCodeName);
 
   const materialModel = conn.model("Material");
   const cmIDAlreadyExists = await materialModel.findOne({ commonMaterialID });
@@ -45,7 +40,7 @@ const createMaterial = async (req, res, next) => {
     return next(error);
   }
 
-  const materialMod = new materialModel({
+  const newMaterial = new materialModel({
     commonMaterialID,
     name,
     description,
@@ -53,7 +48,7 @@ const createMaterial = async (req, res, next) => {
   });
 
   try {
-    const material = await materialMod.save();
+    const material = await newMaterial.save();
     res.status(201).json({ material });
   } catch (error) {
     return next(error);

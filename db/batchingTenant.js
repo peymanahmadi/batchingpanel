@@ -9,8 +9,11 @@ import warehouseOpsDescSchema from "../models/WarehouseOpsDesc.js";
 import dotenv from "dotenv";
 dotenv.config();
 
-const createTenantConnection = (url, dbName) => {
-  const conn = mongoose.createConnection(url, { dbName });
+const createTenantConnection = (dbName) => {
+  dbName = `batching_${dbName}`;
+  const conn = mongoose.createConnection(process.env.TENANT_MONGO_URI, {
+    dbName,
+  });
   conn.model("Material", materialSchema);
   conn.model("Formula", formulaSchema);
   conn.model("Formulation", formulationSchema);

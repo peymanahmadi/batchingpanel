@@ -19,10 +19,7 @@ const materialSchema = new mongoose.Schema(
       maxLength: 200,
       trim: true,
     },
-    available: {
-      type: Boolean,
-      default: true,
-    },
+    available: Boolean,
   },
   { timestamps: true }
 );

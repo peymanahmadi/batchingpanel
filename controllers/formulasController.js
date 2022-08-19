@@ -1,17 +1,5 @@
-import dotenv from "dotenv";
-dotenv.config();
 import { BadRequestError } from "../errors/index.js";
 import createTenantConnection from "../db/batchingTenant.js";
-
-const createConnection = (customerCodeName) => {
-  let db;
-  return db
-    ? db
-    : createTenantConnection(
-        process.env.TENANT_MONGO_URI,
-        `batching_${customerCodeName}`
-      );
-};
 
 const createFormula = async (req, res, next) => {
   const {
@@ -24,7 +12,7 @@ const createFormula = async (req, res, next) => {
     ingredients,
   } = req.body;
 
-  const conn = createConnection(customerCodeName);
+  const conn = createTenantConnection(customerCodeName);
   const formulaModel = conn.model("Formula");
   const formulationModel = conn.model("Formulation");
 
