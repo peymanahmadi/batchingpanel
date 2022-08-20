@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Logo, FormRow, Alert } from "../components";
 import { useAppContext } from "../context/appContext";
+import { useNavigate } from "react-router-dom";
 
 const initialState = {
   email: "",
@@ -8,9 +9,10 @@ const initialState = {
 };
 
 const Login = () => {
+  const navigate = useNavigate();
   const [values, setValues] = useState(initialState);
-  const { isLoading, showAlert, displayAlert } = useAppContext();
-  // global state and useNavigate
+  const { user, isLoading, showAlert, displayAlert, setupUser } =
+    useAppContext();
 
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
@@ -23,8 +25,21 @@ const Login = () => {
       displayAlert();
       return;
     }
-    console.log(values);
+    const currentUser = { email, password };
+    setupUser({
+      currentUser,
+      endPoint: "login",
+      alertText: "Login Successful! Redirecting...",
+    });
   };
+
+  useEffect(() => {
+    if (user) {
+      setTimeout(() => {
+        navigate("/");
+      }, 3000);
+    }
+  }, [user, navigate]);
 
   return (
     <section className="login-page full-page">

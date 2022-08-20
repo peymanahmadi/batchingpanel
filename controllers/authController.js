@@ -112,7 +112,7 @@ const login = async (req, res, next) => {
 
   const token = user.createJWT();
   user.password = undefined;
-  res.status(200).json({ user, token });
+  res.status(200).json({ user, token, customer: user.customerIDs[0].name });
 };
 
 export { register, login };
