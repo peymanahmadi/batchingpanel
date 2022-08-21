@@ -1,12 +1,19 @@
 import { Outlet, Link } from "react-router-dom";
+import { Navbar, BigSidebar, SmallSidebar } from "../../components";
 
 const SharedLayout = () => {
   return (
-    <section>
-      <nav>
-        <Link to="profile">Profile</Link>
-      </nav>
-      <Outlet />
+    <section className="shared-layout">
+      <main className="dashboard">
+        <SmallSidebar />
+        <BigSidebar />
+        <div>
+          <Navbar />
+          <div className="dashboard-page">
+            <Outlet />
+          </div>
+        </div>
+      </main>
     </section>
   );
 };

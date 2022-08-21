@@ -6,7 +6,7 @@ const ProtectedRoute = ({ children }) => {
   if (!user) {
     return <Navigate to="/landing" />;
   }
-  return <div></div>;
+  return children;
 };
 
 export default ProtectedRoute;
