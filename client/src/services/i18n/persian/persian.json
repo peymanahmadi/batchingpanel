@@ -1,5 +1,12 @@
 {
   "documentTitle": "پرتال سیستم اتوماسیون بچینگ",
   "landingTitle": "سیستم جامع و یکپارچه بچینگ اتوماتیک",
-  "login": "ورود"
+  "login": "ورود",
+  "stats": "وضعیت",
+  "reports": "گزارش ها",
+  "materials": "مواد",
+  "formulas": "فرمول ها",
+  "warehouses": "انبارها",
+  "users": "کاربران",
+  "profile": "پروفایل"
 }

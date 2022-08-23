@@ -1,5 +1,12 @@
 {
   "documentTitle": "Batching Automation System Panel",
   "landingTitle": "Batching System Automation",
-  "login": "login"
+  "login": "login",
+  "stats": "stats",
+  "reports": "reports",
+  "materials": "materials",
+  "formulas": "formulas",
+  "warehouses": "warehouses",
+  "users": "users",
+  "profile": "profile"
 }

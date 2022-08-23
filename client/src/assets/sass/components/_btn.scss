@@ -1,5 +1,13 @@
 @use "../abstracts/index" as *;
 
+button {
+  line-height: 1.15;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
 .btn {
   cursor: pointer;
   color: $white;

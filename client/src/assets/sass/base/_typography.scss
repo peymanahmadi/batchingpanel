@@ -42,3 +42,8 @@ small,
 .text-small {
   font-size: $small-text;
 }
+
+a {
+  text-decoration: none;
+  line-height: 1.15;
+}

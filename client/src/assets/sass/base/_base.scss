@@ -36,6 +36,11 @@ body {
   object-fit: cover;
 }
 
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
 .container {
   width: $fluid-width;
   max-width: $max-width;

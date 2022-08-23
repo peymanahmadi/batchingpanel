@@ -3,7 +3,16 @@ import { useTranslation } from "react-i18next";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./assets/sass/main.scss";
 import { Login, Error, Landing, ProtectedRoute } from "./pages";
-import { Stats, Profile, SharedLayout } from "./pages/dashboard";
+import {
+  Stats,
+  Reports,
+  Materials,
+  Formulas,
+  Warehouses,
+  Users,
+  Profile,
+  SharedLayout,
+} from "./pages/dashboard";
 
 const App = () => {
   const { i18n } = useTranslation();
@@ -28,6 +37,11 @@ const App = () => {
             }
           >
             <Route index element={<Stats />} />
+            <Route path="reports" element={<Reports />} />
+            <Route path="materials" element={<Materials />} />
+            <Route path="formulas" element={<Formulas />} />
+            <Route path="warehouses" element={<Warehouses />} />
+            <Route path="users" element={<Users />} />
             <Route path="profile" element={<Profile />} />
           </Route>
           <Route path="/login" element={<Login />} />
