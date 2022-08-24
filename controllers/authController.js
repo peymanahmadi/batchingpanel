@@ -1,4 +1,3 @@
-import mongoose from "mongoose";
 import { BadRequestError, UnAuthenticatedError } from "../errors/index.js";
 import conn from "../db/batchingAdmin.js";
 
@@ -115,4 +114,9 @@ const login = async (req, res, next) => {
   res.status(200).json({ user, token, customer: user.customerIDs[0].name });
 };
 
-export { register, login };
+const updateUser = async (req, res, next) => {
+  console.log(req.user);
+  res.send("updateUser");
+};
+
+export { register, login, updateUser };
