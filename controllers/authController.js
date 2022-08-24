@@ -115,8 +115,26 @@ const login = async (req, res, next) => {
 };
 
 const updateUser = async (req, res, next) => {
-  console.log(req.user);
-  res.send("updateUser");
+  const { firstName, lastName, email, jobTitle, available } = req.body;
+  if (!firstName || !lastName || !email || jobTitle) {
+    const error = new BadRequestError("please provide all required values");
+    return next(error);
+  }
+  const user = await userModel.findOne({ _id: req.user.userId });
+  user.firstName = firstName;
+  user.lastName = lastName;
+  user.email = email;
+  user.jobTitle = jobTitle;
+  user.available = available;
+
+  try {
+    await user.save();
+
+    const token = user.createJWT();
+    res.status(200).json({ user, token });
+  } catch (error) {
+    return next(error);
+  }
 };
 
 export { register, login, updateUser };
