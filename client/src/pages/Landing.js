@@ -10,20 +10,18 @@ const Landing = () => {
       <nav>
         <Logo />
         <div>
-          <button>EN</button>
-          <button>PE</button>
+          <select>
+            <option>English</option>
+            <option>فارسی</option>
+          </select>
         </div>
       </nav>
       <div className="container page">
         <div className="info">
           <h1>{t("landingTitle")}</h1>
-          <p>
-            Manage your business by installing Automatic Batching System
-            packages at your feed mill factory. It is so advanced yet simple and
-            smart to control and use for your teams.
-          </p>
+          <p>{t("LANDING.MESSAGE")}</p>
           <Link to="/login">
-            <button>{t("login")}</button>
+            <button className="btn btn-hero">{t("getStarted")}</button>
           </Link>
         </div>
         <img

@@ -1,7 +1,8 @@
 {
   "documentTitle": "Batching Automation System Panel",
   "landingTitle": "Batching System Automation",
-  "login": "login",
+  "login": "get started",
+  "LANDING.MESSAGE": "The dashboard represents an amazing view of your farm. More than that, collaborate with your team to control your farm.",
   "stats": "stats",
   "reports": "reports",
   "materials": "materials",

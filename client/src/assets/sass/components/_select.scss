@@ -1,0 +1,29 @@
+@use "../abstracts/index" as *;
+
+select {
+  cursor: pointer;
+  line-height: 1.15;
+  color: $white;
+  background: $blue-500;
+  border: transparent;
+  border-radius: $border-radius;
+  padding: 0.375rem 0.75rem;
+  box-shadow: $shadow-2;
+  transition: $transition;
+  text-transform: capitalize;
+  display: inline-block;
+
+  &:hover {
+    background: $blue-700;
+    box-shadow: $shadow-3;
+  }
+
+  &::after {
+    background: red;
+  }
+
+  option {
+    border: none;
+    padding: 0.25rem 1rem;
+  }
+}
