@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./assets/sass/main.scss";
+import { useAppContext } from "./context/appContext";
 import { Login, Error, Landing, ProtectedRoute } from "./pages";
 import {
   Stats,
@@ -16,10 +17,12 @@ import {
 
 const App = () => {
   const { i18n } = useTranslation();
+  const { changeLanguage } = useAppContext();
 
   useEffect(() => {
     document.dir = i18n.dir();
     document.documentElement.lang = i18n.language;
+    changeLanguage(i18n.language);
 
     document.title = i18n.t("documentTitle");
   }, [i18n, i18n.language]);

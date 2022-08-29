@@ -16,6 +16,9 @@ const register = async (req, res, next) => {
     accessLevel,
   } = req.body;
 
+  console.log("---------------");
+  console.log(req.body);
+
   if (!firstName || !lastName || !email || !password || !customerIDs) {
     const error = new BadRequestError("please provide all required values");
     return next(error);
@@ -111,7 +114,12 @@ const login = async (req, res, next) => {
 
   const token = user.createJWT();
   user.password = undefined;
-  res.status(200).json({ user, token, customer: user.customerIDs[0].name });
+  res.status(200).json({
+    user,
+    token,
+    customer: user.customerIDs[0].name,
+    customerID: user.customerIDs[0]._id,
+  });
 };
 
 const updateUser = async (req, res, next) => {
@@ -137,4 +145,15 @@ const updateUser = async (req, res, next) => {
   }
 };
 
-export { register, login, updateUser };
+const getUsersByCustomerID = async (req, res, next) => {
+  const customerID = req.body;
+  console.log(conn);
+  try {
+    const users = await userModel.find({ name: "peyman" });
+    res.status(200).json(users);
+  } catch (error) {
+    return next(error);
+  }
+};
+
+export { register, login, updateUser, getUsersByCustomerID };

@@ -11,7 +11,7 @@ const initialState = {
 const Login = () => {
   const navigate = useNavigate();
   const [values, setValues] = useState(initialState);
-  const { user, isLoading, showAlert, displayAlert, setupUser } =
+  const { user, isLoading, showAlert, displayAlert, loginUser } =
     useAppContext();
 
   const handleChange = (e) => {
@@ -26,7 +26,7 @@ const Login = () => {
       return;
     }
     const currentUser = { email, password };
-    setupUser({
+    loginUser({
       currentUser,
       endPoint: "login",
       alertText: "Login Successful! Redirecting...",

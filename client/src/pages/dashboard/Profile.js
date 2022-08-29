@@ -1,5 +1,5 @@
 const Profile = () => {
-  return <div>Profile</div>;
+  return <section className="dashboard-form-page">Profile</section>;
 };
 
 export default Profile;

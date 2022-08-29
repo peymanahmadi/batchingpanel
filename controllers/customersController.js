@@ -35,20 +35,7 @@ const createCustomer = async (req, res, next) => {
   });
 
   try {
-    //   const sess = await mongoose.startSession();
-    //   sess.startTransaction();
-    // let customerdata = req.body;
     const customer = await newCustomer.save();
-    //  const customer = await Customer.create([customerdata], { session: sess });
-    //  const customer = await customerModel.create([customerdata], {
-    //     session: sess,
-    //   });
-    //   const url = process.env.RAW_MONGO_URL.replace(
-    //     "batching",
-    //     `batching_${customerdata.codeName}`
-    //   );
-    //   const conn = mongoose.createConnection(url);
-    //   sess.commitTransaction();
     res.status(201).json({ customer });
   } catch (error) {
     return next(error);

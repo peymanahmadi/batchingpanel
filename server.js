@@ -7,6 +7,7 @@ import morgan from "morgan";
 // Routers
 import customersRouter from "./routes/customersRoutes.js";
 import authRouter from "./routes/authRoutes.js";
+import adminsRouter from "./routes/adminRoutes.js";
 
 // middleware
 import errorHandlerMiddleware from "./middleware/error-handler.js";
@@ -21,6 +22,7 @@ app.use(express.json());
 
 app.use("/api/v1/customers", authenticateUser, customersRouter);
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/admin", adminsRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);

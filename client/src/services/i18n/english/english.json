@@ -9,5 +9,12 @@
   "formulas": "formulas",
   "warehouses": "warehouses",
   "users": "users",
+  "USERS.ADDUSER": "add user",
+  "USERS.FIRSTNAME": "first name",
+  "USERS.LASTNAME": "last name",
+  "USERS.EMAIL": "email",
+  "USERS.PASSWORD": "password",
+  "USERS.JOBTITLE": "job title",
+  "USERS.AVAILABLE": "available",
   "profile": "profile"
 }

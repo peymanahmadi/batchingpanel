@@ -9,5 +9,12 @@
   "formulas": "فرمول ها",
   "warehouses": "انبارها",
   "users": "کاربران",
+  "USERS.ADDUSER": "تعریف کاربر جدید",
+  "USERS.FIRSTNAME": "نام",
+  "USERS.LASTNAME": "نام خانوادگی",
+  "USERS.EMAIL": "ایمیل",
+  "USERS.PASSWORD": "کلمه عبور",
+  "USERS.JOBTITLE": "عنوان شغلی",
+  "USERS.AVAILABLE": "وضعیت",
   "profile": "پروفایل"
 }
