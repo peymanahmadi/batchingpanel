@@ -15,4 +15,5 @@ export const TOGGLE_SIDEBAR = "TOGGLE_SIDEBAR";
 
 export const LOGOUT_USER = "LOGOUT_USER";
 
-export const GET_USER_BEGIN = "GET_USER_BEGIN";
+export const GET_USERS_BEGIN = "GET_USERS_BEGIN";
+export const GET_USERS_SUCCESS = "GET_USERS_SUCCESS";

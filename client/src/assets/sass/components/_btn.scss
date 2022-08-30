@@ -15,14 +15,14 @@ button {
   border: transparent;
   border-radius: $border-radius;
   padding: 0.375rem 0.75rem;
-  box-shadow: $shadow-2;
+  box-shadow: $shadow-1;
   transition: $transition;
   text-transform: capitalize;
   display: inline-block;
 
   &:hover {
-    background: $blue-700;
-    box-shadow: $shadow-3;
+    // background: $blue-700;
+    box-shadow: $shadow-2;
   }
 }
 
@@ -33,4 +33,20 @@ button {
 
 .btn-block {
   width: 100%;
+}
+
+.btn-edit {
+  background: $green-light;
+  color: $green-dark;
+  &:hover {
+    box-shadow: $shadow-2;
+  }
+}
+
+.btn-delete {
+  background: $red-light;
+  color: $red-dark;
+  &:hover {
+    box-shadow: $shadow-2;
+  }
 }

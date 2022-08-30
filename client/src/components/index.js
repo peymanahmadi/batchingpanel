@@ -4,9 +4,14 @@ import Alert from "./Alert";
 import Navbar from "./Navbar";
 import SmallSidebar from "./SmallSidebar";
 import BigSidebar from "./BigSidebar";
-import Form from "./Form";
-import UserEditModal from "./users/UserEditModal";
+// import Form from "./Form";
 import Modal from "./Modal";
+import Loading from "./Loading";
+// Users
+import UsersOptions from "./users/UsersOptions";
+import UserEditModal from "./users/UserEditModal";
+import UsersContainer from "./users/UsersContainer";
+import User from "./users/User";
 
 export {
   Logo,
@@ -15,7 +20,12 @@ export {
   Navbar,
   SmallSidebar,
   BigSidebar,
-  Form,
-  UserEditModal,
+  // Form,
   Modal,
+  Loading,
+  // Users
+  UsersOptions,
+  UserEditModal,
+  UsersContainer,
+  User,
 };

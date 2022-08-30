@@ -1,0 +1,62 @@
+@use "../../abstracts/index" as *;
+
+.users-container {
+  border-radius: $border-radius;
+  width: 100%;
+  background: $white;
+  padding: 0.5rem 2rem 0.5rem;
+  box-shadow: $shadow-1;
+  margin: 0.5rem 0;
+}
+
+.users-header {
+  display: grid;
+  grid-template-columns: 0.2fr 1fr 1fr 1fr;
+
+  p {
+    margin: 0.25rem;
+    color: $text-color;
+    font-size: $small-text;
+  }
+}
+
+.user-container {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 0.2fr 1fr 1fr 1fr;
+  margin: 0.5rem 0;
+  padding: 0.25rem 0;
+
+  &:hover {
+    background: $grey-50;
+    border-radius: $border-radius;
+  }
+
+  .user-avatar {
+    display: flex;
+    align-items: center;
+    svg {
+      font-size: 3rem;
+      color: $grey-500;
+    }
+  }
+
+  .user-title {
+    h5 {
+      margin-bottom: 0;
+      font-size: 1rem;
+    }
+  }
+
+  .user-jobTitle {
+    p {
+      margin-bottom: 0;
+      color: $text-color;
+    }
+  }
+
+  .user-edit {
+    display: flex;
+    gap: 0.5rem;
+  }
+}

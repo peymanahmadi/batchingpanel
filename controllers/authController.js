@@ -16,9 +16,6 @@ const register = async (req, res, next) => {
     accessLevel,
   } = req.body;
 
-  console.log("---------------");
-  console.log(req.body);
-
   if (!firstName || !lastName || !email || !password || !customerIDs) {
     const error = new BadRequestError("please provide all required values");
     return next(error);
@@ -147,10 +144,9 @@ const updateUser = async (req, res, next) => {
 
 const getUsersByCustomerID = async (req, res, next) => {
   const customerID = req.body;
-  console.log(conn);
   try {
-    const users = await userModel.find({ name: "peyman" });
-    res.status(200).json(users);
+    const users = await userModel.find({ customerID });
+    res.status(200).json({ users, totalUsers: users.length, numOfPages: 1 });
   } catch (error) {
     return next(error);
   }

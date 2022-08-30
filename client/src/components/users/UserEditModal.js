@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FormRow, Alert } from "../../components";
 import { useAppContext } from "../../context/appContext";
@@ -41,13 +41,8 @@ const UserEditModal = () => {
     }
     values.customerIDs[0] = customerID;
     const newUser = values;
-    console.log(newUser);
     registerUser(newUser);
   };
-
-  // useEffect(() => {
-
-  // }, [])
 
   return (
     <form className="userform" onSubmit={onSubmit}>

@@ -42,7 +42,7 @@ const links = [
   },
   {
     id: 6,
-    text: i18n.t("users", "users"),
+    text: i18n.t("USERS", "users"),
     path: "users",
     icon: <ImUsers />,
   },

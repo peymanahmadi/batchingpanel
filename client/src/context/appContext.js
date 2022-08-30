@@ -14,7 +14,8 @@ import {
   REGISTER_USER_ERROR,
   TOGGLE_SIDEBAR,
   LOGOUT_USER,
-  // GET_USER_BEGIN,
+  GET_USERS_BEGIN,
+  GET_USERS_SUCCESS,
 } from "./actions";
 
 const token = localStorage.getItem("token");
@@ -33,6 +34,10 @@ const initialState = {
   customer: customer,
   customerID: customerID,
   showSidebar: false,
+  users: [],
+  totalUsers: 0,
+  numOfPages: 1,
+  page: 1,
 };
 
 const AppContext = React.createContext();
@@ -144,12 +149,19 @@ const AppProvider = ({ children }) => {
   };
 
   const getUsers = async () => {
-    // dispatch({ type: GET_USER_BEGIN });
-    const data = await authFetch.post("/auth/users");
-    console.log(data);
-    // const { data } = data;
-    console.log("-------");
-    console.log(data.data[0].firstName);
+    dispatch({ type: GET_USERS_BEGIN });
+    try {
+      const { data } = await authFetch.post("/auth/users");
+      const { users, totalUsers, numOfPages } = data;
+      dispatch({
+        type: GET_USERS_SUCCESS,
+        payload: { users, totalUsers, numOfPages },
+      });
+    } catch (error) {
+      console.log(error.response);
+      logoutUser();
+    }
+    clearAlert();
   };
 
   return (
@@ -163,7 +175,7 @@ const AppProvider = ({ children }) => {
         logoutUser,
         changeLanguage,
         getUsers,
-        customerID,
+        // customerID,
       }}
     >
       {children}
