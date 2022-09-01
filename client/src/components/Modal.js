@@ -1,14 +1,11 @@
 import ReactDOM from "react-dom";
-import { useTranslation } from "react-i18next";
-import { FaTimes } from "react-icons/fa";
 import { useAppContext } from "../context/appContext";
 
 const Backdrop = ({ onClose }) => {
   return <div className="backdrop" onClick={onClose} />;
 };
 
-const ModalOverlay = ({ children, content, onSubmit }) => {
-  const { t } = useTranslation();
+const ModalOverlay = ({ children, content }) => {
   const { language } = useAppContext();
   return (
     <div className={language === "en" ? "english-font" : "farsi-font"}>

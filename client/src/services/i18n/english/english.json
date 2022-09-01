@@ -11,6 +11,7 @@
   "SEARCH": "search",
   "USERS": "users",
   "USERS.ADDUSER": "add user",
+  "USERS.COMMONUSERID": "common user ID",
   "USERS.FIRSTNAME": "first name",
   "USERS.LASTNAME": "last name",
   "USERS.EMAIL": "email",

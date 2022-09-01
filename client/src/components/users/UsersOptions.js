@@ -5,7 +5,8 @@ import { Modal, UserEditModal } from "..";
 
 const UsersOptions = () => {
   const { t } = useTranslation();
-  const { users, isLoading, page, totalUsers } = useAppContext();
+  const { openModal, showModal, hideModal, users, totalUsers } =
+    useAppContext();
   const [showForm, setShowForm] = useState();
 
   const handleOpenForm = () => {
@@ -18,8 +19,13 @@ const UsersOptions = () => {
 
   return (
     <>
-      {showForm && (
+      {/* {showForm && (
         <Modal onClose={handleCloseForm}>
+          <UserEditModal />
+        </Modal>
+      )} */}
+      {openModal && (
+        <Modal onClose={() => hideModal()}>
           <UserEditModal />
         </Modal>
       )}
@@ -28,7 +34,7 @@ const UsersOptions = () => {
           <h5>{t("USERS")}</h5>
           <div className="navbar-controls">
             <input placeholder={t("SEARCH")} />
-            <button className="btn" onClick={handleOpenForm}>
+            <button className="btn" onClick={() => showModal()}>
               {t("USERS.ADDUSER")}
             </button>
           </div>

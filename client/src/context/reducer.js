@@ -12,6 +12,8 @@ import {
   LOGOUT_USER,
   GET_USERS_BEGIN,
   GET_USERS_SUCCESS,
+  OPEN_MODAL,
+  CLOSE_MODAL,
 } from "./actions";
 
 import { initialState } from "./appContext";
@@ -34,6 +36,18 @@ const reducer = (state, action) => {
       showAlert: false,
       alertType: "",
       alertText: "",
+    };
+  }
+  if (action.type === OPEN_MODAL) {
+    return {
+      ...state,
+      openModal: true,
+    };
+  }
+  if (action.type === CLOSE_MODAL) {
+    return {
+      ...state,
+      openModal: false,
     };
   }
   if (action.type === LOGIN_USER_BEGIN) {

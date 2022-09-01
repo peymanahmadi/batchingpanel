@@ -16,6 +16,8 @@ import {
   LOGOUT_USER,
   GET_USERS_BEGIN,
   GET_USERS_SUCCESS,
+  OPEN_MODAL,
+  CLOSE_MODAL,
 } from "./actions";
 
 const token = localStorage.getItem("token");
@@ -34,6 +36,7 @@ const initialState = {
   customer: customer,
   customerID: customerID,
   showSidebar: false,
+  openModal: false,
   users: [],
   totalUsers: 0,
   numOfPages: 1,
@@ -85,6 +88,14 @@ const AppProvider = ({ children }) => {
     }, 3000);
   };
 
+  const showModal = () => {
+    dispatch({ type: OPEN_MODAL });
+  };
+
+  const hideModal = () => {
+    dispatch({ type: CLOSE_MODAL });
+  };
+
   const addUserToLocalStorage = ({ user, token, customer, customerID }) => {
     localStorage.setItem("user", JSON.stringify(user));
     localStorage.setItem("token", token);
@@ -122,8 +133,6 @@ const AppProvider = ({ children }) => {
     dispatch({ type: REGISTER_USER_BEGIN });
     try {
       const data = await authFetch.post("/auth/register", newUser);
-      console.log(data);
-      //const { user } = data;
       dispatch({ type: REGISTER_USER_SUCCESS });
     } catch (error) {
       console.log(error);
@@ -169,13 +178,14 @@ const AppProvider = ({ children }) => {
       value={{
         ...state,
         displayAlert,
+        showModal,
+        hideModal,
         loginUser,
         registerUser,
         toggleSidebar,
         logoutUser,
         changeLanguage,
         getUsers,
-        // customerID,
       }}
     >
       {children}

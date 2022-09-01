@@ -17,3 +17,6 @@ export const LOGOUT_USER = "LOGOUT_USER";
 
 export const GET_USERS_BEGIN = "GET_USERS_BEGIN";
 export const GET_USERS_SUCCESS = "GET_USERS_SUCCESS";
+
+export const OPEN_MODAL = "OPEN_MODAL";
+export const CLOSE_MODAL = "CLOSE_MODAL";

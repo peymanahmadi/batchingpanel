@@ -1,10 +1,40 @@
 @use "../../abstracts/index" as *;
 
+.user-modal {
+}
+.header-form {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid $grey-200;
+  // background: $blue-light;
+  color: $blue-dark;
+  padding: 0.5rem 1rem;
+
+  h5 {
+    margin-bottom: 0;
+  }
+
+  svg {
+    cursor: pointer;
+    font-size: 1.25rem;
+  }
+}
+
 .userform {
   display: grid;
-  // grid-template-columns: auto auto;
-  gap: 0.5rem;
+  grid-template-columns: 1fr;
+  padding: 0.5rem 1rem;
+  column-gap: 0.5rem;
   overflow: auto;
+
+  @media (min-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+  }
+  @media (min-width: 992px) {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
   .form-label {
     display: block;
     font-size: $small-text;
@@ -33,4 +63,11 @@
   .form-textarea {
     height: 7rem;
   }
+}
+
+.footer-form {
+  padding: 0.5rem 1rem;
+  display: flex;
+  justify-content: end;
+  border-top: 1px solid $grey-200;
 }
