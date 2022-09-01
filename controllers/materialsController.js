@@ -5,8 +5,8 @@ const getAllMaterials = async (req, res, next) => {
   const { customerCodeName } = req.body;
   const conn = createTenantConnection(customerCodeName);
   try {
-    const material = await conn.model("Material").find({});
-    res.status(200).json({ material });
+    const materials = await conn.model("Material").find({});
+    res.status(200).json({ materials });
   } catch (error) {
     return next(error);
   }

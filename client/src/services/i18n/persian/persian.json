@@ -9,6 +9,8 @@
   "formulas": "فرمول ها",
   "warehouses": "انبارها",
   "SEARCH": "جستجو",
+  "MATERIALS": "مواد",
+  "MATERIALS.ADDMATERIAL": "تعریف ماده جدید",
   "USERS": "کاربران",
   "USERS.ADDUSER": "تعریف کاربر جدید",
   "USERS.COMMONUSERID": "شناسه مشترک کاربر",

@@ -12,6 +12,9 @@ import UsersOptions from "./users/UsersOptions";
 import UserEditModal from "./users/UserEditModal";
 import UsersContainer from "./users/UsersContainer";
 import User from "./users/User";
+// Materials
+import MaterialsOptions from "./materials/MaterialsOptions";
+import MaterialsContainer from "./materials/MaterialsContainer";
 
 export {
   Logo,
@@ -28,4 +31,7 @@ export {
   UserEditModal,
   UsersContainer,
   User,
+  // Materials
+  MaterialsOptions,
+  MaterialsContainer,
 };

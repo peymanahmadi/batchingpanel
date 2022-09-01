@@ -14,6 +14,8 @@ import {
   REGISTER_USER_ERROR,
   TOGGLE_SIDEBAR,
   LOGOUT_USER,
+  GET_MATERIALS_BEGIN,
+  GET_MATERIALS_SUCCESS,
   GET_USERS_BEGIN,
   GET_USERS_SUCCESS,
   OPEN_MODAL,
@@ -37,6 +39,10 @@ const initialState = {
   customerID: customerID,
   showSidebar: false,
   openModal: false,
+  // materials
+  materials: [],
+  totalMaterials: 0,
+  // users
   users: [],
   totalUsers: 0,
   numOfPages: 1,
@@ -173,6 +179,21 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
+  const getMaterials = async () => {
+    dispatch({ type: GET_MATERIALS_BEGIN });
+    try {
+      const { data } = await authFetch.post("/customers/materials/all");
+      const { materials } = data;
+      dispatch({
+        type: GET_MATERIALS_SUCCESS,
+        payload: { materials, totalMaterials, page },
+      });
+    } catch (error) {
+      logoutUser();
+    }
+    clearAlert();
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -186,6 +207,7 @@ const AppProvider = ({ children }) => {
         logoutUser,
         changeLanguage,
         getUsers,
+        getMaterials,
       }}
     >
       {children}

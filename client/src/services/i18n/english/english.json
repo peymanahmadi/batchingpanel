@@ -9,6 +9,8 @@
   "formulas": "formulas",
   "warehouses": "warehouses",
   "SEARCH": "search",
+  "MATERIALS": "materials",
+  "MATERIALS.ADDMATERIAL": "add material",
   "USERS": "users",
   "USERS.ADDUSER": "add user",
   "USERS.COMMONUSERID": "common user ID",

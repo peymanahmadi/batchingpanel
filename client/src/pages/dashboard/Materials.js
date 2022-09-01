@@ -1,5 +1,12 @@
+import { MaterialsOptions, MaterialsContainer } from "../../components";
+
 const Materials = () => {
-  return <div>Materials</div>;
+  return (
+    <>
+      <MaterialsOptions />
+      <MaterialsContainer />
+    </>
+  );
 };
 
 export default Materials;
