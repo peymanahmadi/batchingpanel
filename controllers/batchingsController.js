@@ -23,12 +23,11 @@ const createBatching = async (req, res, next) => {
   const fID = await formulaModel.findOne({ commonFormulaID });
   console.log(fID);
 
-  for (let key of ingredients) {
+  for (let [index, key] of ingredients.entries()) {
     let material = await materialModel.findOne({
       commonMaterialID: key.commonMaterialID,
     });
-    console.log("materialID: ", material._id);
-    ingredients[0].materialID = material._id;
+    ingredients[index].materialID = material._id;
   }
 
   const newBatching = new batchingModel({
