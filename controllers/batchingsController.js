@@ -3,7 +3,7 @@ import batchingTenantConn from "../db/batchingTenant.js";
 
 const createBatching = async (req, res, next) => {
   const {
-    customerID,
+    customerCodeName,
     commonUserID,
     dateTime,
     commonFormulaID,
@@ -12,21 +12,16 @@ const createBatching = async (req, res, next) => {
     weight,
   } = req.body;
 
-  const customerModel = batchingAdminConn.model("Customer");
   const userModel = batchingAdminConn.model("User");
 
-  const cID = await customerModel.findById(customerID, "codeName");
   const uID = await userModel.findOne({ commonUserID });
-
-  const customerConn = batchingTenantConn(cID.codeName);
+  const customerConn = batchingTenantConn(customerCodeName);
   const formulaModel = customerConn.model("Formula");
   const materialModel = customerConn.model("Material");
   const batchingModel = customerConn.model("Batching");
 
   const fID = await formulaModel.findOne({ commonFormulaID });
-  // const mID = await materialModel.findOne({ commonMaterialID: 1 });
-  // console.log(mID);
-  //   const mID = await materialModel.findOne({ commonUserID });
+  console.log(fID);
 
   for (let key of ingredients) {
     let material = await materialModel.findOne({
@@ -36,12 +31,10 @@ const createBatching = async (req, res, next) => {
     ingredients[0].materialID = material._id;
   }
 
-  console.log(ingredients);
-
   const newBatching = new batchingModel({
-    commonUserID: uID._id,
+    userID: uID._id,
     dateTime,
-    commonFormulaID: fID._id,
+    formulaID: fID._id,
     formulaVersion,
     ingredients,
     weight,

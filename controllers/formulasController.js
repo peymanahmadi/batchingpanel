@@ -7,6 +7,7 @@ const createFormula = async (req, res, next) => {
     commonFormulaID,
     name,
     description,
+    version,
     creatorID,
     formulaBatchSize,
     ingredients,
@@ -24,9 +25,11 @@ const createFormula = async (req, res, next) => {
 
   const newFormulation = new formulationModel({
     creatorID,
+    version,
     formulaBatchSize,
     ingredients,
   });
+
   try {
     const session = await conn.startSession();
     session.startTransaction();

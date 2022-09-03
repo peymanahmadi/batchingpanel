@@ -183,10 +183,10 @@ const AppProvider = ({ children }) => {
     dispatch({ type: GET_MATERIALS_BEGIN });
     try {
       const { data } = await authFetch.post("/customers/materials/all");
-      const { materials } = data;
+      const { materials, totalMaterials, numOfPages } = data;
       dispatch({
         type: GET_MATERIALS_SUCCESS,
-        payload: { materials, totalMaterials, page },
+        payload: { materials, totalMaterials, numOfPages },
       });
     } catch (error) {
       logoutUser();

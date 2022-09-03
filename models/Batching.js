@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const batchingSchema = new mongoose.Schema({
   userID: { type: mongoose.Types.ObjectId, ref: "User" },
   formulaID: { type: mongoose.Types.ObjectId, ref: "Formula" },
-  formulaVersion: Number,
+  formulaVersion: String,
   dateTime: Date,
   ingredients: [
     {

@@ -25,7 +25,8 @@ const formulationSchema = new mongoose.Schema({
   ingredients: [
     {
       materialID: {
-        type: { type: mongoose.Types.ObjectId, ref: "Material" },
+        type: mongoose.Types.ObjectId,
+        ref: "Material",
       },
       weight: Number,
       percentage: Number,
