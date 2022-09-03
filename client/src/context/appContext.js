@@ -16,6 +16,8 @@ import {
   LOGOUT_USER,
   GET_MATERIALS_BEGIN,
   GET_MATERIALS_SUCCESS,
+  GET_MATERIALS_CONSUMPTION_BEGIN,
+  GET_MATERIALS_CONSUMPTION_SUCCESS,
   GET_USERS_BEGIN,
   GET_USERS_SUCCESS,
   OPEN_MODAL,
@@ -39,6 +41,9 @@ const initialState = {
   customerID: customerID,
   showSidebar: false,
   openModal: false,
+  // stats
+  batching: [],
+  matconsume: [],
   // materials
   materials: [],
   totalMaterials: 0,
@@ -138,7 +143,7 @@ const AppProvider = ({ children }) => {
   const registerUser = async (newUser) => {
     dispatch({ type: REGISTER_USER_BEGIN });
     try {
-      const data = await authFetch.post("/auth/register", newUser);
+      await authFetch.post("/auth/register", newUser);
       dispatch({ type: REGISTER_USER_SUCCESS });
     } catch (error) {
       console.log(error);
@@ -194,6 +199,25 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
+  const getMaterialConsumption = async (condition) => {
+    dispatch({ type: GET_MATERIALS_CONSUMPTION_BEGIN });
+    try {
+      const { data } = await authFetch.post(
+        "/customers/batching/materialconsumption",
+        condition
+      );
+      console.log(data);
+      const { matconsume } = data;
+      dispatch({
+        type: GET_MATERIALS_CONSUMPTION_SUCCESS,
+        payload: { matconsume },
+      });
+    } catch (error) {
+      console.log(error);
+      // logoutUser();
+    }
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -208,6 +232,7 @@ const AppProvider = ({ children }) => {
         changeLanguage,
         getUsers,
         getMaterials,
+        getMaterialConsumption,
       }}
     >
       {children}

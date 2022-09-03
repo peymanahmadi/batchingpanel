@@ -21,7 +21,6 @@ const createBatching = async (req, res, next) => {
   const batchingModel = customerConn.model("Batching");
 
   const fID = await formulaModel.findOne({ commonFormulaID });
-  console.log(fID);
 
   for (let [index, key] of ingredients.entries()) {
     let material = await materialModel.findOne({
@@ -43,8 +42,51 @@ const createBatching = async (req, res, next) => {
     const batching = await newBatching.save();
     res.status(201).json(batching);
   } catch (error) {
-    console.log(error);
+    return next(error);
   }
 };
 
-export { createBatching };
+const materialConsumption = async (req, res, next) => {
+  const { customerCodeName, dueDate } = req.body;
+
+  const customerConn = batchingTenantConn(customerCodeName);
+  const batchingModel = customerConn.model("Batching");
+  const materialModel = customerConn.model("Material");
+
+  try {
+    const batching = await batchingModel.find({ dateTime: dueDate });
+
+    const matconsume = new Object();
+    let mat = new Array();
+
+    for (let [index, items] of batching.entries()) {
+      for (let [i, v] of items.ingredients.entries()) {
+        console.log(v);
+        if (matconsume[v.materialID]) {
+          matconsume[v.materialID] = matconsume[v.materialID] + v.weight;
+        } else {
+          matconsume[v.materialID] = v.weight;
+        }
+      }
+    }
+
+    console.log(matconsume);
+
+    let arr = [];
+
+    for (let item of Object.entries(matconsume)) {
+      let materialConsumption = {};
+      let material = await materialModel.findById(item[0]);
+      materialConsumption["name"] = material.name;
+      materialConsumption["weight"] = item[1];
+      arr.push(materialConsumption);
+    }
+    console.log(arr);
+
+    res.status(200).json({ arr });
+  } catch (error) {
+    return next(error);
+  }
+};
+
+export { createBatching, materialConsumption };

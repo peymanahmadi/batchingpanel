@@ -12,6 +12,8 @@ import {
   LOGOUT_USER,
   GET_MATERIALS_BEGIN,
   GET_MATERIALS_SUCCESS,
+  GET_MATERIALS_CONSUMPTION_BEGIN,
+  GET_MATERIALS_CONSUMPTION_SUCCESS,
   GET_USERS_BEGIN,
   GET_USERS_SUCCESS,
   OPEN_MODAL,
@@ -128,6 +130,16 @@ const reducer = (state, action) => {
       materials: action.payload.materials,
       totalMaterials: action.payload.totalMaterials,
       numOfPages: action.payload.numOfPages,
+    };
+  }
+  if (action.type === GET_MATERIALS_CONSUMPTION_BEGIN) {
+    return { ...state, isLoading: true, showAlert: false };
+  }
+  if (action.type === GET_MATERIALS_CONSUMPTION_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      matconsume: action.payload.matconsume,
     };
   }
   if (action.type === GET_USERS_BEGIN) {

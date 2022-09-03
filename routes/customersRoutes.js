@@ -10,7 +10,10 @@ import {
   getAllMaterials,
 } from "../controllers/materialsController.js";
 import { createFormula } from "../controllers/formulasController.js";
-import { createBatching } from "../controllers/batchingsController.js";
+import {
+  createBatching,
+  materialConsumption,
+} from "../controllers/batchingsController.js";
 
 router.route("/").get(getAllCustomers).post(createCustomer);
 
@@ -20,5 +23,6 @@ router.route("/materials/all").post(getAllMaterials);
 router.route("/formulas").post(createFormula);
 
 router.route("/batching").post(createBatching);
+router.route("/batching/materialconsumption").post(materialConsumption);
 
 export default router;

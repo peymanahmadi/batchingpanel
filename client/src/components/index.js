@@ -7,6 +7,7 @@ import BigSidebar from "./BigSidebar";
 // import Form from "./Form";
 import Modal from "./Modal";
 import Loading from "./Loading";
+import MaterialConsumptions from "./stats/MaterialConsumptions";
 // Users
 import UsersOptions from "./users/UsersOptions";
 import UserEditModal from "./users/UserEditModal";
@@ -26,6 +27,8 @@ export {
   // Form,
   Modal,
   Loading,
+  // Stats
+  MaterialConsumptions,
   // Users
   UsersOptions,
   UserEditModal,
