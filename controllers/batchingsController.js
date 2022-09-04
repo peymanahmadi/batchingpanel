@@ -7,7 +7,7 @@ const createBatching = async (req, res, next) => {
     commonUserID,
     dateTime,
     commonFormulaID,
-    formulaVersion,
+    // formulaVersion,
     ingredients,
     weight,
   } = req.body;
@@ -33,7 +33,7 @@ const createBatching = async (req, res, next) => {
     userID: uID._id,
     dateTime,
     formulaID: fID._id,
-    formulaVersion,
+    // formulaVersion,
     ingredients,
     weight,
   });
@@ -52,38 +52,58 @@ const materialConsumption = async (req, res, next) => {
   const customerConn = batchingTenantConn(customerCodeName);
   const batchingModel = customerConn.model("Batching");
   const materialModel = customerConn.model("Material");
+  const formulaModel = customerConn.model("Formula");
 
   try {
     const batching = await batchingModel.find({ dateTime: dueDate });
 
-    const matconsume = new Object();
-    let mat = new Array();
+    const materialConsumptionObj = new Object();
+    const batchedFormulaObj = new Object();
+
+    let batchedFormulaArr = [];
 
     for (let [index, items] of batching.entries()) {
+      if (batchedFormulaObj[items.formulaID]) {
+        batchedFormulaObj[items.formulaID] =
+          batchedFormulaObj[items.formulaID] + items.weight;
+      } else {
+        batchedFormulaObj[items.formulaID] = items.weight;
+      }
+
       for (let [i, v] of items.ingredients.entries()) {
-        console.log(v);
-        if (matconsume[v.materialID]) {
-          matconsume[v.materialID] = matconsume[v.materialID] + v.weight;
+        if (materialConsumptionObj[v.materialID]) {
+          materialConsumptionObj[v.materialID] =
+            materialConsumptionObj[v.materialID] + v.weight;
         } else {
-          matconsume[v.materialID] = v.weight;
+          materialConsumptionObj[v.materialID] = v.weight;
         }
       }
     }
 
-    console.log(matconsume);
+    for (let item of Object.entries(batchedFormulaObj)) {
+      const batchedFormula = {};
+      const formula = await formulaModel.findById(item[0]);
+      batchedFormula["name"] = formula.name;
+      batchedFormula["weight"] = item[1];
+      batchedFormulaArr.push(batchedFormula);
+    }
 
-    let arr = [];
+    let matConsumeArray = [];
 
-    for (let item of Object.entries(matconsume)) {
+    for (let item of Object.entries(materialConsumptionObj)) {
       let materialConsumption = {};
       let material = await materialModel.findById(item[0]);
       materialConsumption["name"] = material.name;
       materialConsumption["weight"] = item[1];
-      arr.push(materialConsumption);
+      matConsumeArray.push(materialConsumption);
     }
-    console.log(arr);
 
-    res.status(200).json({ arr });
+    res.status(200).json({
+      matConsumeArray,
+      batchingNums: batching.length,
+      batching,
+      batchedFormulaArr,
+    });
   } catch (error) {
     return next(error);
   }

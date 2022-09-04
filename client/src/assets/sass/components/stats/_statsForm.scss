@@ -1,0 +1,57 @@
+@use "../../abstracts/index" as *;
+
+.stats-form {
+  background: $white;
+  border-radius: $border-radius;
+
+  .stats-form__title {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    border-bottom: 1px solid $grey-50;
+  }
+
+  .stats-form__table {
+    padding: 0.5rem 1rem;
+    width: 100%;
+
+    th {
+      text-align: left;
+    }
+
+    tr {
+      &:hover {
+        background: $grey-50;
+      }
+    }
+  }
+
+  .stats-form__content {
+    padding: 0.5rem 1rem;
+    width: 100%;
+
+    h5 {
+      margin-bottom: 0.875rem;
+    }
+
+    h4 {
+      margin: 0;
+    }
+  }
+}
+
+.stats-materialConsumption {
+  border-top: 5px solid #f77f00;
+}
+
+.stats-batchingStats {
+  border-top: 5px solid #3a86ff;
+}
+
+.stats-batchedFormula {
+  border-top: 5px solid #ffb703;
+}
+
+.stats-materialInventory {
+  border-top: 5px solid #1d3557;
+}

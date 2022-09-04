@@ -139,7 +139,10 @@ const reducer = (state, action) => {
     return {
       ...state,
       isLoading: false,
-      matconsume: action.payload.matconsume,
+      materialConsumption: action.payload.matConsumeArray,
+      batching: action.payload.batching,
+      batchingNums: action.payload.batchingNums,
+      batchedFormulaArr: action.payload.batchedFormulaArr,
     };
   }
   if (action.type === GET_USERS_BEGIN) {

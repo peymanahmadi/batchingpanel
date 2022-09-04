@@ -7,7 +7,11 @@ import BigSidebar from "./BigSidebar";
 // import Form from "./Form";
 import Modal from "./Modal";
 import Loading from "./Loading";
+// Stats
 import MaterialConsumptions from "./stats/MaterialConsumptions";
+import BatchingStats from "./stats/BatchingStats";
+import BatchedFormulas from "./stats/BatchedFormulas";
+import MaterialInventory from "./stats/MaterialInventory";
 // Users
 import UsersOptions from "./users/UsersOptions";
 import UserEditModal from "./users/UserEditModal";
@@ -29,6 +33,9 @@ export {
   Loading,
   // Stats
   MaterialConsumptions,
+  BatchingStats,
+  BatchedFormulas,
+  MaterialInventory,
   // Users
   UsersOptions,
   UserEditModal,

@@ -43,7 +43,9 @@ const initialState = {
   openModal: false,
   // stats
   batching: [],
-  matconsume: [],
+  materialConsumption: [],
+  batchingNums: 0,
+  batchedFormulaArr: [],
   // materials
   materials: [],
   totalMaterials: 0,
@@ -206,11 +208,11 @@ const AppProvider = ({ children }) => {
         "/customers/batching/materialconsumption",
         condition
       );
-      console.log(data);
-      const { matconsume } = data;
+      const { matConsumeArray, batchingNums, batching, batchedFormulaArr } =
+        data;
       dispatch({
         type: GET_MATERIALS_CONSUMPTION_SUCCESS,
-        payload: { matconsume },
+        payload: { matConsumeArray, batchingNums, batching, batchedFormulaArr },
       });
     } catch (error) {
       console.log(error);

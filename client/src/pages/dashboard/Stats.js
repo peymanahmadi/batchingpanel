@@ -1,9 +1,17 @@
-import { MaterialConsumptions } from "../../components";
+import {
+  MaterialConsumptions,
+  BatchingStats,
+  BatchedFormulas,
+  MaterialInventory,
+} from "../../components";
 
 const Stats = () => {
   return (
-    <div className="dashboard-form-page">
+    <div className="stats-container">
       <MaterialConsumptions />
+      <BatchingStats />
+      <BatchedFormulas />
+      <MaterialInventory />
     </div>
   );
 };

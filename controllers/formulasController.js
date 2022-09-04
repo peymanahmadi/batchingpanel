@@ -7,7 +7,7 @@ const createFormula = async (req, res, next) => {
     commonFormulaID,
     name,
     description,
-    version,
+    // version,
     creatorID,
     formulaBatchSize,
     ingredients,
@@ -25,7 +25,7 @@ const createFormula = async (req, res, next) => {
 
   const newFormulation = new formulationModel({
     creatorID,
-    version,
+    // version,
     formulaBatchSize,
     ingredients,
   });
