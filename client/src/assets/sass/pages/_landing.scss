@@ -5,14 +5,16 @@
     width: $fluid-width;
     max-width: $max-width;
     margin: 0 auto;
-    height: $nav-height;
+    // height: $nav-height;
+    height: 6rem;
     display: flex;
     align-items: center;
     // background-color: red;
     justify-content: space-between;
   }
   .page {
-    min-height: calc(100vh - $nav-height);
+    // min-height: calc(100vh - $nav-height);
+    min-height: calc(100vh - 6rem);
     display: grid;
     align-items: center;
     // margin-top: -3rem;

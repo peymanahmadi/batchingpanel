@@ -14,6 +14,12 @@ import {
   createBatching,
   materialConsumption,
 } from "../controllers/batchingsController.js";
+import {
+  createWarehouse,
+  createWarehouseOpDesc,
+  transactionInventory,
+  getAllInventory,
+} from "../controllers/warehousesController.js";
 
 router.route("/").get(getAllCustomers).post(createCustomer);
 
@@ -24,5 +30,11 @@ router.route("/formulas").post(createFormula);
 
 router.route("/batching").post(createBatching);
 router.route("/batching/materialconsumption").post(materialConsumption);
+
+router.route("/warehouses").post(createWarehouse);
+router.route("/warehouses/opdesc").post(createWarehouseOpDesc);
+
+router.route("/inventory").post(transactionInventory);
+router.route("/inventory/all").post(getAllInventory);
 
 export default router;

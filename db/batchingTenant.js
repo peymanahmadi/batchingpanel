@@ -5,7 +5,8 @@ import formulationSchema from "../models/Formulation.js";
 import batchingSchema from "../models/Batching.js";
 import warehouseSchema from "../models/Warehouse.js";
 import warehouseOperationsSchema from "../models/WarehouseOperations.js";
-import warehouseOpsDescSchema from "../models/WarehouseOpsDesc.js";
+import warehouseOpDescSchema from "../models/WarehouseOpDesc.js";
+import inventorySchema from "../models/Inventory.js";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -20,7 +21,8 @@ const createTenantConnection = (dbName) => {
   conn.model("Batching", batchingSchema);
   conn.model("Warehouse", warehouseSchema);
   conn.model("WarehouseOperations", warehouseOperationsSchema);
-  conn.model("WarehouseOpsDesc", warehouseOpsDescSchema);
+  conn.model("WarehouseOpDesc", warehouseOpDescSchema);
+  conn.model("Inventory", inventorySchema);
   return conn;
 };
 

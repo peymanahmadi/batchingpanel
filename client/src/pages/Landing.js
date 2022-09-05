@@ -21,7 +21,7 @@ const Landing = () => {
           <h1>{t("landingTitle")}</h1>
           <p>{t("LANDING.MESSAGE")}</p>
           <Link to="/login">
-            <button className="btn btn-hero">{t("getStarted")}</button>
+            <button className="btn btn-hero">{t("LANDING.GETSTARTED")}</button>
           </Link>
         </div>
         <img
