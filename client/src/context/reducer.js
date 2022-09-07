@@ -142,6 +142,7 @@ const reducer = (state, action) => {
       materialConsumption: action.payload.matConsumeArray,
       batching: action.payload.batching,
       batchingNums: action.payload.batchingNums,
+      batchingWeight: action.payload.batchingWeight,
       batchedFormulaArr: action.payload.batchedFormulaArr,
     };
   }

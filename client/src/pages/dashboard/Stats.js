@@ -3,6 +3,7 @@ import {
   BatchingStats,
   BatchedFormulas,
   MaterialInventory,
+  ProductionChart,
 } from "../../components";
 
 const Stats = () => {
@@ -12,6 +13,7 @@ const Stats = () => {
       <BatchingStats />
       <BatchedFormulas />
       <MaterialInventory />
+      <ProductionChart />
     </div>
   );
 };

@@ -1,12 +1,16 @@
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { useAppContext } from "../../context/appContext";
+import StatsForm from "./StatsForm";
+import { TbFileSpreadsheet } from "react-icons/tb";
 
 const MaterialConsumptions = () => {
   const { getMaterialConsumption, materialConsumption } = useAppContext();
+  const { t } = useTranslation();
 
   const condition = {
     customerCodeName: "goldasht",
-    dueDate: "2022-09-03",
+    dueDate: "2022-09-04",
   };
 
   const header = ["Material", "Weight"];
@@ -16,10 +20,12 @@ const MaterialConsumptions = () => {
   }, []);
 
   return (
-    <article className="stats-form stats-materialConsumption">
-      <div className="stats-form__title">
-        <div>Material Consumption</div>
-      </div>
+    <StatsForm
+      handler="material-consumption"
+      color="primary"
+      icon={<TbFileSpreadsheet />}
+      title={t("STATS.MATERIALCONSUMPTION")}
+    >
       <table className="stats-form__table">
         <thead>
           <tr>
@@ -39,7 +45,7 @@ const MaterialConsumptions = () => {
           })}
         </tbody>
       </table>
-    </article>
+    </StatsForm>
   );
 };
 

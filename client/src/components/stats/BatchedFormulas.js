@@ -1,13 +1,19 @@
+import { useTranslation } from "react-i18next";
 import { useAppContext } from "../../context/appContext";
+import StatsForm from "./StatsForm";
+import { TbFlask2 } from "react-icons/tb";
 
 const BatchedFormulas = () => {
   const { batchedFormulaArr } = useAppContext();
+  const { t } = useTranslation();
   const header = ["Material", "Weight"];
   return (
-    <article className="stats-form stats-batchedFormula">
-      <div className="stats-form__title">
-        <div>Batched Formulas</div>
-      </div>
+    <StatsForm
+      handler="formula"
+      color="secondary"
+      icon={<TbFlask2 />}
+      title={t("STATS.BATCHEDFORMULAS")}
+    >
       <table className="stats-form__table">
         <thead>
           <tr>
@@ -27,7 +33,7 @@ const BatchedFormulas = () => {
           })}
         </tbody>
       </table>
-    </article>
+    </StatsForm>
   );
 };
 

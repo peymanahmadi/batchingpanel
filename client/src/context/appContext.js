@@ -45,6 +45,7 @@ const initialState = {
   batching: [],
   materialConsumption: [],
   batchingNums: 0,
+  batchingWeight: 0,
   batchedFormulaArr: [],
   // materials
   materials: [],
@@ -208,11 +209,22 @@ const AppProvider = ({ children }) => {
         "/customers/batching/materialconsumption",
         condition
       );
-      const { matConsumeArray, batchingNums, batching, batchedFormulaArr } =
-        data;
+      const {
+        matConsumeArray,
+        batchingNums,
+        batching,
+        batchingWeight,
+        batchedFormulaArr,
+      } = data;
       dispatch({
         type: GET_MATERIALS_CONSUMPTION_SUCCESS,
-        payload: { matConsumeArray, batchingNums, batching, batchedFormulaArr },
+        payload: {
+          matConsumeArray,
+          batchingNums,
+          batchingWeight,
+          batching,
+          batchedFormulaArr,
+        },
       });
     } catch (error) {
       console.log(error);

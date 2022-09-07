@@ -1,57 +1,114 @@
 @use "../../abstracts/index" as *;
+@use "../../base/index" as b;
 
 .stats-form {
+  // font-family: b.$Roboto;
   background: $white;
   border-radius: $border-radius;
+  box-shadow: $shadow-1;
+}
 
-  .stats-form__title {
-    display: flex;
-    align-items: center;
-    padding: 0.5rem 1rem;
-    border-bottom: 1px solid $grey-50;
-  }
+.material-consumption {
+  grid-area: material-consumption;
+}
+.daily {
+  grid-area: daily;
+}
+.formula {
+  grid-area: formula;
+}
+.inventory {
+  grid-area: inventory;
+}
+.chart {
+  grid-area: chart;
+}
 
-  .stats-form__table {
-    padding: 0.5rem 1rem;
-    width: 100%;
+.stats-form__title {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid $divider;
 
-    th {
-      text-align: left;
-    }
-
-    tr {
-      &:hover {
-        background: $grey-50;
-      }
-    }
-  }
-
-  .stats-form__content {
-    padding: 0.5rem 1rem;
-    width: 100%;
-
-    h5 {
-      margin-bottom: 0.875rem;
-    }
-
-    h4 {
-      margin: 0;
-    }
+  svg {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    padding: 0.25rem;
+    // margin-right: 0.5rem;
+    margin-inline-end: 0.5rem;
   }
 }
 
-.stats-materialConsumption {
-  border-top: 5px solid #f77f00;
+.primary {
+  border-top: 5px solid $primary-500;
+
+  svg {
+    background: $primary-200;
+    color: $primary-900;
+  }
 }
 
-.stats-batchingStats {
-  border-top: 5px solid #3a86ff;
+.secondary {
+  border-top: 5px solid $secondary-500;
+
+  svg {
+    background: $secondary-200;
+    color: $secondary-900;
+  }
 }
 
-.stats-batchedFormula {
-  border-top: 5px solid #ffb703;
+.orange {
+  border-top: 5px solid $orange-500;
+
+  svg {
+    background: $orange-200;
+    color: $orange-900;
+  }
 }
 
-.stats-materialInventory {
-  border-top: 5px solid #1d3557;
+.red {
+  border-top: 5px solid $red-500;
+
+  svg {
+    background: $red-200;
+    color: $red-900;
+  }
+}
+
+.stats-form__content {
+  padding: 0.5rem 1rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stats-form__label {
+  border-radius: $border-radius;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem 1rem;
+
+  &:hover {
+    background: #ffe0b2;
+    transition: $transition;
+  }
+}
+
+.stats-form__table {
+  padding: 0.5rem 1rem;
+  width: 100%;
+
+  th {
+    text-align: left;
+  }
+
+  tr {
+    &:hover {
+      background: $grey-50;
+    }
+  }
 }

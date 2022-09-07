@@ -23,7 +23,7 @@
       background: transparent;
       border-color: transparent;
       font-size: 1.75rem;
-      color: $blue-500;
+      color: $primary-500;
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -46,7 +46,7 @@
         top: 40px;
         left: 0;
         width: 100%;
-        background: $blue-50;
+        background: $primary-50;
         box-shadow: $shadow-2;
         padding: 0.5rem;
         text-align: center;
@@ -61,7 +61,7 @@
       .dropdown-btn {
         background: transparent;
         border-color: transparent;
-        color: $blue-500;
+        color: $primary-500;
         text-transform: capitalize;
         cursor: pointer;
       }

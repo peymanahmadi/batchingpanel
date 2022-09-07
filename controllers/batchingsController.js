@@ -61,8 +61,10 @@ const materialConsumption = async (req, res, next) => {
     const batchedFormulaObj = new Object();
 
     let batchedFormulaArr = [];
+    let batchingWeight = 0;
 
     for (let [index, items] of batching.entries()) {
+      batchingWeight += items.weight;
       if (batchedFormulaObj[items.formulaID]) {
         batchedFormulaObj[items.formulaID] =
           batchedFormulaObj[items.formulaID] + items.weight;
@@ -101,6 +103,7 @@ const materialConsumption = async (req, res, next) => {
     res.status(200).json({
       matConsumeArray,
       batchingNums: batching.length,
+      batchingWeight,
       batching,
       batchedFormulaArr,
     });
