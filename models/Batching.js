@@ -8,7 +8,9 @@ const batchingSchema = new mongoose.Schema({
   ingredients: [
     {
       materialID: { type: mongoose.Types.ObjectId, ref: "Material" },
+      warehouseID: { type: mongoose.Types.ObjectId, ref: "Warehouse" },
       weight: Number,
+      tolerance: Number,
       consumedTime: String,
       status: Boolean,
     },

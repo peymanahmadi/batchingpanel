@@ -12,6 +12,7 @@ const BatchingStats = () => {
       color="orange"
       icon={<TbSum />}
       title={t("STATS.BATCHINGDAILYSTATS")}
+      btnGroup={false}
     >
       <div className="stats-form__label">
         <h4>{batchingNums} batches</h4>

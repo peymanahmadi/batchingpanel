@@ -13,6 +13,7 @@ const BatchedFormulas = () => {
       color="secondary"
       icon={<TbFlask2 />}
       title={t("STATS.BATCHEDFORMULAS")}
+      btnGroup={true}
     >
       <table className="stats-form__table">
         <thead>

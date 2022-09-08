@@ -10,10 +10,10 @@ const MaterialConsumptions = () => {
 
   const condition = {
     customerCodeName: "goldasht",
-    dueDate: "2022-09-04",
+    dueDate: "2022-09-08",
   };
 
-  const header = ["Material", "Weight"];
+  const header = ["Material", "Weight", "Tolerance"];
 
   useEffect(() => {
     getMaterialConsumption(condition);
@@ -25,6 +25,7 @@ const MaterialConsumptions = () => {
       color="primary"
       icon={<TbFileSpreadsheet />}
       title={t("STATS.MATERIALCONSUMPTION")}
+      btnGroup={true}
     >
       <table className="stats-form__table">
         <thead>
@@ -40,6 +41,7 @@ const MaterialConsumptions = () => {
               <tr key={index}>
                 <td>{mat.name}</td>
                 <td>{mat.weight}</td>
+                <td>{mat.tolerance}</td>
               </tr>
             );
           })}
@@ -48,15 +50,5 @@ const MaterialConsumptions = () => {
     </StatsForm>
   );
 };
-
-// const TableRow = ({ Row }) => {
-//   return (
-//     <tr>
-//       {Row.map((val) => (
-//         <td>{val}</td>
-//       ))}
-//     </tr>
-//   );
-// };
 
 export default MaterialConsumptions;

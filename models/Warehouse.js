@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 
 const warehouseSchema = new mongoose.Schema(
   {
+    commonWarehouseID: {
+      type: Number,
+      unique: true,
+    },
     name: {
       type: String,
       required: [true, "Please provide a warehouse name"],

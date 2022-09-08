@@ -9,7 +9,7 @@
   "formulas": "formulas",
   "warehouses": "warehouses",
   "STATS.MATERIALCONSUMPTION": "Material consumption",
-  "STATS.BATCHINGDAILYSTATS": "Batching daily statistics",
+  "STATS.BATCHINGDAILYSTATS": "Daily statistics",
   "STATS.BATCHEDFORMULAS": "Batching formulas",
   "STATS.INVENTORY": "Material inventory",
   "STATS.PRODUCTIONCHART": "Production chart",

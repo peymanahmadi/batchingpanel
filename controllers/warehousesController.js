@@ -1,17 +1,22 @@
-import mongoose from "mongoose";
 import createTenantConnection from "../db/batchingTenant.js";
 import { BadRequestError } from "../errors/index.js";
 
 const createWarehouse = async (req, res, next) => {
-  const { customerCodeName, name } = req.body;
+  const { customerCodeName, commonWarehouseID, name } = req.body;
 
-  if (!name) {
+  if (!commonWarehouseID || !name) {
     const error = new BadRequestError("Please provide all values");
     return next(error);
   }
 
   const conn = createTenantConnection(customerCodeName);
   const warehouseModel = conn.model("Warehouse");
+
+  const cmIDAlreadyExists = await warehouseModel.findOne({ commonWarehouseID });
+  if (cmIDAlreadyExists) {
+    const error = new BadRequestError("commonWarehouseID already in use");
+    return next(error);
+  }
 
   const nameAlreadyExists = await warehouseModel.findOne({ name });
   if (nameAlreadyExists) {
@@ -20,6 +25,7 @@ const createWarehouse = async (req, res, next) => {
   }
 
   const newWarehouse = new warehouseModel({
+    commonWarehouseID,
     name,
   });
 
