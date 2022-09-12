@@ -6,14 +6,13 @@ import { TbFlask2 } from "react-icons/tb";
 const BatchedFormulas = () => {
   const { batchedFormulaArr } = useAppContext();
   const { t } = useTranslation();
-  const header = ["Material", "Weight"];
+  const header = ["Formulas", "Weight"];
   return (
     <StatsForm
       handler="formula"
       color="secondary"
       icon={<TbFlask2 />}
       title={t("STATS.BATCHEDFORMULAS")}
-      btnGroup={true}
     >
       <table className="stats-form__table">
         <thead>

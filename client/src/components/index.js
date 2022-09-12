@@ -4,15 +4,17 @@ import Alert from "./Alert";
 import Navbar from "./Navbar";
 import SmallSidebar from "./SmallSidebar";
 import BigSidebar from "./BigSidebar";
+import ButtonGroup from "./ButtonGroup";
 // import Form from "./Form";
 import Modal from "./Modal";
 import Loading from "./Loading";
 // Stats
+import HeadingStats from "./stats/HeadingStats";
+import ProductionChart from "./stats/ProductionChart";
 import MaterialConsumptions from "./stats/MaterialConsumptions";
 import BatchingStats from "./stats/BatchingStats";
 import BatchedFormulas from "./stats/BatchedFormulas";
 import MaterialInventory from "./stats/MaterialInventory";
-import ProductionChart from "./stats/ProductionChart";
 // Users
 import UsersOptions from "./users/UsersOptions";
 import UserEditModal from "./users/UserEditModal";
@@ -29,15 +31,17 @@ export {
   Navbar,
   SmallSidebar,
   BigSidebar,
+  ButtonGroup,
   // Form,
   Modal,
   Loading,
   // Stats
+  HeadingStats,
+  ProductionChart,
   MaterialConsumptions,
   BatchingStats,
   BatchedFormulas,
   MaterialInventory,
-  ProductionChart,
   // Users
   UsersOptions,
   UserEditModal,

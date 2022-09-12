@@ -3,6 +3,7 @@ import materialSchema from "../models/Material.js";
 import formulaSchema from "../models/Formula.js";
 import formulationSchema from "../models/Formulation.js";
 import batchingSchema from "../models/Batching.js";
+import dailyBatchingSchema from "../models/DailyBatching.js";
 import warehouseSchema from "../models/Warehouse.js";
 import warehouseOperationsSchema from "../models/WarehouseOperations.js";
 import warehouseOpDescSchema from "../models/WarehouseOpDesc.js";
@@ -19,6 +20,7 @@ const createTenantConnection = (dbName) => {
   conn.model("Formula", formulaSchema);
   conn.model("Formulation", formulationSchema);
   conn.model("Batching", batchingSchema);
+  conn.model("DailyBatching", dailyBatchingSchema);
   conn.model("Warehouse", warehouseSchema);
   conn.model("WarehouseOperations", warehouseOperationsSchema);
   conn.model("WarehouseOpDesc", warehouseOpDescSchema);

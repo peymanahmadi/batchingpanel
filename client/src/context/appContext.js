@@ -18,10 +18,15 @@ import {
   GET_MATERIALS_SUCCESS,
   GET_MATERIALS_CONSUMPTION_BEGIN,
   GET_MATERIALS_CONSUMPTION_SUCCESS,
+  GET_MATERIAL_INVENTORY_BEGIN,
+  GET_MATERIAL_INVENTORY_SUCCESS,
   GET_USERS_BEGIN,
   GET_USERS_SUCCESS,
   OPEN_MODAL,
   CLOSE_MODAL,
+  // Stats
+  GET_DAILY_PRODUCTION_BEGIN,
+  GET_DAILY_PRODUCTION_SUCCESS,
 } from "./actions";
 
 const token = localStorage.getItem("token");
@@ -42,11 +47,14 @@ const initialState = {
   showSidebar: false,
   openModal: false,
   // stats
+  isLoadingStatsDailyProduction: false,
+  dailyBatching: [],
   batching: [],
   materialConsumption: [],
   batchingNums: 0,
   batchingWeight: 0,
   batchedFormulaArr: [],
+  materialInventory: [],
   // materials
   materials: [],
   totalMaterials: 0,
@@ -64,7 +72,7 @@ const AppProvider = ({ children }) => {
 
   // create axios request config - to prevent sending token to external resources
   const authFetch = axios.create({
-    baseURL: "/api/v1",
+    baseURL: "http://localhost:5000/api/v1",
   });
 
   // request
@@ -84,6 +92,7 @@ const AppProvider = ({ children }) => {
       return response;
     },
     (error) => {
+      console.log(error);
       if (error.response.status === 401) {
         logoutUser();
       }
@@ -127,7 +136,10 @@ const AppProvider = ({ children }) => {
   const loginUser = async ({ currentUser, endPoint, alertText }) => {
     dispatch({ type: LOGIN_USER_BEGIN });
     try {
-      const { data } = await axios.post(`api/v1/auth/${endPoint}`, currentUser);
+      const { data } = await axios.post(
+        `http://localhost:5000/api/v1/auth/${endPoint}`,
+        currentUser
+      );
       const { user, token, customer, customerID } = data;
       dispatch({
         type: LOGIN_USER_SUCCESS,
@@ -182,7 +194,8 @@ const AppProvider = ({ children }) => {
       });
     } catch (error) {
       console.log(error.response);
-      logoutUser();
+      // logoutUser();
+      console.log(error);
     }
     clearAlert();
   };
@@ -197,7 +210,8 @@ const AppProvider = ({ children }) => {
         payload: { materials, totalMaterials, numOfPages },
       });
     } catch (error) {
-      logoutUser();
+      // logoutUser();
+      console.log(error);
     }
     clearAlert();
   };
@@ -232,6 +246,42 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  const getMaterialInventory = async (condition) => {
+    dispatch({ type: GET_MATERIAL_INVENTORY_BEGIN });
+    try {
+      const { data } = await authFetch.post(
+        "/customers/inventory/all",
+        condition
+      );
+      const { inventory } = data;
+      dispatch({
+        type: GET_MATERIAL_INVENTORY_SUCCESS,
+        payload: { inventory },
+      });
+    } catch (error) {
+      // logoutUser();
+      console.log(error);
+    }
+  };
+
+  const getDailyBatching = async (condition) => {
+    dispatch({ type: GET_DAILY_PRODUCTION_BEGIN });
+    try {
+      const { data } = await authFetch.post(
+        "/customers/batching/daily",
+        condition
+      );
+      const { dailyBatching } = data;
+      dispatch({
+        type: GET_DAILY_PRODUCTION_SUCCESS,
+        payload: { dailyBatching },
+      });
+    } catch (error) {
+      // logoutUser();
+      console.log(error);
+    }
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -247,6 +297,8 @@ const AppProvider = ({ children }) => {
         getUsers,
         getMaterials,
         getMaterialConsumption,
+        getMaterialInventory,
+        getDailyBatching,
       }}
     >
       {children}

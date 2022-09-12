@@ -8,15 +8,35 @@
   }
 
   @media (min-width: 1120px) {
-    grid-template-columns: 1.5fr 0.5fr 1fr 1fr;
-    grid-template-rows: 1.5fr 0.5fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    // grid-template-rows: 50px 1fr;
     gap: 10px 10px;
-    grid-template-areas:
-      "material-consumption material-consumption material-consumption daily"
-      "material-consumption material-consumption material-consumption ."
-      "inventory formula formula formula"
-      "inventory formula formula formula"
-      "chart chart chart ."
-      "chart chart chart .";
+    // grid-template-areas: "title title title title";
+    // "material-consumption material-consumption material-consumption daily"
+    // "material-consumption material-consumption material-consumption ."
+    // "inventory formula formula formula"
+    // "inventory formula formula formula"
+    // "chart chart chart ."
+    // "chart chart chart .";
   }
+
+  // .title {
+  //   grid-area: title;
+  // }
+
+  // .material-consumption {
+  //   grid-area: material-consumption;
+  // }
+  // .daily {
+  //   grid-area: daily;
+  // }
+  // .formula {
+  //   grid-area: formula;
+  // }
+  // .inventory {
+  //   grid-area: inventory;
+  // }
+  // .chart {
+  //   grid-area: chart;
+  // }
 }

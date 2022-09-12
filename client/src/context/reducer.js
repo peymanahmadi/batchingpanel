@@ -14,10 +14,15 @@ import {
   GET_MATERIALS_SUCCESS,
   GET_MATERIALS_CONSUMPTION_BEGIN,
   GET_MATERIALS_CONSUMPTION_SUCCESS,
+  GET_MATERIAL_INVENTORY_BEGIN,
+  GET_MATERIAL_INVENTORY_SUCCESS,
   GET_USERS_BEGIN,
   GET_USERS_SUCCESS,
   OPEN_MODAL,
   CLOSE_MODAL,
+  // Stats
+  GET_DAILY_PRODUCTION_BEGIN,
+  GET_DAILY_PRODUCTION_SUCCESS,
 } from "./actions";
 
 import { initialState } from "./appContext";
@@ -146,6 +151,16 @@ const reducer = (state, action) => {
       batchedFormulaArr: action.payload.batchedFormulaArr,
     };
   }
+  if (action.type === GET_MATERIAL_INVENTORY_BEGIN) {
+    return { ...state, isLoading: true, showAlert: false };
+  }
+  if (action.type === GET_MATERIAL_INVENTORY_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      materialInventory: action.payload.inventory,
+    };
+  }
   if (action.type === GET_USERS_BEGIN) {
     return { ...state, isLoading: true, showAlert: false };
   }
@@ -156,6 +171,17 @@ const reducer = (state, action) => {
       users: action.payload.users,
       totalUsers: action.payload.totalUsers,
       numOfPages: action.payload.numOfPages,
+    };
+  }
+  // Stats
+  if (action.type === GET_DAILY_PRODUCTION_BEGIN) {
+    return { ...state, isLoadingStatsDailyProduction: true };
+  }
+  if (action.type === GET_DAILY_PRODUCTION_SUCCESS) {
+    return {
+      ...state,
+      isLoadingStatsDailyProduction: false,
+      dailyBatching: action.payload.dailyBatching,
     };
   }
   throw new Error(`no such action: ${action.type}`);

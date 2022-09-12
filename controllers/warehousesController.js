@@ -77,9 +77,36 @@ const getAllInventory = async (req, res, next) => {
 
   const conn = createTenantConnection(customerCodeName);
   const inventoryModel = conn.model("Inventory");
+  const materialModel = conn.model("Material");
+  const warehouseModel = conn.model("Warehouse");
 
   try {
     const inventory = await inventoryModel.find({});
+    const pInventoryArr = [];
+    const cInventoryArr = [];
+    for (let [index, items] of inventory.entries()) {
+      let inventoryObj = {};
+      const wInventory = await warehouseModel.findById(items.warehouseID);
+      const mInventory = await materialModel.findById(items.materialID);
+      if (inventoryObj["name"] && inventoryObj["name"] === wInventory.name) {
+        let cInventoryObj = {};
+        cInventoryObj.id = mInventory._id;
+        cInventoryObj.name = mInventory.name;
+        cInventoryObj.weight = items.weight;
+        cInventoryArr.push(cInventoryObj);
+      } else {
+        inventoryObj["name"] = wInventory.name;
+        let cInventoryObj = {};
+        cInventoryObj.id = mInventory._id;
+        cInventoryObj.name = mInventory.name;
+        cInventoryObj.weight = items.weight;
+        cInventoryArr.push(cInventoryObj);
+      }
+      inventoryObj["inventory"] = cInventoryArr;
+      // pInventoryArr.push()
+      // console.log(inventoryObj);
+    }
+
     res.status(200).json({ inventory });
   } catch (error) {
     return next(error);

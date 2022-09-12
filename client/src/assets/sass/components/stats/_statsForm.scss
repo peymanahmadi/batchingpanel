@@ -6,22 +6,7 @@
   background: $white;
   border-radius: $border-radius;
   box-shadow: $shadow-1;
-}
-
-.material-consumption {
-  grid-area: material-consumption;
-}
-.daily {
-  grid-area: daily;
-}
-.formula {
-  grid-area: formula;
-}
-.inventory {
-  grid-area: inventory;
-}
-.chart {
-  grid-area: chart;
+  grid-column: 3/7;
 }
 
 .stats-form__header {
@@ -44,23 +29,6 @@
     // margin-right: 0.5rem;
     margin-inline-end: 0.5rem;
   }
-
-  .stats-form__header__btngroup {
-    // background: $primary-50;
-    padding: 0.25rem;
-    border-radius: $border-radius;
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    gap: 0.5rem;
-
-    .btn {
-      font-size: 0.875rem;
-      background: $white;
-      // border: 1px solid $primary-main;
-      // color: $primary-main;
-    }
-  }
 }
 
 .primary {
@@ -69,22 +37,6 @@
   svg {
     background: $primary-200;
     color: $primary-900;
-  }
-}
-
-.primary-btngroup {
-  background: $primary-50;
-  .btn {
-    // border: 1px solid $primary-main;
-    color: $primary-main;
-  }
-}
-
-.secondary-btngroup {
-  background: $secondary-50;
-  .btn {
-    // border: 1px solid $secondary-main;
-    color: $secondary-main;
   }
 }
 
@@ -121,6 +73,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-height: 10rem;
+  overflow-y: auto;
 }
 
 .stats-form__label {
@@ -143,11 +97,13 @@
 
   th {
     text-align: left;
+    border-bottom: 1px solid $primary-50;
   }
 
   tr {
+    // border: 1px solid $primary-50;
     &:hover {
-      background: $grey-50;
+      background: $primary-50;
     }
   }
 }

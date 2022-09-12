@@ -1,0 +1,12 @@
+@use "../../abstracts/index" as *;
+
+.heading-stats {
+  background: $grey-200;
+  grid-column-start: 1;
+  grid-column-end: 7;
+  border-radius: $border-radius;
+  padding: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}

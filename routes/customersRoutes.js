@@ -13,6 +13,8 @@ import { createFormula } from "../controllers/formulasController.js";
 import {
   createBatching,
   materialConsumption,
+  getDailyBatching,
+  productionTolerance,
 } from "../controllers/batchingsController.js";
 import {
   createWarehouse,
@@ -30,6 +32,8 @@ router.route("/formulas").post(createFormula);
 
 router.route("/batching").post(createBatching);
 router.route("/batching/materialconsumption").post(materialConsumption);
+router.route("/batching/daily").post(getDailyBatching);
+router.route("/batching/tolerance").post(productionTolerance);
 
 router.route("/warehouses").post(createWarehouse);
 router.route("/warehouses/opdesc").post(createWarehouseOpDesc);

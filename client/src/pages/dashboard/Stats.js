@@ -1,4 +1,5 @@
 import {
+  HeadingStats,
   MaterialConsumptions,
   BatchingStats,
   BatchedFormulas,
@@ -9,11 +10,12 @@ import {
 const Stats = () => {
   return (
     <div className="stats-container">
+      <HeadingStats />
+      <ProductionChart />
+      <BatchedFormulas />
       <MaterialConsumptions />
       <BatchingStats />
-      <BatchedFormulas />
       <MaterialInventory />
-      <ProductionChart />
     </div>
   );
 };

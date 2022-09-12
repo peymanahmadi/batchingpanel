@@ -25,6 +25,7 @@ const createBatching = async (req, res, next) => {
   const materialModel = customerConn.model("Material");
   const warehouseModel = customerConn.model("Warehouse");
   const batchingModel = customerConn.model("Batching");
+  const dailyBatchingModel = customerConn.model("DailyBatching");
   const warehouseOperationsModel = customerConn.model("WarehouseOperations");
   const inventoryModel = customerConn.model("Inventory");
 
@@ -60,14 +61,26 @@ const createBatching = async (req, res, next) => {
 
     const batching = await newBatching.save({ session });
 
-    // const newWarehouse = [];
+    let dailyBatching = await dailyBatchingModel.findOne({ date: dateTime });
+    if (!dailyBatching) {
+      const newDailyBatching = new dailyBatchingModel({
+        numOfBatches: 0,
+        weight: 0,
+        date: dateTime,
+      });
+      dailyBatching = await newDailyBatching.save({ session });
+    }
+    let nOfBatchs = dailyBatching.numOfBatches + 1;
+    let newWeight = batching.weight + dailyBatching.weight;
+    const updateDailyBatching = { numOfBatches: nOfBatchs, weight: newWeight };
+
+    const newDBatching = await dailyBatchingModel.findByIdAndUpdate(
+      dailyBatching._id,
+      updateDailyBatching,
+      { new: true, session }
+    );
+
     for (let [index, items] of ingredients.entries()) {
-      console.log(items);
-      // const nWarehouseOp = {};
-      // nWarehouseOp.warehouseID = items.warehouseID;
-      // nWarehouseOp.inbound = false;
-      // nWarehouseOp.materialID = items.materialID;
-      // nWarehouseOp.weight = items.weight;
       let newWarehouseOperations = new warehouseOperationsModel({
         warehouseID: items.warehouseID,
         inbound: false,
@@ -76,7 +89,6 @@ const createBatching = async (req, res, next) => {
       });
 
       await newWarehouseOperations.save({ session });
-      // newWarehouse.push(nWarehouseOp);
       let material = await inventoryModel.findOne({
         warehouseID: items.warehouseID,
         materialID: items.materialID,
@@ -89,12 +101,8 @@ const createBatching = async (req, res, next) => {
         });
         material = await newInventory.save({ session });
       }
-      console.log("material: ", material);
-      console.log("material.weight: ", material.weight);
-      console.log("items.weight: ", items.weight);
 
       let newValue = material.weight - items.weight;
-      console.log("newValue: ", newValue);
       const update = { weight: newValue };
 
       const newAmount = await inventoryModel.findByIdAndUpdate(
@@ -102,15 +110,9 @@ const createBatching = async (req, res, next) => {
         update,
         { new: true, session }
       );
-      console.log("newAmount: ", newAmount);
-      console.log("=======");
-      console.log("=======");
-      console.log("=======");
     }
-    // console.log(newWarehouse);
 
     session.commitTransaction();
-    // res.status(201).json(items);
     res.status(201).json(batching);
   } catch (error) {
     return next(error);
@@ -142,15 +144,6 @@ const materialConsumption = async (req, res, next) => {
       } else {
         batchedFormulaObj[items.formulaID] = items.weight;
       }
-
-      // for (let [i, v] of items.ingredients.entries()) {
-      //   if (materialConsumptionObj[v.materialID]) {
-      //     materialConsumptionObj[v.materialID] =
-      //       materialConsumptionObj[v.materialID] + v.weight;
-      //   } else {
-      //     materialConsumptionObj[v.materialID] = v.weight;
-      //   }
-      // }
 
       for (let [i, v] of items.ingredients.entries()) {
         if (materialConsumptionObj[v.materialID]) {
@@ -202,4 +195,53 @@ const materialConsumption = async (req, res, next) => {
   }
 };
 
-export { createBatching, materialConsumption };
+const getDailyBatching = async (req, res, next) => {
+  const { customerCodeName } = req.body;
+
+  const customerConn = batchingTenantConn(customerCodeName);
+  const dailyBatchingModel = customerConn.model("DailyBatching");
+
+  try {
+    const dailyBatching = await dailyBatchingModel.find({});
+    res.status(200).json({ dailyBatching });
+  } catch (error) {
+    return next(error);
+  }
+};
+
+const productionTolerance = async (req, res, next) => {
+  const { customerCodeName } = req.body;
+
+  const customerConn = batchingTenantConn(customerCodeName);
+  const batchingModel = customerConn.model("Batching");
+
+  try {
+    const batching = await batchingModel.find({});
+    let productionTol = {};
+    let tolerance = [];
+    for (let items of batching) {
+      for (let [index, item] of items.ingredients.entries()) {
+        if (!productionTol[item.materialID]) {
+          tolerance = [];
+          tolerance.push(item.tolerance);
+          productionTol[item.materialID] = tolerance;
+        } else {
+          let tol = [];
+          tol = productionTol[item.materialID];
+          tol.push(item.tolerance);
+          productionTol[item.materialID] = tol;
+        }
+      }
+    }
+    res.status(200).json({ productionTol });
+  } catch (error) {
+    return next(error);
+  }
+};
+
+export {
+  createBatching,
+  materialConsumption,
+  getDailyBatching,
+  productionTolerance,
+};
