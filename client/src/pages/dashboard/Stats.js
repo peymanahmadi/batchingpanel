@@ -11,12 +11,12 @@ import {
 const Stats = () => {
   return (
     <div className="stats-container">
-      <HeadingStats />
+      {/* <HeadingStats />
       <ProductionChart />
       <BatchedFormulas />
       <MaterialConsumptions />
       <BatchingStats />
-      <MaterialInventory />
+      <MaterialInventory /> */}
       <ProductionTolerance />
     </div>
   );

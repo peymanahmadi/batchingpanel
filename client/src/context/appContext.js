@@ -293,10 +293,10 @@ const AppProvider = ({ children }) => {
         "/customers/batching/tolerance",
         condition
       );
-      const { productionTol } = data;
+      const { productionToleranceArr } = data;
       dispatch({
         type: GET_PRODUCTION_TOLERANCE_SUCCESS,
-        payload: productionTol,
+        payload: { productionToleranceArr },
       });
     } catch (error) {
       console.log(error);

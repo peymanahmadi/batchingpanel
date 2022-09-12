@@ -193,7 +193,7 @@ const reducer = (state, action) => {
     return {
       ...state,
       isLoadingProductionTolerance: false,
-      productionTolerance: action.payload.productionTolerance,
+      productionTolerance: action.payload.productionToleranceArr,
     };
   }
   throw new Error(`no such action: ${action.type}`);
