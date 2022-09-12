@@ -23,6 +23,8 @@ import {
   // Stats
   GET_DAILY_PRODUCTION_BEGIN,
   GET_DAILY_PRODUCTION_SUCCESS,
+  GET_PRODUCTION_TOLERANCE_BEGIN,
+  GET_PRODUCTION_TOLERANCE_SUCCESS,
 } from "./actions";
 
 import { initialState } from "./appContext";
@@ -182,6 +184,16 @@ const reducer = (state, action) => {
       ...state,
       isLoadingStatsDailyProduction: false,
       dailyBatching: action.payload.dailyBatching,
+    };
+  }
+  if (action.type === GET_PRODUCTION_TOLERANCE_BEGIN) {
+    return { ...state, isLoadingProductionTolerance: true };
+  }
+  if (action.type === GET_PRODUCTION_TOLERANCE_SUCCESS) {
+    return {
+      ...state,
+      isLoadingProductionTolerance: false,
+      productionTolerance: action.payload.productionTolerance,
     };
   }
   throw new Error(`no such action: ${action.type}`);

@@ -15,6 +15,7 @@ import MaterialConsumptions from "./stats/MaterialConsumptions";
 import BatchingStats from "./stats/BatchingStats";
 import BatchedFormulas from "./stats/BatchedFormulas";
 import MaterialInventory from "./stats/MaterialInventory";
+import ProductionTolerance from "./stats/ProductionTolerance";
 // Users
 import UsersOptions from "./users/UsersOptions";
 import UserEditModal from "./users/UserEditModal";
@@ -42,6 +43,7 @@ export {
   BatchingStats,
   BatchedFormulas,
   MaterialInventory,
+  ProductionTolerance,
   // Users
   UsersOptions,
   UserEditModal,

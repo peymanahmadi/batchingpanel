@@ -27,6 +27,8 @@ import {
   // Stats
   GET_DAILY_PRODUCTION_BEGIN,
   GET_DAILY_PRODUCTION_SUCCESS,
+  GET_PRODUCTION_TOLERANCE_BEGIN,
+  GET_PRODUCTION_TOLERANCE_SUCCESS,
 } from "./actions";
 
 const token = localStorage.getItem("token");
@@ -48,6 +50,8 @@ const initialState = {
   openModal: false,
   // stats
   isLoadingStatsDailyProduction: false,
+  isLoadingProductionTolerance: false,
+  productionTolerance: [],
   dailyBatching: [],
   batching: [],
   materialConsumption: [],
@@ -282,6 +286,23 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  const getProductionTolerance = async (condition) => {
+    dispatch({ type: GET_PRODUCTION_TOLERANCE_BEGIN });
+    try {
+      const { data } = await authFetch.post(
+        "/customers/batching/tolerance",
+        condition
+      );
+      const { productionTol } = data;
+      dispatch({
+        type: GET_PRODUCTION_TOLERANCE_SUCCESS,
+        payload: productionTol,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -299,6 +320,7 @@ const AppProvider = ({ children }) => {
         getMaterialConsumption,
         getMaterialInventory,
         getDailyBatching,
+        getProductionTolerance,
       }}
     >
       {children}

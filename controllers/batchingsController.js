@@ -214,6 +214,7 @@ const productionTolerance = async (req, res, next) => {
 
   const customerConn = batchingTenantConn(customerCodeName);
   const batchingModel = customerConn.model("Batching");
+  const materialModel = customerConn.model("Material");
 
   try {
     const batching = await batchingModel.find({});
@@ -233,7 +234,21 @@ const productionTolerance = async (req, res, next) => {
         }
       }
     }
-    res.status(200).json({ productionTol });
+
+    let productionToleranceArr = [];
+    const mIDs = Object.keys(productionTol);
+    const tols = Object.values(productionTol);
+
+    for (let i = 0; i < mIDs.length; i++) {
+      let productionTolerance = {};
+      let mName = await materialModel.findById(mIDs[i]);
+      productionTolerance["name"] = mName.name;
+      productionTolerance["tolerance"] = tols[i];
+      productionTolerance["length"] = tols[i].length;
+      productionToleranceArr.push(productionTolerance);
+    }
+
+    res.status(200).json({ productionToleranceArr });
   } catch (error) {
     return next(error);
   }
