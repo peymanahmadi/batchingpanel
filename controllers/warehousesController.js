@@ -82,32 +82,49 @@ const getAllInventory = async (req, res, next) => {
 
   try {
     const inventory = await inventoryModel.find({});
-    const pInventoryArr = [];
-    const cInventoryArr = [];
+
+    const allInventoriesArr = [];
+    let materialListArr = [];
+    let warehousesList = {};
     for (let [index, items] of inventory.entries()) {
-      let inventoryObj = {};
-      const wInventory = await warehouseModel.findById(items.warehouseID);
-      const mInventory = await materialModel.findById(items.materialID);
-      if (inventoryObj["name"] && inventoryObj["name"] === wInventory.name) {
-        let cInventoryObj = {};
-        cInventoryObj.id = mInventory._id;
-        cInventoryObj.name = mInventory.name;
-        cInventoryObj.weight = items.weight;
-        cInventoryArr.push(cInventoryObj);
+      if (!warehousesList[items.warehouseID]) {
+        let materialList = {};
+        materialListArr = [];
+        materialList["materialID"] = items.materialID;
+        const material = await materialModel.findById(items.materialID);
+        materialList["name"] = material.name;
+        materialList["weight"] = items.weight;
+        materialListArr.push(materialList);
+        warehousesList[items.warehouseID] = materialListArr;
       } else {
-        inventoryObj["name"] = wInventory.name;
-        let cInventoryObj = {};
-        cInventoryObj.id = mInventory._id;
-        cInventoryObj.name = mInventory.name;
-        cInventoryObj.weight = items.weight;
-        cInventoryArr.push(cInventoryObj);
+        let materialList = {};
+        materialListArr = warehousesList[items.warehouseID];
+        materialList["materialID"] = items.materialID;
+        const material = await materialModel.findById(items.materialID);
+        materialList["name"] = material.name;
+        materialList["weight"] = items.weight;
+        materialListArr.push(materialList);
+        warehousesList[items.warehouseID] = materialListArr;
       }
-      inventoryObj["inventory"] = cInventoryArr;
-      // pInventoryArr.push()
-      // console.log(inventoryObj);
     }
 
-    res.status(200).json({ inventory });
+    let allInventories = [];
+
+    for (const item of Object.entries(warehousesList)) {
+      let wList = {};
+      let warehouse = await warehouseModel.findById(item[0]);
+      wList["name"] = warehouse.name;
+      wList["inventory"] = [];
+      for (let i of item[1]) {
+        let mObj = {};
+        mObj["name"] = i.name;
+        mObj["weight"] = i.weight;
+        wList["inventory"].push(mObj);
+      }
+      allInventories.push(wList);
+    }
+
+    res.status(200).json({ allInventories });
   } catch (error) {
     return next(error);
   }
