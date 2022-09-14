@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import ReactApexChart from "react-apexcharts";
 import { BsGraphUp } from "react-icons/bs";
 import { useAppContext } from "../../context/appContext";
-import { Loading, ButtonGroup } from "../index";
+import { Loading, ButtonGroup } from "../shared";
 
 const ProductionChart = () => {
   const {

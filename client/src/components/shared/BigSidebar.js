@@ -1,4 +1,4 @@
-import { useAppContext } from "../context/appContext";
+import { useAppContext } from "../../context/appContext";
 import Logo from "./Logo";
 import NavLinks from "./NavLinks";
 

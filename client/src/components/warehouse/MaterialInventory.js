@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { TbFileSpreadsheet } from "react-icons/tb";
 import { useAppContext } from "../../context/appContext";
-import StatsForm from "./StatsForm";
+import StatsForm from "../stats/StatsForm";
 
 const MaterialInventory = () => {
   const { t } = useTranslation();

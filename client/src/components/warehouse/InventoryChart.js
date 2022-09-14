@@ -58,7 +58,7 @@ const InventoryChart = () => {
     <>
       {getWarehouseInventory.map((gwi, index) => {
         return (
-          <div key={index} className="production-tolerance">
+          <div key={index} className="material-tolerance">
             <div>{gwi.name}</div>
             <ReactApexChart
               options={{

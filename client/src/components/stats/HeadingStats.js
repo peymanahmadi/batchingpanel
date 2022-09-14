@@ -1,4 +1,4 @@
-import ButtonGroup from "../ButtonGroup";
+import ButtonGroup from "../shared/ButtonGroup";
 
 const HeadingStats = () => {
   const buttons = ["Day", "Week", "Month"];

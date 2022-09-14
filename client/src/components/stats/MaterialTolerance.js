@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import ReactApexChart from "react-apexcharts";
 import { BsPercent } from "react-icons/bs";
 import { useAppContext } from "../../context/appContext";
-import { Loading, ButtonGroup } from "../index";
+import { Loading, ButtonGroup } from "../shared/index";
 
 const ProductionTolerance = () => {
   const {

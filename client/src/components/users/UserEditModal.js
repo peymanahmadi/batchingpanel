@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { FormRow, Alert } from "../../components";
+import { FormRow, Alert } from "../shared";
 import { useAppContext } from "../../context/appContext";
 import { FaTimes } from "react-icons/fa";
 

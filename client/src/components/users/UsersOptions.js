@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useAppContext } from "../../context/appContext";
-import { Modal, UserEditModal } from "..";
+import { Modal, UserEditModal } from "../shared";
 
 const UsersOptions = () => {
   const { t } = useTranslation();

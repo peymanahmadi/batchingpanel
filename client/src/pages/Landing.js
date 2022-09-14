@@ -1,5 +1,5 @@
 import main from "../assets/images/main.svg";
-import { Logo } from "../components";
+import { Logo } from "../components/shared";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 

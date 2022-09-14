@@ -1,5 +1,11 @@
+import { InventoryChart } from "../../components/shared";
+
 const Warehouses = () => {
-  return <div>Warehouses</div>;
+  return (
+    <div className="warehouse-container">
+      <InventoryChart />
+    </div>
+  );
 };
 
 export default Warehouses;

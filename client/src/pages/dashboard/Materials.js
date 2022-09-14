@@ -1,4 +1,4 @@
-import { MaterialsOptions, MaterialsContainer } from "../../components";
+import { MaterialsOptions, MaterialsContainer } from "../../components/shared";
 
 const Materials = () => {
   return (

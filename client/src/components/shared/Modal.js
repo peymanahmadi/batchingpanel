@@ -1,5 +1,5 @@
 import ReactDOM from "react-dom";
-import { useAppContext } from "../context/appContext";
+import { useAppContext } from "../../context/appContext";
 
 const Backdrop = ({ onClose }) => {
   return <div className="backdrop" onClick={onClose} />;

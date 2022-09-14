@@ -7,7 +7,7 @@ import {
   ProductionChart,
   MaterialTolerance,
   InventoryChart,
-} from "../../components";
+} from "../../components/shared";
 
 const Stats = () => {
   return (

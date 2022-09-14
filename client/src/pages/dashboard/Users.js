@@ -1,4 +1,4 @@
-import { UsersOptions, UsersContainer } from "../../components";
+import { UsersOptions, UsersContainer } from "../../components/shared";
 
 const Users = () => {
   return (

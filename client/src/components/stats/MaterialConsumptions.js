@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useAppContext } from "../../context/appContext";
 import StatsForm from "./StatsForm";
 import { TbFileSpreadsheet } from "react-icons/tb";
-import Loading from "../Loading";
+import Loading from "../shared/Loading";
 
 const MaterialConsumptions = () => {
   const { getMaterialConsumption, materialConsumption, isLoading } =

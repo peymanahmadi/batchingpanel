@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useAppContext } from "../../context/appContext";
-import Loading from "../Loading";
+import Loading from "../shared/Loading";
 import User from "./User";
 
 const UsersContainer = () => {

@@ -9,22 +9,22 @@ import ButtonGroup from "./ButtonGroup";
 import Modal from "./Modal";
 import Loading from "./Loading";
 // Stats
-import HeadingStats from "./stats/HeadingStats";
-import ProductionChart from "./stats/ProductionChart";
-import MaterialConsumptions from "./stats/MaterialConsumptions";
-import BatchingStats from "./stats/BatchingStats";
-import BatchedFormulas from "./stats/BatchedFormulas";
-import MaterialInventory from "./stats/MaterialInventory";
-import MaterialTolerance from "./stats/MaterialTolerance";
+import HeadingStats from "../stats/HeadingStats";
+import ProductionChart from "../stats/ProductionChart";
+import MaterialConsumptions from "../stats/MaterialConsumptions";
+import BatchingStats from "../stats/BatchingStats";
+import BatchedFormulas from "../stats/BatchedFormulas";
+import MaterialInventory from "../warehouse/MaterialInventory";
+import MaterialTolerance from "../stats/MaterialTolerance";
 // Users
-import UsersOptions from "./users/UsersOptions";
-import UserEditModal from "./users/UserEditModal";
-import UsersContainer from "./users/UsersContainer";
-import User from "./users/User";
+import UsersOptions from "../users/UsersOptions";
+import UserEditModal from "../users/UserEditModal";
+import UsersContainer from "../users/UsersContainer";
+import User from "../users/User";
 // Materials
-import MaterialsOptions from "./materials/MaterialsOptions";
-import MaterialsContainer from "./materials/MaterialsContainer";
-import InventoryChart from "./stats/InventoryChart";
+import MaterialsOptions from "../materials/MaterialsOptions";
+import MaterialsContainer from "../materials/MaterialsContainer";
+import InventoryChart from "../warehouse/InventoryChart";
 
 export {
   Logo,
