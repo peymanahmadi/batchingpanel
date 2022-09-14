@@ -6,18 +6,20 @@ import {
   MaterialInventory,
   ProductionChart,
   ProductionTolerance,
+  InventoryChart,
 } from "../../components";
 
 const Stats = () => {
   return (
     <div className="stats-container">
-      {/* <HeadingStats />
+      {/* <HeadingStats /> */}
       <ProductionChart />
-      <BatchedFormulas />
-      <MaterialConsumptions />
-      <BatchingStats />
-      <MaterialInventory /> */}
-      <ProductionTolerance />
+      {/* <BatchedFormulas /> */}
+      {/* <MaterialConsumptions /> */}
+      {/* <BatchingStats /> */}
+      {/* <MaterialInventory /> */}
+      {/* <ProductionTolerance /> */}
+      {/* <InventoryChart /> */}
     </div>
   );
 };

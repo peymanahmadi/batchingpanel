@@ -24,6 +24,7 @@ import User from "./users/User";
 // Materials
 import MaterialsOptions from "./materials/MaterialsOptions";
 import MaterialsContainer from "./materials/MaterialsContainer";
+import InventoryChart from "./stats/InventoryChart";
 
 export {
   Logo,
@@ -52,4 +53,6 @@ export {
   // Materials
   MaterialsOptions,
   MaterialsContainer,
+  // Warehouse
+  InventoryChart,
 };

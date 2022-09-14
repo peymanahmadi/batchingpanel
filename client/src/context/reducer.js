@@ -25,6 +25,8 @@ import {
   GET_DAILY_PRODUCTION_SUCCESS,
   GET_PRODUCTION_TOLERANCE_BEGIN,
   GET_PRODUCTION_TOLERANCE_SUCCESS,
+  GET_WAREHOUSE_INVENTORY_BEGIN,
+  GET_WAREHOUSE_INVENTORY_SUCCESS,
 } from "./actions";
 
 import { initialState } from "./appContext";
@@ -176,6 +178,7 @@ const reducer = (state, action) => {
     };
   }
   // Stats
+
   if (action.type === GET_DAILY_PRODUCTION_BEGIN) {
     return { ...state, isLoadingStatsDailyProduction: true };
   }
@@ -184,6 +187,8 @@ const reducer = (state, action) => {
       ...state,
       isLoadingStatsDailyProduction: false,
       dailyBatching: action.payload.dailyBatching,
+      todayNumOfBatches: action.payload.todayNumOfBatches,
+      todayTotalBatchingWeight: action.payload.todayTotalBatchingWeight,
     };
   }
   if (action.type === GET_PRODUCTION_TOLERANCE_BEGIN) {
@@ -194,6 +199,16 @@ const reducer = (state, action) => {
       ...state,
       isLoadingProductionTolerance: false,
       productionTolerance: action.payload.productionToleranceArr,
+    };
+  }
+  if (action.type === GET_WAREHOUSE_INVENTORY_BEGIN) {
+    return { ...state, isLoadingWarehouseInventory: true };
+  }
+  if (action.type === GET_WAREHOUSE_INVENTORY_SUCCESS) {
+    return {
+      ...state,
+      isLoadingWarehouseInventory: false,
+      getWarehouseInventory: action.payload.allInventories,
     };
   }
   throw new Error(`no such action: ${action.type}`);

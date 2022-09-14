@@ -82,14 +82,15 @@ h2 {
 //   line-height: 1.235;
 //   letter-spacing: 0.00735em;
 // }
-// // h5
-// h1 {
-//   font-family: f.$FiraSans;
-//   font-weight: 400;
-//   font-size: 1.5rem;
-//   line-height: 1.334;
-//   letter-spacing: 0em;
-// }
+// h5
+h5 {
+  // font-family: f.$FiraSans;
+  font-weight: 400;
+  font-size: 1.5rem;
+  line-height: 1.334;
+  letter-spacing: 0em;
+  color: $primary-900;
+}
 // h6
 h6 {
   // font-family: f.$FiraSans;
@@ -109,12 +110,13 @@ h6 {
 // }
 // subtitle2
 .subTitle2 {
-  // font-family: f.$Cabin;
+  font-family: f.$Cabin;
   // font-family: f.$FiraSans;
-  font-weight: 500;
-  font-size: 0.875rem;
+  font-weight: 200;
+  font-size: 1.25rem;
   line-height: 1.57;
   letter-spacing: 0.00714em;
+  color: $grey-400;
 }
 // }
 // // body 1

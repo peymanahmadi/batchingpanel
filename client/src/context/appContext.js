@@ -29,6 +29,8 @@ import {
   GET_DAILY_PRODUCTION_SUCCESS,
   GET_PRODUCTION_TOLERANCE_BEGIN,
   GET_PRODUCTION_TOLERANCE_SUCCESS,
+  GET_WAREHOUSE_INVENTORY_BEGIN,
+  GET_WAREHOUSE_INVENTORY_SUCCESS,
 } from "./actions";
 
 const token = localStorage.getItem("token");
@@ -50,13 +52,15 @@ const initialState = {
   openModal: false,
   // stats
   isLoadingStatsDailyProduction: false,
-  isLoadingProductionTolerance: false,
-  productionTolerance: [],
   dailyBatching: [],
-  batching: [],
-  materialConsumption: [],
+  todayNumOfBatches: 0,
+  todayTotalBatchingWeight: 0,
   batchingNums: 0,
   batchingWeight: 0,
+  isLoadingProductionTolerance: false,
+  productionTolerance: [],
+  batching: [],
+  materialConsumption: [],
   batchedFormulaArr: [],
   materialInventory: [],
   // materials
@@ -67,6 +71,9 @@ const initialState = {
   totalUsers: 0,
   numOfPages: 1,
   page: 1,
+  // warehouse
+  isLoadingWarehouseInventory: false,
+  getWarehouseInventory: [],
 };
 
 const AppContext = React.createContext();
@@ -268,6 +275,8 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  // Stats
+
   const getDailyBatching = async (condition) => {
     dispatch({ type: GET_DAILY_PRODUCTION_BEGIN });
     try {
@@ -278,7 +287,13 @@ const AppProvider = ({ children }) => {
       const { dailyBatching } = data;
       dispatch({
         type: GET_DAILY_PRODUCTION_SUCCESS,
-        payload: { dailyBatching },
+        payload: {
+          dailyBatching,
+          todayNumOfBatches:
+            dailyBatching[dailyBatching.length - 1].numOfBatches,
+          todayTotalBatchingWeight:
+            dailyBatching[dailyBatching.length - 1].weight,
+        },
       });
     } catch (error) {
       // logoutUser();
@@ -303,6 +318,23 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  const getAllInventory = async (condition) => {
+    dispatch({ type: GET_WAREHOUSE_INVENTORY_BEGIN });
+    try {
+      const { data } = await authFetch.post(
+        "/customers/inventory/all",
+        condition
+      );
+      const { allInventories } = data;
+      dispatch({
+        type: GET_WAREHOUSE_INVENTORY_SUCCESS,
+        payload: { allInventories },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -321,6 +353,7 @@ const AppProvider = ({ children }) => {
         getMaterialInventory,
         getDailyBatching,
         getProductionTolerance,
+        getAllInventory,
       }}
     >
       {children}
