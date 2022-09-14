@@ -23,8 +23,8 @@ import {
   // Stats
   GET_DAILY_PRODUCTION_BEGIN,
   GET_DAILY_PRODUCTION_SUCCESS,
-  GET_PRODUCTION_TOLERANCE_BEGIN,
-  GET_PRODUCTION_TOLERANCE_SUCCESS,
+  GET_MATERIAL_TOLERANCE_BEGIN,
+  GET_MATERIAL_TOLERANCE_SUCCESS,
   GET_WAREHOUSE_INVENTORY_BEGIN,
   GET_WAREHOUSE_INVENTORY_SUCCESS,
 } from "./actions";
@@ -191,14 +191,14 @@ const reducer = (state, action) => {
       todayTotalBatchingWeight: action.payload.todayTotalBatchingWeight,
     };
   }
-  if (action.type === GET_PRODUCTION_TOLERANCE_BEGIN) {
-    return { ...state, isLoadingProductionTolerance: true };
+  if (action.type === GET_MATERIAL_TOLERANCE_BEGIN) {
+    return { ...state, isLoadingMaterialTolerance: true };
   }
-  if (action.type === GET_PRODUCTION_TOLERANCE_SUCCESS) {
+  if (action.type === GET_MATERIAL_TOLERANCE_SUCCESS) {
     return {
       ...state,
-      isLoadingProductionTolerance: false,
-      productionTolerance: action.payload.productionToleranceArr,
+      isLoadingMaterialTolerance: false,
+      materialTolerance: action.payload.materialToleranceArr,
     };
   }
   if (action.type === GET_WAREHOUSE_INVENTORY_BEGIN) {

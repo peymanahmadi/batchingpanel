@@ -209,7 +209,7 @@ const getDailyBatching = async (req, res, next) => {
   }
 };
 
-const productionTolerance = async (req, res, next) => {
+const materialTolerance = async (req, res, next) => {
   const { customerCodeName } = req.body;
 
   const customerConn = batchingTenantConn(customerCodeName);
@@ -235,7 +235,7 @@ const productionTolerance = async (req, res, next) => {
       }
     }
 
-    let productionToleranceArr = [];
+    let materialToleranceArr = [];
     const mIDs = Object.keys(productionTol);
     const tols = Object.values(productionTol);
 
@@ -245,10 +245,10 @@ const productionTolerance = async (req, res, next) => {
       productionTolerance["name"] = mName.name;
       productionTolerance["tolerance"] = tols[i];
       productionTolerance["length"] = tols[i].length;
-      productionToleranceArr.push(productionTolerance);
+      materialToleranceArr.push(productionTolerance);
     }
 
-    res.status(200).json({ productionToleranceArr });
+    res.status(200).json({ materialToleranceArr });
   } catch (error) {
     return next(error);
   }
@@ -258,5 +258,5 @@ export {
   createBatching,
   materialConsumption,
   getDailyBatching,
-  productionTolerance,
+  materialTolerance,
 };

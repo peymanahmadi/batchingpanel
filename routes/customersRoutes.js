@@ -14,7 +14,7 @@ import {
   createBatching,
   materialConsumption,
   getDailyBatching,
-  productionTolerance,
+  materialTolerance,
 } from "../controllers/batchingsController.js";
 import {
   createWarehouse,
@@ -33,7 +33,7 @@ router.route("/formulas").post(createFormula);
 router.route("/batching").post(createBatching);
 router.route("/batching/materialconsumption").post(materialConsumption);
 router.route("/batching/daily").post(getDailyBatching);
-router.route("/batching/tolerance").post(productionTolerance);
+router.route("/batching/tolerance").post(materialTolerance);
 
 router.route("/warehouses").post(createWarehouse);
 router.route("/warehouses/opdesc").post(createWarehouseOpDesc);

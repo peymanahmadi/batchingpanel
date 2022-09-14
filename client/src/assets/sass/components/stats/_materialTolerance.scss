@@ -1,0 +1,89 @@
+@use "../../abstracts/index" as *;
+
+.material-tolerance {
+  background: #fcfdfd;
+  grid-column-start: 1;
+  grid-column-end: 7;
+  border-radius: 0.625rem;
+  border: 1px solid #eff2f5;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  .material-tolerance__header {
+    padding: 1rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .material-tolerance__title {
+      padding: 1rem 1rem;
+      display: flex;
+      align-items: center;
+
+      svg {
+        width: 32px;
+        height: 32px;
+        margin-inline-end: 0.5rem;
+        color: #50cd89;
+        background: #e8fff3;
+        border-radius: $border-radius;
+        padding: 0.25rem;
+      }
+
+      h6 {
+        color: #3f4254;
+        font-size: 1.15rem;
+        margin-inline-end: 0.5rem;
+      }
+    }
+    .material-tolerance__condition {
+      padding: 1rem;
+    }
+  }
+
+  .material-tolerance__chart {
+    margin-bottom: 0.5rem;
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+
+    .material-tolerance__canvas {
+      border: 1px dashed #eff2f5;
+      border-radius: 0.625rem;
+    }
+
+    .half-width:nth-child(odd) {
+      grid-column-start: 1;
+      grid-column-end: 4;
+    }
+
+    .half-width:nth-child(even) {
+      grid-column-start: 4;
+      grid-column-end: 7;
+    }
+
+    .full-width {
+      grid-column-start: 1;
+      grid-column-end: 7;
+    }
+  }
+}
+
+.space-between {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.25rem;
+}
+
+.badge {
+  background: #e8fff3;
+  width: 100px;
+  color: #50cd89;
+  border-radius: $border-radius;
+  font-size: 0.875rem;
+  padding: 0.25rem 0.5rem;
+  text-align: center;
+}

@@ -38,7 +38,7 @@ const ProductionChart = () => {
           show: false,
         },
         zoom: {
-          enabl: false,
+          enabled: false,
         },
       },
       dataLabels: {

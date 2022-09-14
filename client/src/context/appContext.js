@@ -27,8 +27,8 @@ import {
   // Stats
   GET_DAILY_PRODUCTION_BEGIN,
   GET_DAILY_PRODUCTION_SUCCESS,
-  GET_PRODUCTION_TOLERANCE_BEGIN,
-  GET_PRODUCTION_TOLERANCE_SUCCESS,
+  GET_MATERIAL_TOLERANCE_BEGIN,
+  GET_MATERIAL_TOLERANCE_SUCCESS,
   GET_WAREHOUSE_INVENTORY_BEGIN,
   GET_WAREHOUSE_INVENTORY_SUCCESS,
 } from "./actions";
@@ -55,10 +55,12 @@ const initialState = {
   dailyBatching: [],
   todayNumOfBatches: 0,
   todayTotalBatchingWeight: 0,
+  //
+  isLoadingMaterialTolerance: false,
+  materialTolerance: [],
+  //
   batchingNums: 0,
   batchingWeight: 0,
-  isLoadingProductionTolerance: false,
-  productionTolerance: [],
   batching: [],
   materialConsumption: [],
   batchedFormulaArr: [],
@@ -301,17 +303,17 @@ const AppProvider = ({ children }) => {
     }
   };
 
-  const getProductionTolerance = async (condition) => {
-    dispatch({ type: GET_PRODUCTION_TOLERANCE_BEGIN });
+  const getMaterialTolerance = async (condition) => {
+    dispatch({ type: GET_MATERIAL_TOLERANCE_BEGIN });
     try {
       const { data } = await authFetch.post(
         "/customers/batching/tolerance",
         condition
       );
-      const { productionToleranceArr } = data;
+      const { materialToleranceArr } = data;
       dispatch({
-        type: GET_PRODUCTION_TOLERANCE_SUCCESS,
-        payload: { productionToleranceArr },
+        type: GET_MATERIAL_TOLERANCE_SUCCESS,
+        payload: { materialToleranceArr },
       });
     } catch (error) {
       console.log(error);
@@ -352,7 +354,7 @@ const AppProvider = ({ children }) => {
         getMaterialConsumption,
         getMaterialInventory,
         getDailyBatching,
-        getProductionTolerance,
+        getMaterialTolerance,
         getAllInventory,
       }}
     >
