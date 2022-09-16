@@ -117,7 +117,6 @@ const ProductionTolerance = () => {
           <ButtonGroup btns={buttons} />
         </div>
       </div>
-      <div className="material-tolerance__content"></div>
       {materialTolerance.map((pt, index) => {
         return (
           <div key={index} className="material-tolerance__chart">

@@ -14,7 +14,7 @@ const Navbar = () => {
         </button>
         <div>
           <Logo />
-          <h3 className="logo-text">dashboard</h3>
+          <h6 className="logo-text">Dashboard</h6>
         </div>
         <div className="btn-container">
           <button

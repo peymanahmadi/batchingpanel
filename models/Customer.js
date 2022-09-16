@@ -19,7 +19,7 @@ const customerSchema = new mongoose.Schema(
       unique: true,
     },
     logo: String,
-    adminIDs: [{ type: mongoose.Types.ObjectId, ref: "User" }],
+    users: [{ type: mongoose.Types.ObjectId, ref: "User" }],
     available: {
       type: Boolean,
       default: true,

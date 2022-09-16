@@ -13,7 +13,7 @@ const getAllCustomers = async (req, res) => {
 };
 
 const createCustomer = async (req, res, next) => {
-  const { name, codeName, logo, adminIDs } = req.body;
+  const { name, codeName, logo } = req.body;
 
   if (!name || !codeName) {
     const error = new BadRequestError("Please provide all required values");
@@ -31,7 +31,6 @@ const createCustomer = async (req, res, next) => {
     name,
     codeName,
     logo,
-    adminIDs,
   });
 
   try {
@@ -42,4 +41,8 @@ const createCustomer = async (req, res, next) => {
   }
 };
 
-export { getAllCustomers, createCustomer };
+const updateCustomer = async (req, res, next) => {
+  res.send("update customer");
+};
+
+export { getAllCustomers, createCustomer, updateCustomer };

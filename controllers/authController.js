@@ -12,12 +12,12 @@ const register = async (req, res, next) => {
     email,
     password,
     jobTitle,
-    customerIDs,
+    customerID,
     accessLevel,
   } = req.body;
 
-  if (!firstName || !lastName || !email || !password || !customerIDs) {
-    const error = new BadRequestError("please provide all required values");
+  if (!firstName || !lastName || !email || !password || !customerID) {
+    const error = new BadRequestError("Please provide all required values");
     return next(error);
   }
 
@@ -31,12 +31,13 @@ const register = async (req, res, next) => {
 
   const userAlreadyExists = await userModel.findOne({ email });
   if (userAlreadyExists) {
-    const error = new BadRequestError("Email already in use");
+    const error = new BadRequestError("email already in use");
     return next(error);
   }
 
-  if (customerIDs.length == 0) {
-    const error = new BadRequestError(`CustomerID(s) not found`);
+  const customer = await customerModel.findById(customerID);
+  if (!customer) {
+    const error = new BadRequestError(`customerID not found`);
     return next(error);
   }
 
@@ -53,20 +54,18 @@ const register = async (req, res, next) => {
     email,
     password,
     jobTitle,
-    customerIDs,
+    customerID,
     accessLevel,
   });
 
   try {
     const session = await conn.startSession();
     session.startTransaction();
-    await newUser.save({ session });
 
-    for (let ids of customerIDs) {
-      let customer = await customerModel.findById(ids);
-      customer.adminIDs.push(newUser);
-      await customer.save({ session });
-    }
+    await newUser.save({ session });
+    customer.users.push(newUser);
+    await customer.save({ session });
+
     session.commitTransaction();
 
     res.status(201).json({
@@ -76,7 +75,7 @@ const register = async (req, res, next) => {
         lastName: newUser.lastName,
         email: newUser.email,
         jobTitle: newUser.jobTitle,
-        customerIDs: newUser.customerIDs,
+        customerID: newUser.customerID,
         accessLevel: newUser.accessLevel,
       },
     });
@@ -96,7 +95,9 @@ const login = async (req, res, next) => {
   const user = await userModel
     .findOne({ email })
     .select("+password")
-    .populate("customerIDs");
+    .populate("customerID");
+
+  console.log(user);
 
   if (!user) {
     const error = new UnAuthenticatedError("Invalid Credentials");
@@ -114,8 +115,8 @@ const login = async (req, res, next) => {
   res.status(200).json({
     user,
     token,
-    customer: user.customerIDs[0].name,
-    customerID: user.customerIDs[0]._id,
+    customer: user.customerID._id,
+    customerID: user.customerID.name,
   });
 };
 
@@ -143,9 +144,9 @@ const updateUser = async (req, res, next) => {
 };
 
 const getUsersByCustomerID = async (req, res, next) => {
-  const customerID = req.body;
+  const cID = req.params;
   try {
-    const users = await userModel.find({});
+    const users = await userModel.find({ cID });
     res.status(200).json({ users, totalUsers: users.length, numOfPages: 1 });
   } catch (error) {
     return next(error);

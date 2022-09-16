@@ -28,7 +28,6 @@ const createBatching = async (req, res, next) => {
   const dailyBatchingModel = customerConn.model("DailyBatching");
   const warehouseOperationsModel = customerConn.model("WarehouseOperations");
   const inventoryModel = customerConn.model("Inventory");
-
   const fID = await formulaModel.findOne({ commonFormulaID });
 
   // look for materialID and warehouseID for each raw materials in ingredients

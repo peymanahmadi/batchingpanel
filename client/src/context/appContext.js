@@ -29,6 +29,7 @@ import {
   GET_DAILY_PRODUCTION_SUCCESS,
   GET_MATERIAL_TOLERANCE_BEGIN,
   GET_MATERIAL_TOLERANCE_SUCCESS,
+  // Warehouse
   GET_WAREHOUSE_INVENTORY_BEGIN,
   GET_WAREHOUSE_INVENTORY_SUCCESS,
 } from "./actions";
@@ -50,7 +51,7 @@ const initialState = {
   customerID: customerID,
   showSidebar: false,
   openModal: false,
-  // stats
+  // Stats
   isLoadingStatsDailyProduction: false,
   dailyBatching: [],
   todayNumOfBatches: 0,
@@ -73,7 +74,7 @@ const initialState = {
   totalUsers: 0,
   numOfPages: 1,
   page: 1,
-  // warehouse
+  // Warehouse
   isLoadingWarehouseInventory: false,
   getWarehouseInventory: [],
 };

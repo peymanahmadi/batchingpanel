@@ -5,20 +5,20 @@ import jwt from "jsonwebtoken";
 
 const userSchema = new mongoose.Schema(
   {
-    // commonUserID is an id common with automatic batching system software user id.
+    // commonUserID is a registered id in common with automatic batching system software user id installed in the factory.
     commonUserID: Number,
     firstName: {
       type: String,
       required: [true, "Please provide first name"],
       minLength: 3,
-      maxLength: 20,
+      maxLength: 30,
       trim: true,
     },
     lastName: {
       type: String,
       required: [true, "Please provide last name"],
       minLength: 3,
-      maxLength: 20,
+      maxLength: 30,
       trim: true,
     },
     email: {
@@ -46,20 +46,18 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
-    customerIDs: [
-      {
-        type: mongoose.Types.ObjectId,
-        ref: "Customer",
-        required: [true, "Please provide a customer id"],
-      },
-    ],
+    customerID: {
+      type: mongoose.Types.ObjectId,
+      ref: "Customer",
+      required: [true, "Please provide a customer id"],
+    },
     lastLoginAt: Date,
     accessLevel: {
       isAdmin: Boolean,
-      allowDefineWarehouse: Boolean,
-      allowdefineFormula: Boolean,
-      allowCreateReports: Boolean,
-      allowManageUsers: Boolean,
+      allowedWarehouse: Boolean,
+      allowedFormula: Boolean,
+      allowedReports: Boolean,
+      allowedManageUsers: Boolean,
     },
   },
   { timestamps: true }

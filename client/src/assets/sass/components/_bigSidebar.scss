@@ -4,16 +4,19 @@
   display: none;
   @media (min-width: 992px) {
     display: block;
-    box-shadow: 1px 0px 0px 0px rgba(0, 0, 0, 0.1);
+    // box-shadow: 1px 0px 0px 0px rgba(0, 0, 0, 0.1);
+    z-index: 2;
 
     .sidebar-container {
       background: $white;
+      background: #fcfdfd;
       min-height: 100vh;
       height: 100%;
       width: 250px;
       // margin-left: -250px;
       margin-inline-start: -250px;
       transition: $transition;
+      border-right: 1px solid #eff2f5;
     }
 
     .content {

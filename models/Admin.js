@@ -9,19 +9,19 @@ const adminSchema = new mongoose.Schema(
       type: String,
       required: [true, "Please provide a first name"],
       minLength: 2,
-      maxLength: 20,
+      maxLength: 30,
       trim: true,
     },
     lastName: {
       type: String,
       required: [true, "Please provide a last name"],
       minLength: 2,
-      maxLength: 20,
+      maxLength: 30,
       trim: true,
     },
     email: {
       type: String,
-      required: [true, "Please provide email"],
+      required: [true, "Please provide an email"],
       validate: {
         validator: validator.isEmail,
         message: "Please provide a valid email",
@@ -30,7 +30,7 @@ const adminSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: [true, "Please provide password"],
+      required: [true, "Please provide a password"],
       minLength: 6,
       select: false,
     },

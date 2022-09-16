@@ -1,0 +1,46 @@
+@use "../abstracts/index" as *;
+
+.dashboard-form {
+  background: #fcfdfd;
+  border-radius: 0.625rem;
+  border: 1px solid #eff2f5;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  grid-column-start: 1;
+  grid-column-end: 7;
+  // height: 100%;
+
+  .dashboard-form__header {
+    padding: 1rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .dashboard-form__title {
+      padding: 1rem 1rem;
+      display: flex;
+      align-items: center;
+
+      svg {
+        width: 32px;
+        height: 32px;
+        margin-inline-end: 0.5rem;
+        // font-size: 1.5rem;
+        color: $primary-500;
+        background: $primary-50;
+        border-radius: $border-radius;
+        padding: 0.25rem;
+      }
+
+      h6 {
+        color: #3f4254;
+        font-size: 1.15rem;
+        margin-inline-end: 0.5rem;
+      }
+    }
+    .dashboard-form__condition {
+      padding: 1rem;
+    }
+  }
+}
