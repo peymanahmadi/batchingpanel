@@ -1,11 +1,13 @@
 @use "../../abstracts/index" as *;
 
 .daily-production {
-  background: #fcfdfd;
+  // background: #fcfdfd;
+  background: $grey-50;
   grid-column-start: 1;
   grid-column-end: 4;
   border-radius: 0.625rem;
-  border: 1px solid #eff2f5;
+  // border: 1px solid #eff2f5;
+  border: 1px solid $grey-200;
   overflow: hidden;
   // padding: 0.5rem;
   // box-shadow: $shadow-1;
@@ -48,6 +50,7 @@
 
       h6 {
         color: #3f4254;
+        color: $grey-900;
         font-size: 1.15rem;
         margin-inline-end: 0.5rem;
       }

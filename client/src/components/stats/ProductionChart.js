@@ -9,7 +9,7 @@ const ProductionChart = () => {
   const {
     isLoadingStatsDailyProduction,
     getDailyBatching,
-    dailyBatching,
+    dailyBatchingArr,
     todayNumOfBatches,
     todayTotalBatchingWeight,
   } = useAppContext();
@@ -27,7 +27,7 @@ const ProductionChart = () => {
     series: [
       {
         name: "Weight",
-        data: dailyBatching.map((value) => value.weight),
+        data: dailyBatchingArr.map((value) => value.weight),
       },
     ],
     options: {
@@ -49,7 +49,7 @@ const ProductionChart = () => {
       },
       xaxis: {
         type: "datetime",
-        categories: dailyBatching.map((value) => value.date),
+        categories: dailyBatchingArr.map((value) => value.date),
         labels: {
           show: false,
         },

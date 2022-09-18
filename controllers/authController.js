@@ -97,8 +97,6 @@ const login = async (req, res, next) => {
     .select("+password")
     .populate("customerID");
 
-  console.log(user);
-
   if (!user) {
     const error = new UnAuthenticatedError("Invalid Credentials");
     return next(error);

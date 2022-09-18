@@ -27,6 +27,7 @@ import {
   // Stats
   GET_DAILY_PRODUCTION_BEGIN,
   GET_DAILY_PRODUCTION_SUCCESS,
+  GET_DAILY_PRODUCTION_EMPTY,
   GET_MATERIAL_TOLERANCE_BEGIN,
   GET_MATERIAL_TOLERANCE_SUCCESS,
   // Warehouse
@@ -53,7 +54,7 @@ const initialState = {
   openModal: false,
   // Stats
   isLoadingStatsDailyProduction: false,
-  dailyBatching: [],
+  dailyBatchingArr: [],
   todayNumOfBatches: 0,
   todayTotalBatchingWeight: 0,
   //
@@ -288,16 +289,27 @@ const AppProvider = ({ children }) => {
         condition
       );
       const { dailyBatching } = data;
-      dispatch({
-        type: GET_DAILY_PRODUCTION_SUCCESS,
-        payload: {
-          dailyBatching,
-          todayNumOfBatches:
-            dailyBatching[dailyBatching.length - 1].numOfBatches,
-          todayTotalBatchingWeight:
-            dailyBatching[dailyBatching.length - 1].weight,
-        },
-      });
+      if (dailyBatching.length === 0) {
+        dispatch({
+          type: GET_DAILY_PRODUCTION_EMPTY,
+          payload: {
+            dailyBatching,
+            todayNumOfBatches: 0,
+            todayTotalBatchingWeight: 0,
+          },
+        });
+      } else {
+        dispatch({
+          type: GET_DAILY_PRODUCTION_SUCCESS,
+          payload: {
+            dailyBatching,
+            todayNumOfBatches:
+              dailyBatching[dailyBatching.length - 1].numOfBatches,
+            todayTotalBatchingWeight:
+              dailyBatching[dailyBatching.length - 1].weight,
+          },
+        });
+      }
     } catch (error) {
       // logoutUser();
       console.log(error);

@@ -12,6 +12,7 @@
     // background-color: red;
     justify-content: space-between;
   }
+
   .page {
     // min-height: calc(100vh - $nav-height);
     min-height: calc(100vh - 6rem);
@@ -20,15 +21,19 @@
     // margin-top: -3rem;
     // background-color: aqua;
   }
+
   h1 {
     font-weight: 700;
+    margin-bottom: 0.875rem;
     span {
       color: $blue-500;
     }
   }
+
   p {
     color: $grey-600;
   }
+
   .main-img {
     display: none;
   }

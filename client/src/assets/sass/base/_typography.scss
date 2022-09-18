@@ -49,66 +49,6 @@ a {
   line-height: 1.15;
 }
 
-h1 {
-  font-family: f.$Ubuntu;
-  font-family: f.$Cabin;
-  font-family: f.$FiraSans;
-  font-family: f.$Roboto;
-  font-weight: 300;
-  font-size: 6rem;
-  line-height: 1.167;
-  letter-spacing: -0.01562em;
-}
-// h2
-h2 {
-  font-family: f.$FiraSans;
-  font-family: f.$Roboto;
-  font-weight: 300;
-  font-size: 3.75rem;
-  line-height: 1.2;
-  letter-spacing: -0.00833em;
-}
-// h1 {
-//   font-family: f.$FiraSans;
-//   font-weight: 400;
-//   font-size: 3rem;
-//   line-height: 1.167;
-//   letter-spacing: 0em;
-// }
-// h1 {
-//   font-family: f.$FiraSans;
-//   font-weight: 400;
-//   font-size: 2.125rem;
-//   line-height: 1.235;
-//   letter-spacing: 0.00735em;
-// }
-// h5
-h5 {
-  // font-family: f.$FiraSans;
-  font-weight: 400;
-  font-size: 1.5rem;
-  line-height: 1.334;
-  letter-spacing: 0em;
-  color: $primary-900;
-}
-// h6
-h6 {
-  // font-family: f.$FiraSans;
-  font-weight: 500;
-  font-size: 1.25rem;
-  line-height: 1.6;
-  letter-spacing: 0.0075em;
-}
-// // subtitle1
-// h1 {
-//   // font-family: f.$Cabin;
-//   font-family: f.$FiraSans;
-//   font-weight: 400;
-//   font-size: 1rem;
-//   line-height: 1.75;
-//   letter-spacing: 0.00938em;
-// }
-// subtitle2
 .subTitle2 {
   font-family: f.$Cabin;
   // font-family: f.$FiraSans;
@@ -118,25 +58,11 @@ h6 {
   letter-spacing: 0.00714em;
   color: $grey-500;
 }
-// }
-// // body 1
-// h1 {
-//   // font-family: f.$Cabin;
-//   font-family: f.$FiraSans;
-//   font-weight: 400;
-//   font-size: 1rem;
-//   line-height: 1.5;
-//   letter-spacing: 0.00938em;
-// }
-// // body 2
-// h1 {
-//   // font-family: f.$Cabin;
-//   font-family: f.$Roboto;
-//   font-weight: 400;
-//   font-size: 0.875rem;
-//   line-height: 1.43;
-//   letter-spacing: 0.01071em;
-// }
+
+.heading-colored {
+  color: $grey-900;
+  letter-spacing: 1px;
+}
 
 .muted {
   color: $grey-400;
