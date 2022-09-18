@@ -131,18 +131,7 @@ const reducer = (state, action) => {
       customer: null,
     };
   }
-  if (action.type === GET_MATERIALS_BEGIN) {
-    return { ...state, isLoading: true, showAlert: false };
-  }
-  if (action.type === GET_MATERIALS_SUCCESS) {
-    return {
-      ...state,
-      isLoading: false,
-      materials: action.payload.materials,
-      totalMaterials: action.payload.totalMaterials,
-      numOfPages: action.payload.numOfPages,
-    };
-  }
+
   if (action.type === GET_MATERIALS_CONSUMPTION_BEGIN) {
     return { ...state, isLoading: true, showAlert: false };
   }
@@ -179,8 +168,8 @@ const reducer = (state, action) => {
       numOfPages: action.payload.numOfPages,
     };
   }
-  // Stats
 
+  // Stats
   if (action.type === GET_DAILY_PRODUCTION_BEGIN) {
     return { ...state, isLoadingStatsDailyProduction: true };
   }
@@ -220,6 +209,20 @@ const reducer = (state, action) => {
       ...state,
       isLoadingWarehouseInventory: false,
       getWarehouseInventory: action.payload.allInventories,
+    };
+  }
+
+  // Materials
+  if (action.type === GET_MATERIALS_BEGIN) {
+    return { ...state, isLoadingMaterials: true, showAlert: false };
+  }
+  if (action.type === GET_MATERIALS_SUCCESS) {
+    return {
+      ...state,
+      isLoadingMaterials: false,
+      materialsArr: action.payload.materials,
+      totalMaterials: action.payload.totalMaterials,
+      numOfMaterialPages: action.payload.numOfPages,
     };
   }
   throw new Error(`no such action: ${action.type}`);

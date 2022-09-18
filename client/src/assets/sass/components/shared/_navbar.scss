@@ -1,4 +1,4 @@
-@use "../abstracts/index" as *;
+@use "../../abstracts/index" as *;
 
 .navbar {
   height: $nav-height;
@@ -24,8 +24,8 @@
     .toggle-btn {
       background: transparent;
       border-color: transparent;
-      font-size: 1.75rem;
-      color: $primary-500;
+      font-size: 1.5rem;
+      color: $blue-500;
       cursor: pointer;
       display: flex;
       align-items: center;

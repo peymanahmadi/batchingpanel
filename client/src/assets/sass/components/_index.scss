@@ -1,8 +1,8 @@
-@forward "./btn";
-@forward "./logo";
+@forward "../components/shared/btn";
+@forward "../components/shared/logo";
 @forward "./form";
 @forward "./alert";
-@forward "./navbar";
+@forward "../components/shared/navbar";
 @forward "./smallSidebar";
 @forward "./bigSidebar";
 @forward "./select";

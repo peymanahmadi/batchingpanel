@@ -70,9 +70,11 @@ const initialState = {
   materialConsumption: [],
   batchedFormulaArr: [],
   materialInventory: [],
-  // materials
-  materials: [],
+  // Materials
+  isLoadingMaterials: false,
+  materialsArr: [],
   totalMaterials: 0,
+  numOfMaterialPages: 1,
   // users
   users: [],
   totalUsers: 0,
@@ -137,7 +139,13 @@ const AppProvider = ({ children }) => {
     dispatch({ type: CLOSE_MODAL });
   };
 
-  const addUserToLocalStorage = ({ user, token, customer, customerID }) => {
+  const addUserToLocalStorage = ({
+    user,
+    token,
+    customerName,
+    customerCodeName,
+    customerID,
+  }) => {
     localStorage.setItem("user", JSON.stringify(user));
     localStorage.setItem("token", token);
     localStorage.setItem("customerName", customerName);
@@ -214,22 +222,6 @@ const AppProvider = ({ children }) => {
 
   const changeLanguage = (language) => {
     dispatch({ type: LANGUAGE, payload: { language } });
-  };
-
-  const getMaterials = async () => {
-    dispatch({ type: GET_MATERIALS_BEGIN });
-    try {
-      const { data } = await authFetch.post("/customers/materials/all");
-      const { materials, totalMaterials, numOfPages } = data;
-      dispatch({
-        type: GET_MATERIALS_SUCCESS,
-        payload: { materials, totalMaterials, numOfPages },
-      });
-    } catch (error) {
-      // logoutUser();
-      console.log(error);
-    }
-    clearAlert();
   };
 
   const getMaterialConsumption = async (condition) => {
@@ -349,6 +341,27 @@ const AppProvider = ({ children }) => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  // Materials
+
+  const getMaterials = async (condition) => {
+    dispatch({ type: GET_MATERIALS_BEGIN });
+    try {
+      const { data } = await authFetch.post(
+        "/customers/materials/all",
+        condition
+      );
+      const { materials, totalMaterials, numOfPages } = data;
+      dispatch({
+        type: GET_MATERIALS_SUCCESS,
+        payload: { materials, totalMaterials, numOfPages },
+      });
+    } catch (error) {
+      // logoutUser();
+      console.log(error);
+    }
+    clearAlert();
   };
 
   // Users

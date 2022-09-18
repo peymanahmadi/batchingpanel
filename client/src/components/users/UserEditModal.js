@@ -101,6 +101,17 @@ const UserEditModal = () => {
           value={values.jobTitle}
           handleChange={handleValuesChange}
         />
+        {/* <div>
+          <div className="form-label">Access Level</div>
+          <div>
+            <input type="checkbox" name="cbAdmin" id="" />
+            <span>Admin</span>
+          </div>
+          <div>
+            <input type="checkbox" name="cbAdmin" id="" />
+            Admin
+          </div>
+        </div> */}
         {/* <FormRow
           name="available"
           labelText={t("USERS.AVAILABLE")}

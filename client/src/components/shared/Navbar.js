@@ -5,7 +5,7 @@ import Logo from "./Logo";
 
 const Navbar = () => {
   const [showLogout, setShowLogout] = useState(false);
-  const { toggleSidebar, logoutUser, user } = useAppContext();
+  const { toggleSidebar, logoutUser, user, customerName } = useAppContext();
   return (
     <nav className="navbar">
       <div className="nav-center">
@@ -14,7 +14,7 @@ const Navbar = () => {
         </button>
         <div>
           <Logo />
-          <h6 className="logo-text">Dashboard</h6>
+          <h5 className="logo-text">{customerName}</h5>
         </div>
         <div className="btn-container">
           <button
