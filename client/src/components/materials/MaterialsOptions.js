@@ -1,6 +1,8 @@
 import { useTranslation } from "react-i18next";
+import { useAppContext } from "../../context/appContext";
 
 const MaterialsOptions = () => {
+  const { totalMaterials } = useAppContext();
   const { t } = useTranslation();
   return (
     <>
@@ -11,7 +13,9 @@ const MaterialsOptions = () => {
             <input placeholder={t("SEARCH")} />
             <button className="btn">{t("MATERIALS.ADDMATERIAL")}</button>
           </div>
-          <p>{/* {totalUsers} user{users.length > 1 && "s"} found */}</p>
+          <p>
+            {totalMaterials} material{totalMaterials.length > 1 && "s"} found
+          </p>
         </nav>
       </section>
     </>

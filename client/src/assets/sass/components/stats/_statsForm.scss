@@ -90,20 +90,3 @@
     transition: $transition;
   }
 }
-
-.stats-form__table {
-  padding: 0.5rem 1rem;
-  width: 100%;
-
-  th {
-    text-align: left;
-    border-bottom: 1px solid $primary-50;
-  }
-
-  tr {
-    // border: 1px solid $primary-50;
-    &:hover {
-      background: $grey-100;
-    }
-  }
-}
