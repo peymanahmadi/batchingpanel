@@ -48,8 +48,15 @@ const createFormula = async (req, res, next) => {
   }
 };
 
-const getAllFormulas = (req, res, next) => {
-  res.send("get all formulas");
+const getAllFormulas = async (req, res, next) => {
+  const { customerCodeName } = req.body;
+  const conn = createTenantConnection(customerCodeName);
+  try {
+    const formulas = await conn.model("Formula").find({});
+    res.status(200).json({ formulas });
+  } catch (error) {
+    return next(error);
+  }
 };
 
 const getFormulaByID = (req, res, next) => {

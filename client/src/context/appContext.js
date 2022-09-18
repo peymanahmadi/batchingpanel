@@ -28,6 +28,9 @@ import {
   GET_DAILY_PRODUCTION_EMPTY,
   GET_MATERIAL_TOLERANCE_BEGIN,
   GET_MATERIAL_TOLERANCE_SUCCESS,
+  // Formulas
+  GET_FORMULAS_BEGIN,
+  GET_FORMULAS_SUCCESS,
   // Warehouse
   GET_WAREHOUSE_INVENTORY_BEGIN,
   GET_WAREHOUSE_INVENTORY_SUCCESS,
@@ -75,6 +78,11 @@ const initialState = {
   materialsArr: [],
   totalMaterials: 0,
   numOfMaterialPages: 1,
+  // Formulas
+  isLoadingFormulas: false,
+  formulasArr: [],
+  totalFormulas: 0,
+  numOfFormulaPages: 1,
   // users
   users: [],
   totalUsers: 0,
@@ -383,6 +391,25 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
+  // Formulas
+
+  const getFormulas = async (condition) => {
+    dispatch({ type: GET_FORMULAS_BEGIN });
+    try {
+      const { data } = await authFetch.post(
+        "/customers/formulas/all",
+        condition
+      );
+      const { formulas, totalFormulas, numOfPages } = data;
+      dispatch({
+        type: GET_FORMULAS_SUCCESS,
+        payload: { formulas, totalFormulas, numOfPages },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -396,12 +423,13 @@ const AppProvider = ({ children }) => {
         logoutUser,
         changeLanguage,
         getUsers,
-        getMaterials,
         getMaterialConsumption,
         getMaterialInventory,
         getDailyBatching,
         getMaterialTolerance,
         getAllInventory,
+        getMaterials,
+        getFormulas,
       }}
     >
       {children}

@@ -25,5 +25,7 @@
   "USERS.PASSWORD": "password",
   "USERS.JOBTITLE": "job title",
   "USERS.AVAILABLE": "available",
+  "FORMULAS": "Formulas",
+  "FORMULAS.ADDFORMULA": "Add Formulas",
   "profile": "profile"
 }

@@ -14,7 +14,10 @@ import {
 } from "../controllers/materialsController.js";
 
 // Formulas
-import { createFormula } from "../controllers/formulasController.js";
+import {
+  createFormula,
+  getAllFormulas,
+} from "../controllers/formulasController.js";
 
 // Batchings
 import {
@@ -32,7 +35,6 @@ import {
   getAllInventory,
 } from "../controllers/warehousesController.js";
 
-
 // Customers
 router.route("/").get(getAllCustomers).post(createCustomer);
 
@@ -42,6 +44,7 @@ router.route("/materials/all").post(getAllMaterials);
 
 // Formulas
 router.route("/formulas").post(createFormula);
+router.route("/formulas/all").post(getAllFormulas);
 
 // Batchings
 router.route("/batching").post(createBatching);

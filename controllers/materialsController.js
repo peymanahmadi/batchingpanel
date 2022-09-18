@@ -3,12 +3,12 @@ import createTenantConnection from "../db/batchingTenant.js";
 
 const getAllMaterials = async (req, res, next) => {
   const { customerCodeName } = req.body;
-  console.log(customerCodeName);
   const conn = createTenantConnection(customerCodeName);
   try {
     const materials = await conn.model("Material").find({});
-    console.log(materials);
-    res.status(200).json({ materials });
+    res
+      .status(200)
+      .json({ materials, totalMaterials: materials.length, numOfPages: 1 });
   } catch (error) {
     return next(error);
   }

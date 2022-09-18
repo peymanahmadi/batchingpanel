@@ -25,6 +25,9 @@ import User from "../users/User";
 import MaterialsOptions from "../materials/MaterialsOptions";
 import MaterialsContainer from "../materials/MaterialsContainer";
 import InventoryChart from "../warehouse/InventoryChart";
+// Formulas
+import FormulasOptions from "../formulas/FormulasOptions";
+import FormulasContainer from "../formulas/FormulasContainer";
 
 export {
   Logo,
@@ -55,4 +58,7 @@ export {
   MaterialsContainer,
   // Warehouse
   InventoryChart,
+  // Formulas
+  FormulasOptions,
+  FormulasContainer,
 };

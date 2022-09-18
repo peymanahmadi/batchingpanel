@@ -28,6 +28,9 @@ import {
   GET_MATERIAL_TOLERANCE_SUCCESS,
   GET_WAREHOUSE_INVENTORY_BEGIN,
   GET_WAREHOUSE_INVENTORY_SUCCESS,
+  // Formulas
+  GET_FORMULAS_BEGIN,
+  GET_FORMULAS_SUCCESS,
 } from "./actions";
 
 import { initialState } from "./appContext";
@@ -223,6 +226,20 @@ const reducer = (state, action) => {
       materialsArr: action.payload.materials,
       totalMaterials: action.payload.totalMaterials,
       numOfMaterialPages: action.payload.numOfPages,
+    };
+  }
+
+  // Formulas
+  if (action.type === GET_FORMULAS_BEGIN) {
+    return { ...state, isLoadingFormulas: true };
+  }
+  if (action.type === GET_FORMULAS_SUCCESS) {
+    return {
+      ...state,
+      isLoadingFormulas: false,
+      formulasArr: action.payload.formulas,
+      totalFormulas: action.payload.totalFormulas,
+      numOfFormulaPages: action.payload.numOfPages,
     };
   }
   throw new Error(`no such action: ${action.type}`);
