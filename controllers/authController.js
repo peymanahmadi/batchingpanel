@@ -113,8 +113,9 @@ const login = async (req, res, next) => {
   res.status(200).json({
     user,
     token,
-    customer: user.customerID._id,
-    customerID: user.customerID.name,
+    customerName: user.customerID.name,
+    customerCodeName: user.customerID.codeName,
+    customerID: user.customerID._id,
   });
 };
 

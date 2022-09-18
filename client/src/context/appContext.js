@@ -20,8 +20,6 @@ import {
   GET_MATERIALS_CONSUMPTION_SUCCESS,
   GET_MATERIAL_INVENTORY_BEGIN,
   GET_MATERIAL_INVENTORY_SUCCESS,
-  GET_USERS_BEGIN,
-  GET_USERS_SUCCESS,
   OPEN_MODAL,
   CLOSE_MODAL,
   // Stats
@@ -33,11 +31,15 @@ import {
   // Warehouse
   GET_WAREHOUSE_INVENTORY_BEGIN,
   GET_WAREHOUSE_INVENTORY_SUCCESS,
+  // Users
+  GET_USERS_BEGIN,
+  GET_USERS_SUCCESS,
 } from "./actions";
 
 const token = localStorage.getItem("token");
 const user = localStorage.getItem("user");
-const customer = localStorage.getItem("customer");
+const customerName = localStorage.getItem("customerName");
+const customerCodeName = localStorage.getItem("customerCodeName");
 const customerID = localStorage.getItem("customerID");
 
 const initialState = {
@@ -48,7 +50,8 @@ const initialState = {
   alertType: "",
   user: user ? JSON.parse(user) : null,
   token: token,
-  customer: customer,
+  customerName: customerName,
+  customerCodeName: customerCodeName,
   customerID: customerID,
   showSidebar: false,
   openModal: false,
@@ -137,14 +140,16 @@ const AppProvider = ({ children }) => {
   const addUserToLocalStorage = ({ user, token, customer, customerID }) => {
     localStorage.setItem("user", JSON.stringify(user));
     localStorage.setItem("token", token);
-    localStorage.setItem("customer", customer);
+    localStorage.setItem("customerName", customerName);
+    localStorage.setItem("customerCodeName", customerCodeName);
     localStorage.setItem("customerID", customerID);
   };
 
   const removeUserFromLocalStorage = () => {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
-    localStorage.removeItem("customer");
+    localStorage.removeItem("customerName");
+    localStorage.removeItem("customerCodeName");
     localStorage.removeItem("customerID");
   };
 
@@ -155,12 +160,25 @@ const AppProvider = ({ children }) => {
         `http://localhost:5000/api/v1/auth/${endPoint}`,
         currentUser
       );
-      const { user, token, customer, customerID } = data;
+      const { user, token, customerName, customerCodeName, customerID } = data;
       dispatch({
         type: LOGIN_USER_SUCCESS,
-        payload: { user, token, customer, customerID, alertText },
+        payload: {
+          user,
+          token,
+          customerName,
+          customerCodeName,
+          customerID,
+          alertText,
+        },
       });
-      addUserToLocalStorage({ user, token, customer, customerID });
+      addUserToLocalStorage({
+        user,
+        token,
+        customerName,
+        customerCodeName,
+        customerID,
+      });
     } catch (error) {
       dispatch({
         type: LOGIN_USER_ERROR,
@@ -196,23 +214,6 @@ const AppProvider = ({ children }) => {
 
   const changeLanguage = (language) => {
     dispatch({ type: LANGUAGE, payload: { language } });
-  };
-
-  const getUsers = async () => {
-    dispatch({ type: GET_USERS_BEGIN });
-    try {
-      const { data } = await authFetch.post("/auth/users");
-      const { users, totalUsers, numOfPages } = data;
-      dispatch({
-        type: GET_USERS_SUCCESS,
-        payload: { users, totalUsers, numOfPages },
-      });
-    } catch (error) {
-      console.log(error.response);
-      // logoutUser();
-      console.log(error);
-    }
-    clearAlert();
   };
 
   const getMaterials = async () => {
@@ -348,6 +349,25 @@ const AppProvider = ({ children }) => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  // Users
+
+  const getUsers = async () => {
+    dispatch({ type: GET_USERS_BEGIN });
+    try {
+      const { data } = await authFetch(`/auth/users/${customerID}`);
+      const { users, totalUsers, numOfPages } = data;
+      dispatch({
+        type: GET_USERS_SUCCESS,
+        payload: { users, totalUsers, numOfPages },
+      });
+    } catch (error) {
+      console.log(error.response);
+      // logoutUser();
+      console.log(error);
+    }
+    clearAlert();
   };
 
   return (

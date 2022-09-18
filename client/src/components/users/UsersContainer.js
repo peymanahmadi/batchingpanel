@@ -11,6 +11,8 @@ const UsersContainer = () => {
     getUsers(customerID);
   }, []);
 
+  console.log(customerID);
+
   if (isLoading) {
     return <Loading center />;
   }

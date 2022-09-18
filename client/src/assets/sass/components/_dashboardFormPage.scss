@@ -3,9 +3,10 @@
 .dashboard-form-page {
   border-radius: $border-radius;
   width: 100%;
-  background: $white;
+  background: $grey-50;
+  border: 1px solid $grey-200;
   padding: 0.5rem 2rem 0.5rem;
-  box-shadow: $shadow-1;
+  // box-shadow: $shadow-1;
 
   p,
   h5 {
@@ -22,7 +23,8 @@
   input {
     padding: 0.375rem 0.75rem;
     border-radius: $border-radius;
-    background: $background-color;
+    // background: $background-color;
+    background: $white;
     border: 1px solid $grey-200;
     outline: none;
   }
