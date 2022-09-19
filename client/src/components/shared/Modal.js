@@ -9,8 +9,8 @@ const ModalOverlay = ({ children, content }) => {
   const { language } = useAppContext();
   return (
     <div className={language === "en" ? "english-font" : "farsi-font"}>
-      <div className="modal">
-        <div className={content}>{children}</div>
+      <div className={`modal ${content}`}>
+        <div>{children}</div>
       </div>
     </div>
   );
@@ -18,12 +18,12 @@ const ModalOverlay = ({ children, content }) => {
 
 const portalElement = document.getElementById("root");
 
-const Modal = ({ children, onClose }) => {
+const Modal = ({ children, onClose, className }) => {
   return (
     <>
       {ReactDOM.createPortal(<Backdrop onClose={onClose} />, portalElement)}
       {ReactDOM.createPortal(
-        <ModalOverlay>{children}</ModalOverlay>,
+        <ModalOverlay content={className}>{children}</ModalOverlay>,
         portalElement
       )}
     </>

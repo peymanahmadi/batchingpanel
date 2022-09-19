@@ -3,13 +3,8 @@ import { useAppContext } from "../../context/appContext";
 import Loading from "../shared/Loading";
 
 const MaterialsContainer = () => {
-  const {
-    getMaterials,
-    isLoadingMaterials,
-    materialsArr,
-    totalMaterials,
-    customerCodeName,
-  } = useAppContext();
+  const { getMaterials, isLoadingMaterials, materialsArr, customerCodeName } =
+    useAppContext();
 
   const header = ["Name", "Common ID", "Available", "Actions"];
 

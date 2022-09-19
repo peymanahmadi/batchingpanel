@@ -24,6 +24,7 @@ import User from "../users/User";
 // Materials
 import MaterialsOptions from "../materials/MaterialsOptions";
 import MaterialsContainer from "../materials/MaterialsContainer";
+import MaterialEditModal from "../materials/MaterialEditModal";
 import InventoryChart from "../warehouse/InventoryChart";
 // Formulas
 import FormulasOptions from "../formulas/FormulasOptions";
@@ -56,6 +57,7 @@ export {
   // Materials
   MaterialsOptions,
   MaterialsContainer,
+  MaterialEditModal,
   // Warehouse
   InventoryChart,
   // Formulas

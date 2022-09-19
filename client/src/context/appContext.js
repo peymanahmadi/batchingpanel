@@ -14,8 +14,6 @@ import {
   REGISTER_USER_ERROR,
   TOGGLE_SIDEBAR,
   LOGOUT_USER,
-  GET_MATERIALS_BEGIN,
-  GET_MATERIALS_SUCCESS,
   GET_MATERIALS_CONSUMPTION_BEGIN,
   GET_MATERIALS_CONSUMPTION_SUCCESS,
   GET_MATERIAL_INVENTORY_BEGIN,
@@ -28,6 +26,12 @@ import {
   GET_DAILY_PRODUCTION_EMPTY,
   GET_MATERIAL_TOLERANCE_BEGIN,
   GET_MATERIAL_TOLERANCE_SUCCESS,
+  // Materials
+  GET_MATERIALS_BEGIN,
+  GET_MATERIALS_SUCCESS,
+  CREATE_MATERIAL_BEGIN,
+  CREATE_MATERIAL_SUCCESS,
+  CREATE_MATERIAL_ERROR,
   // Formulas
   GET_FORMULAS_BEGIN,
   GET_FORMULAS_SUCCESS,
@@ -78,6 +82,7 @@ const initialState = {
   materialsArr: [],
   totalMaterials: 0,
   numOfMaterialPages: 1,
+  isLoadingCreateMaterial: false,
   // Formulas
   isLoadingFormulas: false,
   formulasArr: [],
@@ -372,6 +377,20 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
+  const createMaterial = async (condition) => {
+    dispatch({ type: CREATE_MATERIAL_BEGIN });
+    try {
+      await authFetch.post("/customers/materials", condition);
+      dispatch({ type: CREATE_MATERIAL_SUCCESS });
+    } catch (error) {
+      dispatch({
+        type: CREATE_MATERIAL_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+    clearAlert();
+  };
+
   // Users
 
   const getUsers = async () => {
@@ -429,6 +448,7 @@ const AppProvider = ({ children }) => {
         getMaterialTolerance,
         getAllInventory,
         getMaterials,
+        createMaterial,
         getFormulas,
       }}
     >

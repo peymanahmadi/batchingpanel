@@ -10,8 +10,6 @@ import {
   REGISTER_USER_ERROR,
   TOGGLE_SIDEBAR,
   LOGOUT_USER,
-  GET_MATERIALS_BEGIN,
-  GET_MATERIALS_SUCCESS,
   GET_MATERIALS_CONSUMPTION_BEGIN,
   GET_MATERIALS_CONSUMPTION_SUCCESS,
   GET_MATERIAL_INVENTORY_BEGIN,
@@ -28,6 +26,12 @@ import {
   GET_MATERIAL_TOLERANCE_SUCCESS,
   GET_WAREHOUSE_INVENTORY_BEGIN,
   GET_WAREHOUSE_INVENTORY_SUCCESS,
+  // Materials
+  GET_MATERIALS_BEGIN,
+  GET_MATERIALS_SUCCESS,
+  CREATE_MATERIAL_BEGIN,
+  CREATE_MATERIAL_SUCCESS,
+  CREATE_MATERIAL_ERROR,
   // Formulas
   GET_FORMULAS_BEGIN,
   GET_FORMULAS_SUCCESS,
@@ -226,6 +230,27 @@ const reducer = (state, action) => {
       materialsArr: action.payload.materials,
       totalMaterials: action.payload.totalMaterials,
       numOfMaterialPages: action.payload.numOfPages,
+    };
+  }
+  if (action.type === CREATE_MATERIAL_BEGIN) {
+    return { ...state, isLoadingCreateMaterial: true };
+  }
+  if (action.type === CREATE_MATERIAL_SUCCESS) {
+    return {
+      ...state,
+      isLoadingCreateMaterial: false,
+      showAlert: true,
+      alertType: "success",
+      alertText: "Create Successful!",
+    };
+  }
+  if (action.type === CREATE_MATERIAL_ERROR) {
+    return {
+      ...state,
+      isLoadingCreateMaterial: false,
+      showAlert: true,
+      alertType: "danger",
+      alertText: action.payload.msg,
     };
   }
 
