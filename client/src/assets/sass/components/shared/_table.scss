@@ -1,36 +1,51 @@
 @use "../../abstracts/index" as *;
 
-.stats-form__table {
+.form-table {
   width: 100%;
   text-align: left;
-  border-spacing: 0;
+  // border-spacing: 0;
+  border-collapse: collapse;
   border: 1px solid $grey-200;
   border-radius: $border-radius;
 
-  tr:nth-child(even) {
-    background: $white;
-    // padding: 5px;
-    // border: 1px solid $primary-50;
-    // &:hover {
-    //   background: $grey-100;
-    // }
+  thead {
+    background: $grey-200;
+    padding: 5px;
+
+    .table-header {
+      th {
+        padding: 5px;
+      }
+      //   text-align: left;
+      // th:last-child {
+      //   text-align: right;
+      // }
+    }
   }
 
-  .table-header {
-    background: $grey-100;
-
-    th {
-      padding: 5px;
+  tbody {
+    tr:nth-child(even) {
+      background: $grey-50;
+      // padding: 5px;
+      // border: 1px solid $primary-50;
+      &:hover {
+        background: $grey-100;
+      }
     }
-
-    //   text-align: left;
-    // th:last-child {
-    //   text-align: right;
-    // }
   }
 
   td {
     padding: 5px;
+  }
+}
+
+.table-row {
+  &:hover {
+    background: $grey-100;
+  }
+
+  .active {
+    background: $grey-200;
   }
 }
 
@@ -42,4 +57,33 @@
   font-size: 0.875rem;
   font-style: italic;
   color: $grey-300;
+}
+
+.list-input {
+  outline: none;
+  padding: 0.25rem;
+  border: 1px solid $grey-200;
+}
+
+.ingredients {
+  background: $grey-50;
+  width: 100%;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  min-height: 200px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.ingredients-list {
+  padding: 0.5rem;
+  background: $grey-100;
+  margin: 0.25rem;
+  cursor: pointer;
+}
+
+.list-active {
+  background: $grey-200;
+  // color: #a8dadc;
 }

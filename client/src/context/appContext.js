@@ -80,6 +80,7 @@ const initialState = {
   // Materials
   isLoadingMaterials: false,
   materialsArr: [],
+  availableMaterialsArr: [],
   totalMaterials: 0,
   numOfMaterialPages: 1,
   isLoadingCreateMaterial: false,
@@ -366,9 +367,16 @@ const AppProvider = ({ children }) => {
         condition
       );
       const { materials, totalMaterials, numOfPages } = data;
+      let availableMaterials = [];
+      materials.map((material) => {
+        material.selected = false;
+        if (material.available) {
+          availableMaterials = [...availableMaterials, material];
+        }
+      });
       dispatch({
         type: GET_MATERIALS_SUCCESS,
-        payload: { materials, totalMaterials, numOfPages },
+        payload: { materials, availableMaterials, totalMaterials, numOfPages },
       });
     } catch (error) {
       // logoutUser();

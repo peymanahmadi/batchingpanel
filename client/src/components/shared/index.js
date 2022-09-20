@@ -29,6 +29,7 @@ import InventoryChart from "../warehouse/InventoryChart";
 // Formulas
 import FormulasOptions from "../formulas/FormulasOptions";
 import FormulasContainer from "../formulas/FormulasContainer";
+import FormulaEditModal from "../formulas/FormulaEditModal";
 
 export {
   Logo,
@@ -63,4 +64,5 @@ export {
   // Formulas
   FormulasOptions,
   FormulasContainer,
+  FormulaEditModal,
 };

@@ -228,6 +228,7 @@ const reducer = (state, action) => {
       ...state,
       isLoadingMaterials: false,
       materialsArr: action.payload.materials,
+      availableMaterialsArr: action.payload.availableMaterials,
       totalMaterials: action.payload.totalMaterials,
       numOfMaterialPages: action.payload.numOfPages,
     };
