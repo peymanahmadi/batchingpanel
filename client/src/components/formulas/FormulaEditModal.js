@@ -158,6 +158,11 @@ const FormulaEditModal = () => {
         <div className="formulation">
           <div className="table1">
             <ul className="ingredients">
+              <div className="list-header">
+                <div>Code</div>
+                <div>Name</div>
+                <div>Weight</div>
+              </div>
               {ingredients.map((ingredient, index) => {
                 console.log(ingredient);
                 return (
@@ -168,9 +173,13 @@ const FormulaEditModal = () => {
                     key={index}
                     onClick={() => handleListClick(index, ingredient)}
                   >
-                    {ingredient.commonMaterialID}
-                    {ingredient.name}
-                    {ingredient.description}
+                    <div>{ingredient.commonMaterialID}</div>
+                    <div>
+                      {ingredient.name}
+                      <div className="table-subTitle">
+                        {ingredient.description}
+                      </div>
+                    </div>
                     <input className="list-input" type="number" name="" id="" />
                   </li>
                 );
@@ -193,19 +202,27 @@ const FormulaEditModal = () => {
           </div>
           <div className="table2">
             <ul className="ingredients">
+              <div className="list-header materials-list">
+                <div>Code</div>
+                <div>Name</div>
+              </div>
               {materials.map((material, index) => {
                 console.log(material);
                 return (
                   <li
-                    className={`ingredients-list ${
+                    className={`ingredients-list materials-list ${
                       material.selected ? "list-active" : null
                     }`}
                     key={index}
                     onClick={() => handleListClick(index, material)}
                   >
-                    {material.commonMaterialID}
-                    {material.name}
-                    {material.description}
+                    <div>{material.commonMaterialID}</div>
+                    <div>
+                      {material.name}
+                      <div className="table-subTitle">
+                        {material.description}
+                      </div>
+                    </div>
                   </li>
                 );
               })}
