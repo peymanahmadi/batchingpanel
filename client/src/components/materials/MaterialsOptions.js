@@ -34,7 +34,7 @@ const MaterialsOptions = () => {
             </button>
           </div>
           <p>
-            {totalMaterials} material{totalMaterials.length > 1 && "s"} found
+            {totalMaterials} material{totalMaterials > 1 && "s"} found
           </p>
         </nav>
       </section>

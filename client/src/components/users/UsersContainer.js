@@ -1,50 +1,68 @@
 import { useEffect } from "react";
 import { useAppContext } from "../../context/appContext";
-import Loading from "../shared/Loading";
-import User from "./User";
+import { Loading, Badge } from "../shared";
+// import User from "./User";
 
 const UsersContainer = () => {
-  const { getUsers, users, isLoading, page, totalUsers, customerID } =
-    useAppContext();
+  const {
+    getUsers,
+    usersArr,
+    isLoadingUsers,
+    page,
+    totalUsers,
+    customerCodeName,
+  } = useAppContext();
+
+  const header = ["Name", "Job Title", "Available", "Actions"];
+
+  const condition = {
+    customerCodeName,
+  };
 
   useEffect(() => {
-    getUsers(customerID);
+    getUsers(customerCodeName);
   }, []);
 
-  console.log(customerID);
-
-  if (isLoading) {
-    return <Loading center />;
-  }
-
-  if (users.length === 0) {
-    return (
-      <section>
-        <h2>No users to display</h2>
-      </section>
-    );
-  }
   return (
-    <>
-      <div className="users-container">
-        <div className="users-header">
-          <p>Name</p>
-          <p></p>
-          <p>Role</p>
-          <p>Actions</p>
-        </div>
-        {users.map((user) => {
-          return (
-            <User
-              key={user._id}
-              firstName={user.firstName}
-              lastName={user.lastName}
-              jobTitle={user.jobTitle}
-            />
-          );
-        })}
-      </div>
-    </>
+    <div className="users-container">
+      {isLoadingUsers ? (
+        <Loading center />
+      ) : (
+        <table className="form-table">
+          <thead>
+            <tr className="table-header">
+              {header.map((title, index) => (
+                <th key={index}>{title}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {usersArr.map((user, index) => {
+              return (
+                <tr className="table-row" key={index}>
+                  <td>
+                    <div className="table-row__text">
+                      {user.firstName} {user.lastName}
+                    </div>
+                    <div className="table-subTitle">{user.email}</div>
+                  </td>
+                  <td className="table-row__text">{user.jobTitle}</td>
+                  <td className="table-row__text">
+                    <Badge
+                      type={user.available ? "success" : "fail"}
+                      content={user.available ? "Available" : "Not Available"}
+                    />
+                  </td>
+                  <td>
+                    <button className="btn-secondary">Edit</button>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      )}
+    </div>
   );
 };
 

@@ -143,9 +143,9 @@ const updateUser = async (req, res, next) => {
 };
 
 const getUsersByCustomerID = async (req, res, next) => {
-  const cID = req.params;
+  const { customerCodeName } = req.body;
   try {
-    const users = await userModel.find({ cID });
+    const users = await userModel.find({ customerCodeName });
     res.status(200).json({ users, totalUsers: users.length, numOfPages: 1 });
   } catch (error) {
     return next(error);

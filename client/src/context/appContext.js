@@ -90,9 +90,10 @@ const initialState = {
   totalFormulas: 0,
   numOfFormulaPages: 1,
   // users
-  users: [],
+  isLoadingUsers: false,
+  usersArr: [],
   totalUsers: 0,
-  numOfPages: 1,
+  numOfUserPages: 1,
   page: 1,
   // Warehouse
   isLoadingWarehouseInventory: false,
@@ -401,10 +402,10 @@ const AppProvider = ({ children }) => {
 
   // Users
 
-  const getUsers = async () => {
+  const getUsers = async (condition) => {
     dispatch({ type: GET_USERS_BEGIN });
     try {
-      const { data } = await authFetch(`/auth/users/${customerID}`);
+      const { data } = await authFetch.post("/auth/users", condition);
       const { users, totalUsers, numOfPages } = data;
       dispatch({
         type: GET_USERS_SUCCESS,

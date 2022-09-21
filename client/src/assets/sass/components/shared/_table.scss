@@ -9,12 +9,12 @@
   border-radius: $border-radius;
 
   thead {
-    background: $grey-200;
-    padding: 5px;
+    background: $grey-300;
+    // padding: 5px;
 
     .table-header {
       th {
-        padding: 5px;
+        padding: 0.5rem;
       }
       //   text-align: left;
       // th:last-child {
@@ -29,28 +29,30 @@
       // padding: 5px;
       // border: 1px solid $primary-50;
       &:hover {
-        background: $grey-100;
+        background: $grey-200;
       }
     }
   }
 
   td {
-    padding: 5px;
+    padding: 0.25rem 0.5rem;
   }
 }
 
 .table-row {
+  background: $white;
   &:hover {
-    background: $grey-100;
-  }
-
-  .active {
     background: $grey-200;
   }
+
+  // .active {
+  //   background: $grey-200;
+  // }
 }
 
 .table-row__text {
   font-size: 1rem;
+  line-height: 1.25rem;
 }
 
 .table-subTitle {

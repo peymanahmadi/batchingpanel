@@ -39,7 +39,7 @@ const UsersOptions = () => {
             </button>
           </div>
           <p>
-            {totalUsers} user{users.length > 1 && "s"} found
+            {totalUsers} user{totalUsers > 1 && "s"} found
           </p>
         </nav>
       </section>

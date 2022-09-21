@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useAppContext } from "../../context/appContext";
-import Loading from "../shared/Loading";
+import { Loading, Badge } from "../shared";
 
 const MaterialsContainer = () => {
   const { getMaterials, isLoadingMaterials, materialsArr, customerCodeName } =
@@ -9,7 +9,7 @@ const MaterialsContainer = () => {
   const header = ["Name", "Common ID", "Available", "Actions"];
 
   const condition = {
-    customerCodeName: customerCodeName,
+    customerCodeName,
   };
 
   useEffect(() => {
@@ -19,31 +19,33 @@ const MaterialsContainer = () => {
   return (
     <div className="users-container">
       {isLoadingMaterials ? (
-        <Loading />
+        <Loading center />
       ) : (
-        <table className="stats-form__table">
+        <table className="form-table">
           <thead>
             <tr className="table-header">
-              {header.map((h, index) => (
-                <th key={index}>{h}</th>
+              {header.map((title, index) => (
+                <th key={index}>{title}</th>
               ))}
             </tr>
           </thead>
           <tbody>
-            {materialsArr.map((mat, index) => {
+            {materialsArr.map((material, index) => {
               return (
-                <tr key={index}>
+                <tr className="table-row" key={index}>
                   <td>
-                    <div className="table-row__text">{mat.name}</div>
-                    <div className="table-subTitle">{mat.description}</div>
+                    <div className="table-row__text">{material.name}</div>
+                    <div className="table-subTitle">{material.description}</div>
                   </td>
-                  <td className="table-row__text">{mat.commonMaterialID}</td>
                   <td className="table-row__text">
-                    <input
-                      type="checkbox"
-                      name=""
-                      id=""
-                      checked={mat.available}
+                    {material.commonMaterialID}
+                  </td>
+                  <td className="table-row__text">
+                    <Badge
+                      type={material.available ? "success" : "fail"}
+                      content={
+                        material.available ? "Available" : "Not Available"
+                      }
                     />
                   </td>
                   <td>

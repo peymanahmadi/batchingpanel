@@ -53,7 +53,9 @@ const getAllFormulas = async (req, res, next) => {
   const conn = createTenantConnection(customerCodeName);
   try {
     const formulas = await conn.model("Formula").find({});
-    res.status(200).json({ formulas });
+    res
+      .status(200)
+      .json({ formulas, totalFormulas: formulas.length, numOfPages: 1 });
   } catch (error) {
     return next(error);
   }

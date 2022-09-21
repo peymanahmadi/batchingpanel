@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import { useAppContext } from "../../context/appContext";
-import Loading from "../shared/Loading";
+import { Loading, Badge } from "../shared";
 
 const FormulasContainer = () => {
   const { getFormulas, isLoadingFormulas, formulasArr, customerCodeName } =
     useAppContext();
 
-  const header = ["Formulas"];
+  const header = ["Name", "Common ID", "Available", "Actions"];
 
   const condition = {
     customerCodeName,
@@ -19,21 +19,36 @@ const FormulasContainer = () => {
   return (
     <div className="users-container">
       {isLoadingFormulas ? (
-        <Loading />
+        <Loading center />
       ) : (
-        <table className="stats-form__table">
+        <table className="form-table">
           <thead>
-            <tr>
-              {header.map((h, index) => (
-                <th key={index}>{h}</th>
+            <tr className="table-header">
+              {header.map((title, index) => (
+                <th key={index}>{title}</th>
               ))}
             </tr>
           </thead>
           <tbody>
-            {formulasArr.map((mat, index) => {
+            {formulasArr.map((formula, index) => {
               return (
-                <tr key={index}>
-                  <td>{mat.name}</td>
+                <tr className="table-row" key={index}>
+                  <td>
+                    <div className="table-row__text">{formula.name}</div>
+                    <div className="table-subTitle">{formula.description}</div>
+                  </td>
+                  <td className="table-row__text">{formula.commonFormulaID}</td>
+                  <td className="table-row__text">
+                    <Badge
+                      type={formula.available ? "success" : "fail"}
+                      content={
+                        formula.available ? "Available" : "Not Available"
+                      }
+                    />
+                  </td>
+                  <td>
+                    <button className="btn-secondary">Edit</button>
+                  </td>
                 </tr>
               );
             })}

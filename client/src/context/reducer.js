@@ -164,15 +164,15 @@ const reducer = (state, action) => {
     };
   }
   if (action.type === GET_USERS_BEGIN) {
-    return { ...state, isLoading: true, showAlert: false };
+    return { ...state, isLoadingUsers: true, showAlert: false };
   }
   if (action.type === GET_USERS_SUCCESS) {
     return {
       ...state,
-      isLoading: false,
-      users: action.payload.users,
+      isLoadingUsers: false,
+      usersArr: action.payload.users,
       totalUsers: action.payload.totalUsers,
-      numOfPages: action.payload.numOfPages,
+      numOfUserPages: action.payload.numOfPages,
     };
   }
 

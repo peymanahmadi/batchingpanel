@@ -5,6 +5,7 @@ import Navbar from "./Navbar";
 import SmallSidebar from "./SmallSidebar";
 import BigSidebar from "./BigSidebar";
 import ButtonGroup from "./ButtonGroup";
+import Badge from "./Badge";
 // import Form from "./Form";
 import Modal from "./Modal";
 import Loading from "./Loading";
@@ -20,7 +21,6 @@ import MaterialTolerance from "../stats/MaterialTolerance";
 import UsersOptions from "../users/UsersOptions";
 import UserEditModal from "../users/UserEditModal";
 import UsersContainer from "../users/UsersContainer";
-import User from "../users/User";
 // Materials
 import MaterialsOptions from "../materials/MaterialsOptions";
 import MaterialsContainer from "../materials/MaterialsContainer";
@@ -39,6 +39,7 @@ export {
   SmallSidebar,
   BigSidebar,
   ButtonGroup,
+  Badge,
   // Form,
   Modal,
   Loading,
@@ -54,7 +55,6 @@ export {
   UsersOptions,
   UserEditModal,
   UsersContainer,
-  User,
   // Materials
   MaterialsOptions,
   MaterialsContainer,
