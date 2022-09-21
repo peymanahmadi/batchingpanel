@@ -6,6 +6,7 @@ import SmallSidebar from "./SmallSidebar";
 import BigSidebar from "./BigSidebar";
 import ButtonGroup from "./ButtonGroup";
 import Badge from "./Badge";
+import CheckBox from "./CheckBox";
 // import Form from "./Form";
 import Modal from "./Modal";
 import Loading from "./Loading";
@@ -40,6 +41,7 @@ export {
   BigSidebar,
   ButtonGroup,
   Badge,
+  CheckBox,
   // Form,
   Modal,
   Loading,

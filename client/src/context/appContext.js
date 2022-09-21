@@ -35,6 +35,9 @@ import {
   // Formulas
   GET_FORMULAS_BEGIN,
   GET_FORMULAS_SUCCESS,
+  CREATE_FORMULA_BEGIN,
+  CREATE_FORMULA_SUCCESS,
+  CREATE_FORMULA_ERROR,
   // Warehouse
   GET_WAREHOUSE_INVENTORY_BEGIN,
   GET_WAREHOUSE_INVENTORY_SUCCESS,
@@ -89,6 +92,7 @@ const initialState = {
   formulasArr: [],
   totalFormulas: 0,
   numOfFormulaPages: 1,
+  isLoadingCreateMaterial: false,
   // users
   isLoadingUsers: false,
   usersArr: [],
@@ -438,6 +442,20 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  const createFormula = async (condition) => {
+    dispatch({ type: CREATE_FORMULA_BEGIN });
+    try {
+      await authFetch.post("/customers/formulas", condition);
+      dispatch({ type: CREATE_FORMULA_SUCCESS });
+    } catch (error) {
+      dispatch({
+        type: CREATE_FORMULA_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+    clearAlert();
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -459,6 +477,7 @@ const AppProvider = ({ children }) => {
         getMaterials,
         createMaterial,
         getFormulas,
+        createFormula,
       }}
     >
       {children}

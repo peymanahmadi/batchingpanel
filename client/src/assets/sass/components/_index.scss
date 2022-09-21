@@ -5,14 +5,15 @@
 @forward "../components/shared/bigSidebar";
 @forward "../components/shared/modalForm";
 @forward "../components/shared/badge";
+@forward "../components/shared/checkbox";
+@forward "../components/shared/alert";
 @forward "./form";
-@forward "./alert";
 @forward "./smallSidebar";
 @forward "./select";
 @forward "./dashboardFormPage";
 @forward "./modal";
 @forward "../components/users/userForm";
-@forward "./loading";
+@forward "../components/shared/loading";
 @forward "./users/users";
 @forward "./stats/statsContainer";
 @forward "./stats/statsForm";

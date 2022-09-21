@@ -35,6 +35,9 @@ import {
   // Formulas
   GET_FORMULAS_BEGIN,
   GET_FORMULAS_SUCCESS,
+  CREATE_FORMULA_BEGIN,
+  CREATE_FORMULA_SUCCESS,
+  CREATE_FORMULA_ERROR,
 } from "./actions";
 
 import { initialState } from "./appContext";
@@ -266,6 +269,27 @@ const reducer = (state, action) => {
       formulasArr: action.payload.formulas,
       totalFormulas: action.payload.totalFormulas,
       numOfFormulaPages: action.payload.numOfPages,
+    };
+  }
+  if (action.type === CREATE_FORMULA_BEGIN) {
+    return { ...state, isLoadingCreateFormula: true };
+  }
+  if (action.type === CREATE_FORMULA_SUCCESS) {
+    return {
+      ...state,
+      isLoadingCreateFormula: false,
+      showAlert: true,
+      alertType: "success",
+      alertText: "Create Successful!",
+    };
+  }
+  if (action.type === CREATE_FORMULA_ERROR) {
+    return {
+      ...state,
+      isLoadingCreateFormula: false,
+      showAlert: true,
+      alertType: "danger",
+      alertText: action.payload.msg,
     };
   }
   throw new Error(`no such action: ${action.type}`);

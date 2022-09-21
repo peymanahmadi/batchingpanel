@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { FaTimes } from "react-icons/fa";
+import { FaTimes, FaFlask } from "react-icons/fa";
 import { FormRow, Alert } from "../shared";
 import {
   BsChevronDoubleLeft,
@@ -16,17 +16,20 @@ const initialState = {
   description: "",
   formulaBatchSize: 1500,
   available: true,
+  ingredients: [],
 };
 
-// const ingredients = {
-//   commonMaterialID: "",
-//   name: "",
-//   weight: 0,
-// };
+const comb = {
+  commonMaterialID: "",
+  weight: 0,
+};
 
 const FormulaEditModal = () => {
   const {
+    hideModal,
     getMaterials,
+    createFormula,
+    showAlert,
     materialsArr,
     availableMaterialsArr,
     customerCodeName,
@@ -34,9 +37,9 @@ const FormulaEditModal = () => {
 
   const [materials, setMaterials] = useState(availableMaterialsArr);
   const [values, setValues] = useState(initialState);
-  const [ingValues, setIngValues] = useState([]);
   const [ingredients, setIngredients] = useState([]);
-  const [load, setLoad] = useState();
+  const [combination, setCombination] = useState(comb);
+  const [ingValues, setIngValues] = useState([]);
 
   const condition = {
     customerCodeName,
@@ -50,8 +53,17 @@ const FormulaEditModal = () => {
     setMaterials(availableMaterialsArr);
   }, [availableMaterialsArr]);
 
+  const closeModal = () => {
+    setMaterials([]);
+    setValues(initialState);
+    setIngredients([]);
+    hideModal();
+  };
+
   const handleValuesChange = (e) => {
-    // setValues({ ...initialState, [e.target.name]: e.target.value });
+    console.log(e.target);
+    console.log(e.target.name);
+    setValues({ ...values, [e.target.name]: e.target.value });
   };
 
   const handleMoveLeft = () => {
@@ -61,6 +73,7 @@ const FormulaEditModal = () => {
     materials.map((material) => {
       if (material.selected) {
         material.selected = false;
+        material.weight = null;
         setIngredients((prevState) => [...prevState, material]);
       }
     });
@@ -82,21 +95,46 @@ const FormulaEditModal = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(ingValues);
+    // ingredients.remove("_id");
+    console.log(ingredients);
+    values.ingredients = ingredients;
+    values.customerCodeName = customerCodeName;
+    // console.log(values);
+    // setValues(prevState => [...prevState, values.ingredients])
+    setValues(values);
+    console.log(values);
+    createFormula(values);
+    // for(let i = 0; i < ingredients.length; i++){
+
+    // }
   };
 
-  console.log(materials);
+  // console.log(materials); // imppppppppppppppppppppppppppppppp
   const handleListClick = (index, material) => {
     material.selected = !material.selected;
     setMaterials([...materials]);
   };
 
+  const handleInputChange = (index, ingredient, e) => {
+    ingredients[index].weight = e.target.value;
+    ingredients[index].materialID = ingredients[index]._id;
+    setIngredients([...ingredients]);
+  };
+
   return (
     <form className="modal-form" onSubmit={handleSubmit}>
       <nav className="modal-form__header">
-        <h5>Add Formula</h5>
-        <FaTimes />
+        <div className="modal-form__header__title">
+          <FaFlask />
+          <h5>Add Material</h5>
+        </div>
+        <FaTimes onClick={closeModal} />
       </nav>
+      {showAlert && (
+        <div className="modal-form__content">
+          <Alert />
+        </div>
+      )}
       <div className="modal-form__content">
         <div className="modal-form__content__inputs">
           <div className="cfi">
@@ -122,7 +160,7 @@ const FormulaEditModal = () => {
               name="name"
               labelText="Name"
               type="text"
-              value={values.description}
+              value={values.name}
               handleChange={handleValuesChange}
             />
           </div>
@@ -155,16 +193,17 @@ const FormulaEditModal = () => {
           </div>
         </div>
 
+        <div>Formulation</div>
         <div className="formulation">
-          <div className="table1">
+          <div className="list-ingredients">
+            <div className="list-header">
+              <div>Code</div>
+              <div>Name</div>
+              <div>Weight</div>
+            </div>
             <ul className="ingredients">
-              <div className="list-header">
-                <div>Code</div>
-                <div>Name</div>
-                <div>Weight</div>
-              </div>
               {ingredients.map((ingredient, index) => {
-                console.log(ingredient);
+                // console.log(ingredient); // impppppppppppppppppppppppppppp
                 return (
                   <li
                     className={`ingredients-list ${
@@ -180,7 +219,14 @@ const FormulaEditModal = () => {
                         {ingredient.description}
                       </div>
                     </div>
-                    <input className="list-input" type="number" name="" id="" />
+                    <input
+                      className="list-input"
+                      type="number"
+                      name={ingredient.commonMaterialID}
+                      // name="weight"
+                      value={ingredients[index].weight}
+                      onChange={(e) => handleInputChange(index, ingredient, e)}
+                    />
                   </li>
                 );
               })}
@@ -200,14 +246,14 @@ const FormulaEditModal = () => {
             <BsChevronDoubleLeft />
             {/* </button> */}
           </div>
-          <div className="table2">
+          <div className="list-materials">
+            <div className="list-header materials-list">
+              <div>Code</div>
+              <div>Name</div>
+            </div>
             <ul className="ingredients">
-              <div className="list-header materials-list">
-                <div>Code</div>
-                <div>Name</div>
-              </div>
               {materials.map((material, index) => {
-                console.log(material);
+                // console.log(material); // imppppppppppppppppppppppppppppppppppp
                 return (
                   <li
                     className={`ingredients-list materials-list ${

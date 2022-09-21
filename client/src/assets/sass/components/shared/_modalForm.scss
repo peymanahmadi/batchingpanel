@@ -16,6 +16,15 @@
         color: $grey-900;
       }
     }
+
+    .modal-form__header__title {
+      display: flex;
+      align-items: center;
+      svg {
+        margin-inline-end: 0.5rem;
+        color: $green-500;
+      }
+    }
   }
 
   .modal-form__content {
@@ -27,34 +36,34 @@
 
     .modal-form__content__inputs {
       display: grid;
-      grid-template-columns: 2fr 1fr 3fr;
+      grid-template-columns: repeat(12, 1fr);
       // grid-template-rows: 1fr 1fr;
       column-gap: 0.5rem;
 
       .cfi {
         grid-column-start: 1;
-        grid-column-end: 2;
-      }
-      .version {
-        grid-column-start: 2;
         grid-column-end: 3;
       }
-      .name {
+      .version {
         grid-column-start: 3;
+        grid-column-end: 4;
+      }
+      .name {
+        grid-column-start: 4;
         grid-column-end: 7;
       }
 
       .desc {
-        grid-column-start: 1;
-        grid-column-end: 3;
+        grid-column-start: 7;
+        grid-column-end: 10;
       }
       .batch-size {
-        grid-column-start: 3;
-        grid-column-end: 4;
+        grid-column-start: 10;
+        grid-column-end: 12;
       }
       .available {
-        grid-column-start: 5;
-        grid-column-end: 7;
+        grid-column-start: 12;
+        grid-column-end: 13;
       }
     }
 
@@ -97,9 +106,19 @@
   column-gap: 0.5rem;
 }
 
-.table1 {
+.list-ingredients {
   grid-column-start: 1;
   grid-column-end: 8;
+  border: 1px solid $grey-200;
+  border-radius: $border-radius;
+}
+
+.list-materials {
+  grid-column-start: 9;
+  grid-column-end: 13;
+  border: 1px solid $grey-200;
+  border-radius: $border-radius;
+  padding-bottom: 0.25rem;
 }
 
 .buttons {
@@ -127,9 +146,4 @@
       background: $grey-300;
     }
   }
-}
-
-.table2 {
-  grid-column-start: 9;
-  grid-column-end: 13;
 }

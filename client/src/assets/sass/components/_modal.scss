@@ -40,13 +40,14 @@
 }
 
 @media (min-width: 1200px) {
-  .modal-one-column {
-    width: 20rem;
-    left: calc(50% - 10rem);
-  }
   .modal {
     width: 70rem;
     left: calc(50% - 35rem);
+  }
+
+  .modal-one-column {
+    width: 20rem;
+    left: calc(50% - 10rem);
   }
 }
 

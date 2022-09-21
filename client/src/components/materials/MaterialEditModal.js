@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { FaTimes } from "react-icons/fa";
+import { useEffect, useState } from "react";
+import { FaTimes, FaNutritionix } from "react-icons/fa";
 import { useAppContext } from "../../context/appContext";
-import { FormRow, Alert } from "../shared";
+import { FormRow, Alert, CheckBox } from "../shared";
 
 const initialState = {
   commonMaterialID: "",
@@ -17,6 +17,7 @@ const MaterialEditModal = () => {
     customerCodeName,
     showAlert,
     displayAlert,
+    alertType,
     hideModal,
   } = useAppContext();
   const [values, setValues] = useState(initialState);
@@ -33,6 +34,10 @@ const MaterialEditModal = () => {
     available: values.available,
   };
 
+  const closeModal = () => {
+    hideModal();
+  };
+
   const submitHandler = (e) => {
     e.preventDefault();
     if (!condition.commonMaterialID || !condition.name) {
@@ -40,17 +45,30 @@ const MaterialEditModal = () => {
       return;
     }
     createMaterial(condition);
-    setTimeout(() => {}, 3000);
-    hideModal();
   };
+
+  useEffect(() => {
+    if (alertType === "success") {
+      setTimeout(() => {
+        closeModal();
+      }, 3000);
+    }
+  }, [alertType]);
 
   return (
     <form className="modal-form" onSubmit={submitHandler}>
       <nav className="modal-form__header">
-        <h5>Add Material</h5>
-        <FaTimes />
+        <div className="modal-form__header__title">
+          <FaNutritionix />
+          <h5>Add Material</h5>
+        </div>
+        <FaTimes onClick={closeModal} />
       </nav>
-      {showAlert && <Alert />}
+      {showAlert && (
+        <div className="modal-form__content">
+          <Alert />
+        </div>
+      )}
       <div className="modal-form__content">
         <FormRow
           name="commonMaterialID"
@@ -80,6 +98,7 @@ const MaterialEditModal = () => {
           value={values.available}
           handleChange={handleValuesChange}
         />
+        {/* <CheckBox label="Available" /> */}
         {/* <input
           className="form-select"
           type="checkbox"
@@ -90,7 +109,11 @@ const MaterialEditModal = () => {
         /> */}
       </div>
       <div className="modal-form__footer">
-        <button className="btn" type="submit">
+        <button
+          className="btn"
+          type="submit"
+          disabled={isLoadingCreateMaterial}
+        >
           Submit
         </button>
       </div>
