@@ -116,7 +116,7 @@ const createBatching = async (req, res, next) => {
         (Math.abs(items.weight - (items.weight + items.tolerance)) /
           (items.weight + items.tolerance)) *
         100;
-      parr.push(percentage);
+      parr.push(Number(percentage.toFixed(2)));
       console.log(percentage);
     }
     console.log(parr);

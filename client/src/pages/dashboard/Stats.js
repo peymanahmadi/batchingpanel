@@ -5,6 +5,7 @@ import {
   BatchedFormulas,
   MaterialInventory,
   ProductionChart,
+  BatchingMessages,
   MaterialTolerance,
   InventoryChart,
 } from "../../components/shared";
@@ -14,6 +15,7 @@ const Stats = () => {
     <div className="stats-container">
       {/* <HeadingStats /> */}
       <ProductionChart />
+      <BatchingMessages />
       {/* <BatchedFormulas /> */}
       {/* <MaterialConsumptions /> */}
       {/* <BatchingStats /> */}

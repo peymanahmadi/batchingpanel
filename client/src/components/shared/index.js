@@ -13,6 +13,7 @@ import Loading from "./Loading";
 // Stats
 import HeadingStats from "../stats/HeadingStats";
 import ProductionChart from "../stats/ProductionChart";
+import BatchingMessages from "../stats/BatchingMessages";
 import MaterialConsumptions from "../stats/MaterialConsumptions";
 import BatchingStats from "../stats/BatchingStats";
 import BatchedFormulas from "../stats/BatchedFormulas";
@@ -48,6 +49,7 @@ export {
   // Stats
   HeadingStats,
   ProductionChart,
+  BatchingMessages,
   MaterialConsumptions,
   BatchingStats,
   BatchedFormulas,
