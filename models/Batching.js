@@ -18,4 +18,12 @@ const batchingSchema = new mongoose.Schema({
   weight: Number,
 });
 
+batchingSchema.pre("save", function () {
+  let sum = 0;
+  for (let keys of this.ingredients) {
+    sum += keys.weight;
+  }
+  this.weight = sum;
+});
+
 export default batchingSchema;

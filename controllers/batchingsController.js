@@ -14,7 +14,6 @@ const createBatching = async (req, res, next) => {
     commonFormulaID,
     formulaVersion,
     ingredients,
-    weight,
   } = req.body;
 
   const userModel = batchingAdminConn.model("User");
@@ -28,6 +27,7 @@ const createBatching = async (req, res, next) => {
   const dailyBatchingModel = customerConn.model("DailyBatching");
   const warehouseOperationsModel = customerConn.model("WarehouseOperations");
   const inventoryModel = customerConn.model("Inventory");
+  const formulaToleranceModel = customerConn.model("FormulaTolerance");
   const fID = await formulaModel.findOne({ commonFormulaID });
 
   // look for materialID and warehouseID for each raw materials in ingredients
@@ -49,7 +49,6 @@ const createBatching = async (req, res, next) => {
     formulaID: fID._id,
     formulaVersion,
     ingredients,
-    weight,
   });
 
   // Here, we have to create a session to save batching data
@@ -78,6 +77,9 @@ const createBatching = async (req, res, next) => {
       updateDailyBatching,
       { new: true, session }
     );
+
+    let percentage = 0;
+    let parr = [];
 
     for (let [index, items] of ingredients.entries()) {
       let newWarehouseOperations = new warehouseOperationsModel({
@@ -109,7 +111,26 @@ const createBatching = async (req, res, next) => {
         update,
         { new: true, session }
       );
+
+      percentage =
+        (Math.abs(items.weight - (items.weight + items.tolerance)) /
+          (items.weight + items.tolerance)) *
+        100;
+      parr.push(percentage);
+      console.log(percentage);
     }
+    console.log(parr);
+    const formulaToleranceAve = (
+      parr.reduce((a, b) => a + b, 0) / parr.length
+    ).toFixed(2);
+
+    const formulaTolerance = new formulaToleranceModel({
+      formulaID: fID._id,
+      dateTime,
+      tolerance: formulaToleranceAve,
+    });
+
+    await formulaTolerance.save({ session });
 
     session.commitTransaction();
     res.status(201).json(batching);
