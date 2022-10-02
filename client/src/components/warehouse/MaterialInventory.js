@@ -6,17 +6,37 @@ import StatsForm from "../stats/StatsForm";
 
 const MaterialInventory = () => {
   const { t } = useTranslation();
-  const { materialInventory, getMaterialInventory } = useAppContext();
+  const {
+    materialInventory,
+    getWarehouses,
+    warehouses,
+    getMaterialInventory,
+    getAllInventory,
+    isLoadingWarehouseInventory,
+    warehouseInventory,
+  } = useAppContext();
 
   const condition = {
     customerCodeName: "goldasht",
   };
 
+  const condition2 = {
+    customerCodeName: "goldasht",
+    warehouseID: "632b72c7c21ad43357939e06",
+  };
+
   const header = ["Material", "Weight"];
 
   useEffect(() => {
-    getMaterialInventory(condition);
+    getWarehouses(condition);
   }, []);
+
+  useEffect(() => {
+    if (warehouses) {
+      console.log(warehouses);
+      getAllInventory(condition2);
+    }
+  }, [warehouses]);
 
   return (
     <StatsForm
@@ -25,6 +45,19 @@ const MaterialInventory = () => {
       icon={<TbFileSpreadsheet />}
       title={t("STATS.INVENTORY")}
     >
+      <select name="" id="">
+        {warehouses.map((warehouse, index) => {
+          return (
+            <option
+              style={{ padding: "1rem" }}
+              key={index}
+              value={warehouse._id}
+            >
+              {warehouse.name}
+            </option>
+          );
+        })}
+      </select>
       <table className="stats-form__table">
         <thead>
           <tr>
@@ -34,7 +67,7 @@ const MaterialInventory = () => {
           </tr>
         </thead>
         <tbody>
-          {materialInventory.map((mat, index) => {
+          {warehouseInventory.map((mat, index) => {
             return (
               <tr key={index}>
                 <td>{mat.name}</td>

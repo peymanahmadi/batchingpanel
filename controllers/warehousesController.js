@@ -37,8 +37,16 @@ const createWarehouse = async (req, res, next) => {
   }
 };
 
-const readWarehouse = async (req, res, next) => {
-  res.send("read warehouse");
+const getAllWarehouses = async (req, res, next) => {
+  const { customerCodeName } = req.body;
+
+  const conn = createTenantConnection(customerCodeName);
+  const warehouseModel = conn.model("Warehouse");
+
+  try {
+    const warehouses = await warehouseModel.find({});
+    res.status(200).json({ warehouses });
+  } catch (error) {}
 };
 
 const updateWarehouse = async (req, res, next) => {
@@ -73,7 +81,7 @@ const createWarehouseOpDesc = async (req, res, next) => {
 };
 
 const getAllInventory = async (req, res, next) => {
-  const { customerCodeName } = req.body;
+  const { customerCodeName, warehouseID } = req.body;
 
   const conn = createTenantConnection(customerCodeName);
   const inventoryModel = conn.model("Inventory");
@@ -81,7 +89,7 @@ const getAllInventory = async (req, res, next) => {
   const warehouseModel = conn.model("Warehouse");
 
   try {
-    const inventory = await inventoryModel.find({});
+    const inventory = await inventoryModel.find({ warehouseID });
 
     const allInventoriesArr = [];
     let materialListArr = [];
@@ -218,7 +226,7 @@ const transactionInventory = async (req, res, next) => {
 
 export {
   createWarehouse,
-  readWarehouse,
+  getAllWarehouses,
   updateWarehouse,
   deleteWarehouse,
   createWarehouseOpDesc,

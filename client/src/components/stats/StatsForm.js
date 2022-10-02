@@ -1,11 +1,28 @@
-const StatsForm = ({ handler, color, icon, title, btnGroup, children }) => {
+import { ButtonGroup } from "../shared";
+
+const StatsForm = ({
+  handler,
+  color,
+  icon,
+  title,
+  btnGroup,
+  children,
+  buttons,
+  select,
+  onPeriodClick,
+}) => {
   return (
-    <article className={`stats-form ${handler} ${color}`}>
-      <div className="stats-form__header">
-        <div className="stats-form__header__title">
+    <article className={`stats-form ${handler}`}>
+      <div className="dashboard-card__header">
+        <div className="dashboard-card__title">
           {icon}
-          {title}
+          <h6>{title}</h6>
         </div>
+        {buttons && (
+          <div className="dashboard-card__condition">
+            <ButtonGroup btns={buttons} onPeriodClick={onPeriodClick} />
+          </div>
+        )}
       </div>
       <div className="stats-form__content">{children}</div>
     </article>

@@ -1,11 +1,9 @@
 const FormRow = ({ type, name, value, handleChange, labelText, className }) => {
   return (
     <div className="form-row">
-      {type !== "checkbox" && (
-        <label htmlFor={name} className="form-label">
-          {labelText || name}
-        </label>
-      )}
+      <label htmlFor={name} className="form-label">
+        {labelText || name}
+      </label>
       <input
         type={type}
         name={name}
@@ -15,11 +13,6 @@ const FormRow = ({ type, name, value, handleChange, labelText, className }) => {
           type === "checkbox" ? "styled-checkbox" : null
         }`}
       />
-      {type === "checkbox" && (
-        <label htmlFor={name} className="form-label">
-          {labelText || name}
-        </label>
-      )}
     </div>
   );
 };

@@ -1,5 +1,7 @@
+@use "../abstracts/index" as *;
+
 .shared-layout {
-  background: white;
+  background: $gray-50; ////////////
   .dashboard {
     display: grid;
     grid-template-columns: 1fr;

@@ -1,11 +1,11 @@
 @use "../../abstracts/index" as *;
 
 .material-tolerance {
-  background: #fcfdfd;
+  background: $white;
   grid-column-start: 1;
   grid-column-end: 7;
-  border-radius: 0.625rem;
-  border: 1px solid #eff2f5;
+  border-radius: $border-radius;
+  border: 1px solid $gray-200;
   overflow: hidden;
   display: flex;
   flex-direction: column;

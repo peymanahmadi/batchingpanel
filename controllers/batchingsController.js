@@ -140,7 +140,7 @@ const createBatching = async (req, res, next) => {
 };
 
 const materialConsumption = async (req, res, next) => {
-  const { customerCodeName, dueDate } = req.body;
+  const { customerCodeName, startDate, endDate } = req.body;
 
   const customerConn = batchingTenantConn(customerCodeName);
   const batchingModel = customerConn.model("Batching");
@@ -148,7 +148,9 @@ const materialConsumption = async (req, res, next) => {
   const formulaModel = customerConn.model("Formula");
 
   try {
-    const batching = await batchingModel.find({ dateTime: dueDate });
+    const batching = await batchingModel.find({
+      dateTime: { $gte: startDate, $lte: endDate },
+    });
 
     const materialConsumptionObj = new Object();
     const batchedFormulaObj = new Object();
@@ -216,13 +218,16 @@ const materialConsumption = async (req, res, next) => {
 };
 
 const getDailyBatching = async (req, res, next) => {
-  const { customerCodeName } = req.body;
+  const { customerCodeName, startDate, endDate } = req.body;
+  console.log(req.body);
 
   const customerConn = batchingTenantConn(customerCodeName);
   const dailyBatchingModel = customerConn.model("DailyBatching");
 
   try {
-    const dailyBatching = await dailyBatchingModel.find({});
+    const dailyBatching = await dailyBatchingModel.find({
+      date: { $gte: startDate, $lte: endDate },
+    });
     res.status(200).json({ dailyBatching });
   } catch (error) {
     return next(error);

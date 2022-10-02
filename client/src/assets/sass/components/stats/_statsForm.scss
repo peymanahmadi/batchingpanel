@@ -2,34 +2,36 @@
 @use "../../base/index" as b;
 
 .stats-form {
-  font-family: b.$Roboto;
   background: $white;
   border-radius: $border-radius;
-  box-shadow: $shadow-1;
-  grid-column: 3/7;
-}
-
-.stats-form__header {
+  border: 1px solid $gray-200;
   display: flex;
-  align-items: center;
-  padding: 0.5rem 1rem;
-  border-bottom: 1px solid $divider;
-  justify-content: space-between;
-
-  .stats-form__header__title {
-    display: flex;
-    align-items: center;
-  }
-
-  svg {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    padding: 0.25rem;
-    // margin-right: 0.5rem;
-    margin-inline-end: 0.5rem;
-  }
+  flex-direction: column;
+  box-shadow: $shadow-1;
+  // grid-column: 3/7;
 }
+
+// .stats-form__header {
+//   display: flex;
+//   align-items: center;
+//   padding: 0.5rem 1rem;
+//   border-bottom: 1px solid $divider;
+//   justify-content: space-between;
+
+//   .stats-form__header__title {
+//     display: flex;
+//     align-items: center;
+//   }
+
+//   svg {
+//     width: 32px;
+//     height: 32px;
+//     border-radius: 50%;
+//     padding: 0.25rem;
+//     // margin-right: 0.5rem;
+//     margin-inline-end: 0.5rem;
+//   }
+// }
 
 .primary {
   border-top: 5px solid $primary-500;
@@ -73,8 +75,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-height: 10rem;
-  overflow-y: auto;
+  // max-height: 10rem;
+  // overflow-y: auto;
 }
 
 .stats-form__label {
@@ -88,5 +90,38 @@
   &:hover {
     background: #ffe0b2;
     transition: $transition;
+  }
+}
+
+.dashboard-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .dashboard-card__title {
+    padding: 1rem 1rem;
+    display: flex;
+    align-items: center;
+
+    svg {
+      width: 32px;
+      height: 32px;
+      margin-inline-end: 0.5rem;
+      // font-size: 1.5rem;
+      color: $primary-500;
+      background: $primary-50;
+      border-radius: $border-radius;
+      padding: 0.25rem;
+    }
+
+    h6 {
+      // color: #3f4254;
+      color: $gray-800;
+      font-size: 1.15rem;
+      margin-inline-end: 0.5rem;
+    }
+  }
+  .dashboard-card__condition {
+    padding: 1rem;
   }
 }

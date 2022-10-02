@@ -6,27 +6,28 @@ button {
 
   &:disabled {
     cursor: not-allowed;
+    background: $gray-300;
+
+    &:hover {
+      background: $gray-300;
+    }
   }
 }
 
 .btn {
-  font-family: f.$FiraSans;
-  font-family: f.$Cabin;
   cursor: pointer;
   color: $white;
-  background: $blue-500;
+  background: $green-500;
   border: transparent;
   border-radius: $border-radius;
   padding: 0.375rem 0.75rem;
-  // box-shadow: $shadow-2;
   transition: $transition;
   text-transform: capitalize;
   display: inline-block;
   letter-spacing: 1px;
 
   &:hover {
-    background: $blue-700;
-    box-shadow: $shadow-2;
+    background: $green-600;
   }
 }
 
@@ -40,34 +41,34 @@ button {
   width: 100%;
 }
 
-.btn-edit {
-  background: $grey-100;
-  border: 1px solid $grey-200;
-  color: $grey-900;
-  // &:hover {
-  //   box-shadow: $shadow-2;
-  // }
-}
+// .btn-edit {
+//   background: $grey-100;
+//   border: 1px solid $grey-200;
+//   color: $grey-900;
+//   // &:hover {
+//   //   box-shadow: $shadow-2;
+//   // }
+// }
 
-.btn-delete {
-  background: $grey-100;
-  border: 1px solid $grey-200;
-  color: $grey-900;
-  // &:hover {
-  //   box-shadow: $shadow-2;
-  // }
-}
+// .btn-delete {
+//   background: $grey-100;
+//   border: 1px solid $grey-200;
+//   color: $grey-900;
+//   // &:hover {
+//   //   box-shadow: $shadow-2;
+//   // }
+// }
 
-.btn-secondary {
-  cursor: pointer;
-  background: $grey-100;
-  border: 1px solid $grey-200;
-  color: $grey-900;
-  border-radius: $border-radius;
-  padding: 0.375rem 0.75rem;
-  // box-shadow: $shadow-2;
-  transition: $transition;
-  text-transform: capitalize;
-  display: inline-block;
-  letter-spacing: 1px;
-}
+// .btn-secondary {
+//   cursor: pointer;
+//   background: $grey-100;
+//   border: 1px solid $grey-200;
+//   color: $grey-900;
+//   border-radius: $border-radius;
+//   padding: 0.375rem 0.75rem;
+//   // box-shadow: $shadow-2;
+//   transition: $transition;
+//   text-transform: capitalize;
+//   display: inline-block;
+//   letter-spacing: 1px;
+// }

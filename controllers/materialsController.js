@@ -32,13 +32,13 @@ const createMaterial = async (req, res, next) => {
   const materialModel = conn.model("Material");
   const cmIDAlreadyExists = await materialModel.findOne({ commonMaterialID });
   if (cmIDAlreadyExists) {
-    const error = new BadRequestError("commonMaterialID already in use");
+    const error = new BadRequestError("Common Material ID already in use");
     return next(error);
   }
 
   const nameAlreadyExists = await materialModel.findOne({ name });
   if (nameAlreadyExists) {
-    const error = new BadRequestError("name already in use");
+    const error = new BadRequestError("Name already in use");
     return next(error);
   }
 

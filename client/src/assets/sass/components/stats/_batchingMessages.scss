@@ -1,0 +1,17 @@
+@use "../../abstracts/index" as *;
+
+.batching-messages {
+  overflow: hidden;
+
+  // @media (min-width: 768px) {
+  //   grid-column: 1/3;
+  // }
+
+  @media (min-width: 1120px) {
+    grid-column: 5/7;
+  }
+}
+
+.batching-messages__content {
+  padding: 0.5rem 1rem;
+}

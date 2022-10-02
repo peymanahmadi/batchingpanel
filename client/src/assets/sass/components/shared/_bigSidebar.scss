@@ -9,15 +9,12 @@
 
     .sidebar-container {
       background: $white;
-      background: $grey-50;
-      // background: #fcfdfd;
       min-height: 100vh;
       height: 100%;
       width: 250px;
       // margin-left: -250px;
       margin-inline-start: -250px;
       transition: $transition;
-      // border-right: 1px solid #eff2f5;
     }
 
     .content {
@@ -47,7 +44,7 @@
     .nav-link {
       display: flex;
       align-items: center;
-      color: $grey-500;
+      color: $gray-300;
       padding: 1rem 0;
       // padding-left: 2.5rem;
       padding-inline-start: 2.5rem;
@@ -55,13 +52,15 @@
       transition: $transition;
 
       &:hover {
-        background: $grey-50;
+        background: $gray-50;
         // padding-left: 3rem;
         padding-inline-start: 3rem;
-        color: $grey-900;
+        color: $gray-900;
+        border-left: 3px solid $green-500;
 
         .icon {
-          color: $primary-500;
+          // color: $primary-500;
+          color: $green-500;
         }
       }
     }
@@ -76,10 +75,13 @@
     }
 
     .active {
-      color: $grey-900;
+      color: $gray-900;
+      border-left: 3px solid $green-500;
+      background: $green-50;
 
       .icon {
-        color: $primary-500;
+        // color: $primary-500;
+        color: $green-500;
       }
     }
   }

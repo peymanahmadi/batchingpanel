@@ -1,13 +1,19 @@
 @use "../../abstracts/index" as *;
 
 .badge-1 {
-  background: $green-500;
+  width: fit-content;
   font-size: 0.75rem;
-  color: $white;
-  width: 70px;
   text-align: center;
-  //   border: 1px solid #84cc16;
-  //   border-radius: 10px;
-  //   text-transform: uppercase;
-  padding: 0.125rem;
+  border-radius: 5px;
+  padding: 0rem 0.25rem;
+}
+
+.badge-success {
+  background: $green-100;
+  color: $green-600;
+}
+
+.badge-fail {
+  background: $red-100;
+  color: $red-600;
 }

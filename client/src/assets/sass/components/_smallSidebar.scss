@@ -55,13 +55,13 @@
   .nav-link {
     display: flex;
     align-items: center;
-    color: $grey-500;
+    color: $gray-500;
     padding: 1rem 0;
     text-transform: capitalize;
     transition: $transition;
 
     &:hover {
-      color: $grey-900;
+      color: $gray-900;
 
       .icon {
         color: $primary-500;
@@ -78,7 +78,7 @@
   }
 
   .active {
-    color: $grey-900;
+    color: $gray-900;
 
     .icon {
       color: $primary-500;

@@ -23,6 +23,12 @@ const MaterialEditModal = () => {
   const [values, setValues] = useState(initialState);
 
   const handleValuesChange = (e) => {
+    // console.log(e.target.value);
+    // console.log(e.target.checked);
+    if (e.target.name === "available") {
+      setValues({ ...values, [e.target.name]: e.target.checked });
+      return;
+    }
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
@@ -91,14 +97,19 @@ const MaterialEditModal = () => {
           value={values.description}
           handleChange={handleValuesChange}
         />
-        <FormRow
+        {/* <FormRow
           name="available"
           labelText="Available"
           type="checkbox"
           value={values.available}
           handleChange={handleValuesChange}
+        /> */}
+        <CheckBox
+          name="available"
+          labelText="Available"
+          value={values.available}
+          handleChange={handleValuesChange}
         />
-        {/* <CheckBox label="Available" /> */}
         {/* <input
           className="form-select"
           type="checkbox"

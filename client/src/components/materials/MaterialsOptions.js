@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useAppContext } from "../../context/appContext";
-import { Modal, MaterialEditModal } from "../shared";
+import { Modal, MaterialEditModal, Badge } from "../shared";
 
 const MaterialsOptions = () => {
   const { openModal, showModal, hideModal, totalMaterials } = useAppContext();
@@ -24,19 +24,17 @@ const MaterialsOptions = () => {
           <MaterialEditModal />
         </Modal>
       )}
-      <section className="dashboard-form-page">
-        <nav>
-          <h5>{t("MATERIALS")}</h5>
-          <div className="navbar-controls">
-            <input placeholder={t("SEARCH")} />
-            <button className="btn" onClick={() => showModal()}>
-              {t("MATERIALS.ADDMATERIAL")}
-            </button>
-          </div>
-          <p>
-            {totalMaterials} material{totalMaterials > 1 && "s"} found
-          </p>
-        </nav>
+      <section className="dashboard-form__options">
+        <div className="dashboard-form__options__title">
+          <h6>{t("MATERIALS")}</h6>
+          <Badge content={totalMaterials} />
+        </div>
+        <div className="navbar-controls">
+          <input placeholder={t("SEARCH")} />
+          <button className="btn" onClick={() => showModal()}>
+            {t("MATERIALS.ADDMATERIAL")}
+          </button>
+        </div>
       </section>
     </>
   );

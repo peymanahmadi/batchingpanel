@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useAppContext } from "../../context/appContext";
 import StatsForm from "./StatsForm";
@@ -9,17 +9,26 @@ const MaterialConsumptions = () => {
   const { getMaterialConsumption, materialConsumption, isLoading } =
     useAppContext();
   const { t } = useTranslation();
+  const [startDate, setStartDate] = useState();
 
   const condition = {
     customerCodeName: "goldasht",
-    dueDate: "2022-09-01",
+    startDate: startDate,
+    endDate: Date.now(),
   };
+
+  const buttons = ["Day", "Week", "Month", "Year"];
 
   const header = ["Material", "Weight", "Tolerance"];
 
   useEffect(() => {
     getMaterialConsumption(condition);
-  }, []);
+  }, [startDate]);
+
+  const handlePeriodClick = (newDate) => {
+    setStartDate(newDate);
+    console.log(newDate);
+  };
 
   return (
     <StatsForm
@@ -28,25 +37,30 @@ const MaterialConsumptions = () => {
       icon={<TbFileSpreadsheet />}
       title={t("STATS.MATERIALCONSUMPTION")}
       btnGroup={true}
+      buttons={buttons}
+      onPeriodClick={handlePeriodClick}
     >
       {isLoading ? (
         <Loading center />
       ) : (
-        <table className="stats-form__table">
+        <table className="form-table">
           <thead>
-            <tr>
-              {header.map((h, index) => (
-                <th key={index}>{h}</th>
+            <tr className="table-header">
+              {header.map((title, index) => (
+                <th key={index}>{title}</th>
               ))}
             </tr>
           </thead>
           <tbody>
-            {materialConsumption.map((mat, index) => {
+            {materialConsumption.map((material, index) => {
               return (
-                <tr key={index}>
-                  <td>{mat.name}</td>
-                  <td>{mat.weight}</td>
-                  <td>{mat.tolerance}</td>
+                <tr className="table-row" key={index}>
+                  <td className="table-row__text">
+                    <div className="table-row__text">{material.name}</div>
+                    <div className="table-subTitle">{material.description}</div>
+                  </td>
+                  <td className="table-row__text">{material.weight}</td>
+                  <td className="table-row__text">{material.tolerance}</td>
                 </tr>
               );
             })}

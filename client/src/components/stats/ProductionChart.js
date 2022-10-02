@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import ReactApexChart from "react-apexcharts";
 import { BsGraphUp } from "react-icons/bs";
@@ -14,14 +14,17 @@ const ProductionChart = () => {
     todayTotalBatchingWeight,
   } = useAppContext();
   const { t } = useTranslation();
+  const [startDate, setStartDate] = useState();
 
   const condition = {
     customerCodeName: "goldasht",
+    startDate: startDate,
+    endDate: Date.now(),
   };
 
   useEffect(() => {
     getDailyBatching(condition);
-  }, []);
+  }, [startDate]);
 
   const state = {
     series: [
@@ -88,19 +91,23 @@ const ProductionChart = () => {
   };
 
   // {t("STATS.PRODUCTIONCHART")}
-  const buttons = ["Week", "Month"];
+  const buttons = ["Week", "Month", "Year"];
+
+  const handlePeriodClick = (newDate) => {
+    setStartDate(newDate);
+  };
 
   return (
     <>
-      <article className="daily-production">
-        <div className="daily-production__header">
-          <div className="daily-production__title">
+      <article className="stats-form daily-production">
+        <div className="dashboard-card__header">
+          <div className="dashboard-card__title">
             <BsGraphUp />
             <h6>Daily Production Chart</h6>
             {isLoadingStatsDailyProduction && <Loading center />}
           </div>
-          <div className="daily-production__condition">
-            <ButtonGroup btns={buttons} />
+          <div className="dashboard-card__condition">
+            <ButtonGroup btns={buttons} onPeriodClick={handlePeriodClick} />
           </div>
         </div>
         <div className="daily-production__content">
@@ -122,7 +129,7 @@ const ProductionChart = () => {
                   series={state.series}
                   type="area"
                   className="chart-canvas"
-                  height="100%"
+                  height="90%"
                 />
               </div>
             </>

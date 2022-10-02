@@ -44,32 +44,38 @@ const ProductionTolerance = () => {
               {
                 from: -100,
                 to: -10,
-                color: "#F1416C",
+                // color: "#F1416C",
+                color: "#0d47a1",
               },
               {
                 from: -10,
                 to: -5,
-                color: "#FFC700", // Warning
+                // color: "#FFC700", // Warning
+                color: "#2196f3", // Warning
               },
               {
                 from: -5,
                 to: 0,
-                color: "#50CD89", // Green
+                // color: "#50CD89", // Green
+                color: "#90caf9", // Green
               },
               {
                 from: 0,
                 to: 5,
-                color: "#50CD89", // Green color
+                // color: "#50CD89", // Green color
+                color: "#90caf9", // Green color
               },
               {
                 from: 5,
                 to: 10,
-                color: "#FFC700",
+                // color: "#FFC700",
+                color: "#2196f3",
               },
               {
                 from: 10,
                 to: 100,
-                color: "#F1416C", // Red
+                // color: "#F1416C", // Red
+                color: "#0d47a1", // Red
               },
             ],
           },
@@ -107,13 +113,13 @@ const ProductionTolerance = () => {
 
   return (
     <div className="material-tolerance">
-      <div className="material-tolerance__header">
-        <div className="material-tolerance__title">
+      <div className="dashboard-card__header">
+        <div className="dashboard-card__title">
           <BsPercent />
           <h6>Material Tolerance</h6>
           {isLoadingMaterialTolerance && <Loading center />}
         </div>
-        <div className="material-tolerance__condition">
+        <div className="dashboard-card__condition">
           <ButtonGroup btns={buttons} />
         </div>
       </div>

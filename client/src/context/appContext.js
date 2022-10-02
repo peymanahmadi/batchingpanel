@@ -39,6 +39,8 @@ import {
   CREATE_FORMULA_SUCCESS,
   CREATE_FORMULA_ERROR,
   // Warehouse
+  GET_WAREHOUSES_BEGIN,
+  GET_WAREHOUSES_SUCCESS,
   GET_WAREHOUSE_INVENTORY_BEGIN,
   GET_WAREHOUSE_INVENTORY_SUCCESS,
   // Users
@@ -100,8 +102,10 @@ const initialState = {
   numOfUserPages: 1,
   page: 1,
   // Warehouse
+  isLoadingWarehouses: false,
+  warehouses: [],
   isLoadingWarehouseInventory: false,
-  getWarehouseInventory: [],
+  warehouseInventory: [],
 };
 
 const AppContext = React.createContext();
@@ -270,6 +274,20 @@ const AppProvider = ({ children }) => {
     } catch (error) {
       console.log(error);
       // logoutUser();
+    }
+  };
+
+  const getWarehouses = async (condition) => {
+    dispatch({ type: GET_WAREHOUSES_BEGIN });
+    try {
+      const { data } = await authFetch.post(
+        "/customers/warehouses/all",
+        condition
+      );
+      const { warehouses } = data;
+      dispatch({ type: GET_WAREHOUSES_SUCCESS, payload: { warehouses } });
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -473,6 +491,7 @@ const AppProvider = ({ children }) => {
         getMaterialInventory,
         getDailyBatching,
         getMaterialTolerance,
+        getWarehouses,
         getAllInventory,
         getMaterials,
         createMaterial,

@@ -39,6 +39,12 @@ h5 {
   font-size: 1.25rem;
 }
 
+h6 {
+  // color: $grey-800;
+  font-size: 1.15rem;
+  margin-inline-end: 0.5rem;
+}
+
 small,
 .text-small {
   font-size: $small-text;
@@ -50,13 +56,13 @@ a {
 }
 
 .subTitle2 {
-  font-family: f.$Cabin;
+  // font-family: f.$Cabin;
   // font-family: f.$FiraSans;
   font-weight: 200;
   font-size: 1.25rem;
   line-height: 1.57;
   letter-spacing: 0.00714em;
-  color: $grey-500;
+  // color: $grey-500;
 }
 
 // .heading-colored {
@@ -64,12 +70,12 @@ a {
 //   letter-spacing: 1px;
 // }
 
-.muted {
-  color: $grey-400;
-}
+// .muted {
+//   color: $grey-400;
+// }
 
-.table-header {
-}
+// .table-header {
+// }
 
-.table-row {
-}
+// .table-row {
+// }

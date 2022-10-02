@@ -38,6 +38,8 @@ import {
   CREATE_FORMULA_BEGIN,
   CREATE_FORMULA_SUCCESS,
   CREATE_FORMULA_ERROR,
+  GET_WAREHOUSES_BEGIN,
+  GET_WAREHOUSES_SUCCESS,
 } from "./actions";
 
 import { initialState } from "./appContext";
@@ -201,6 +203,19 @@ const reducer = (state, action) => {
       todayTotalBatchingWeight: action.payload.todayTotalBatchingWeight,
     };
   }
+
+  if (action.type === GET_WAREHOUSES_BEGIN) {
+    return { ...state, isLoadingWarehouses: true };
+  }
+
+  if (action.type === GET_WAREHOUSES_SUCCESS) {
+    return {
+      ...state,
+      isLoadingWarehouses: true,
+      warehouses: action.payload.warehouses,
+    };
+  }
+
   if (action.type === GET_MATERIAL_TOLERANCE_BEGIN) {
     return { ...state, isLoadingMaterialTolerance: true };
   }
@@ -218,7 +233,7 @@ const reducer = (state, action) => {
     return {
       ...state,
       isLoadingWarehouseInventory: false,
-      getWarehouseInventory: action.payload.allInventories,
+      warehouseInventory: action.payload.allInventories,
     };
   }
 

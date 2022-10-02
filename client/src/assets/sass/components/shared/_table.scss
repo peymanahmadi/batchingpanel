@@ -5,17 +5,16 @@
   text-align: left;
   // border-spacing: 0;
   border-collapse: collapse;
-  border: 1px solid $grey-200;
-  border-radius: $border-radius;
+  // border: 1px solid $grey-200; /////
+  // border-radius: $border-radius;
 
   thead {
-    background: $grey-300;
-    // padding: 5px;
-
     .table-header {
       th {
         padding: 0.5rem;
+        color: $gray-500;
       }
+      border-bottom: 1px dashed $gray-200;
       //   text-align: left;
       // th:last-child {
       //   text-align: right;
@@ -23,26 +22,31 @@
     }
   }
 
-  tbody {
-    tr:nth-child(even) {
-      background: $grey-50;
-      // padding: 5px;
-      // border: 1px solid $primary-50;
-      &:hover {
-        background: $grey-200;
-      }
-    }
-  }
+  // tbody {
+  //   tr:nth-child(even) {
+  //     // background: $grey-50;
+  //     background: $gray-50;
+  //     // padding: 5px;
+  //     // border: 1px solid $primary-50;
+  //     &:hover {
+  //       background: $grey-100; ///
+  //     }
+  //   }
+  // }
 
   td {
-    padding: 0.25rem 0.5rem;
+    padding: 0.5rem;
+    border-bottom: 1px dashed $gray-200;
+    svg {
+      font-size: 1.125rem;
+      cursor: pointer;
+    }
   }
 }
 
 .table-row {
-  background: $white;
   &:hover {
-    background: $grey-200;
+    background: $gray-50; //
   }
 
   // .active {
@@ -55,10 +59,34 @@
   line-height: 1.25rem;
 }
 
+.table-row__actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.table-row__actions__edit {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  border-radius: $border-radius;
+  background: $primary-50;
+  color: $primary-500;
+}
+
+.table-row__actions__delete {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  border-radius: $border-radius;
+  background: $red-50;
+  color: $red-500;
+}
+
 .table-subTitle {
   font-size: 0.875rem;
   font-style: italic;
-  color: $grey-300;
+  color: $gray-300;
 }
 
 .ingredients {
@@ -76,7 +104,7 @@
   position: sticky;
   display: grid;
   grid-template-columns: 1fr 3fr 2fr;
-  background: $grey-300;
+  background: $gray-300;
   margin: 0.25rem;
   padding: 0.5rem;
   border-radius: $border-radius $border-radius 0 0;
@@ -84,7 +112,7 @@
 
 .ingredients-list {
   padding: 0.25rem 0.5rem;
-  background: $grey-50;
+  background: $gray-50;
   margin: 0.25rem;
   cursor: pointer;
   display: grid;
@@ -100,10 +128,11 @@
 .list-input {
   outline: none;
   padding: 0.25rem;
-  border: 1px solid $grey-100;
+  border: 1px solid $gray-100;
+  border: 1px solid red;
 }
 
 .list-active {
-  background: $grey-100;
+  background: $gray-100;
   // color: #a8dadc;
 }

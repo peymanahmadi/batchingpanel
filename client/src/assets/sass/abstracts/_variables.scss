@@ -8,7 +8,7 @@ $max-width: 1120px;
 $fixed-width: 500px;
 $fluid-width: 90vw;
 
-$transition: 0.3s ease-in-out all;
+$transition: 0.2s ease-in-out all;
 
 // primary
 $primary-50: #e3f2fd;
@@ -105,16 +105,16 @@ $green-900: #14532d;
 // $orange-900: #cd6a27;
 
 // grey
-$grey-50: #f0f4f8;
-$grey-100: #d9e2ec;
-$grey-200: #bcccdc;
-$grey-300: #9fb3c8;
-$grey-400: #829ab1;
-$grey-500: #627d98;
-$grey-600: #486581;
-$grey-700: #334e68;
-$grey-800: #243b53;
-$grey-900: #102a43;
+// $grey-50: #f0f4f8;
+// $grey-100: #d9e2ec;
+// $grey-200: #bcccdc;
+// $grey-300: #9fb3c8;
+// $grey-400: #829ab1;
+// $grey-500: #627d98;
+// $grey-600: #486581;
+// $grey-700: #334e68;
+// $grey-800: #243b53;
+// $grey-900: #102a43;
 
 $gray-50: #fafafa;
 $gray-100: #f5f5f5;
@@ -140,8 +140,8 @@ $green-dark: #0f5132;
 $blue-light: #6d89cb;
 $blue-dark: #2a4f96;
 
-$background-color: $grey-50;
-$text-color: $grey-900;
+$background-color: $gray-50;
+$text-color: $gray-900;
 
 // box shadow
 $shadow-1: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);

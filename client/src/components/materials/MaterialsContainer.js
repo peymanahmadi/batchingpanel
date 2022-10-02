@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { MdEdit, MdDelete } from "react-icons/md";
 import { useAppContext } from "../../context/appContext";
 import { Loading, Badge } from "../shared";
 
@@ -42,14 +43,21 @@ const MaterialsContainer = () => {
                   </td>
                   <td className="table-row__text">
                     <Badge
-                      type={material.available ? "success" : "fail"}
+                      type={material.available ? "badge-success" : "badge-fail"}
                       content={
                         material.available ? "Available" : "Not Available"
                       }
                     />
                   </td>
-                  <td>
-                    <button className="btn-secondary">Edit</button>
+                  <td className="table-row__text">
+                    <div className="table-row__actions">
+                      <div className="table-row__actions__edit">
+                        <MdEdit />
+                      </div>
+                      <div className="table-row__actions__delete">
+                        <MdDelete />
+                      </div>
+                    </div>
                   </td>
                 </tr>
               );

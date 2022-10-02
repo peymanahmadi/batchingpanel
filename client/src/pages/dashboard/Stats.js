@@ -17,7 +17,7 @@ const Stats = () => {
       <ProductionChart />
       <BatchingMessages />
       {/* <BatchedFormulas /> */}
-      {/* <MaterialConsumptions /> */}
+      <MaterialConsumptions />
       {/* <BatchingStats /> */}
       {/* <MaterialInventory /> */}
       <MaterialTolerance />
