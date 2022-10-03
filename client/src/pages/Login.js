@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Logo, FormRow, Alert } from "../components/shared";
+import { Logo, FormRow, Alert, Toast } from "../components/shared";
 import { useAppContext } from "../context/appContext";
 import { useNavigate } from "react-router-dom";
 
@@ -46,7 +46,8 @@ const Login = () => {
       <form className="form" onSubmit={onSubmit}>
         <Logo />
         <h3>Login</h3>
-        {showAlert && <Alert />}
+        {/* {showAlert && <Alert />} */}
+        {showAlert && <Toast />}
         {/* email input */}
         <FormRow
           type="email"

@@ -1,4 +1,5 @@
-@use "../abstracts/index" as *;
+@use "../../abstracts/index" as *;
+@use "../../base/fonts" as f;
 
 .backdrop {
   position: fixed;
@@ -77,5 +78,59 @@
   svg {
     cursor: pointer;
     font-size: 1.25rem;
+  }
+}
+
+.toast-container {
+  font-family: f.$Cabin;
+  position: fixed;
+  background: $white;
+
+  min-width: 15rem;
+  text-align: center;
+  border-radius: $border-radius;
+  padding: 1rem;
+  top: 5%;
+  left: calc(100% - 17rem);
+  margin-inline-end: 20px;
+  animation: fadein ease-out forwards 0.5s, fadeout ease-out forwards 0.5s 2.5s;
+  z-index: 3;
+}
+
+.alert-success {
+  background: $green-100;
+  color: $green-800;
+  border-top: 5px solid $green-500;
+}
+
+.alert-danger {
+  background: $red-100;
+  color: $red-800;
+  border-top: 5px solid $red-500;
+}
+
+// .toast-close {
+//   animation: fadeout 500ms ease-out forwards;
+// }
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+    transform: translateX(2rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeout {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(2rem);
   }
 }

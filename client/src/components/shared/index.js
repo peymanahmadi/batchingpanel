@@ -7,6 +7,7 @@ import BigSidebar from "./BigSidebar";
 import ButtonGroup from "./ButtonGroup";
 import Badge from "./Badge";
 import CheckBox from "./CheckBox";
+import Toast from "./Toast";
 // import Form from "./Form";
 import Modal from "./Modal";
 import Loading from "./Loading";
@@ -43,6 +44,7 @@ export {
   ButtonGroup,
   Badge,
   CheckBox,
+  Toast,
   // Form,
   Modal,
   Loading,
