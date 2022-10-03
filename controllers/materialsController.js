@@ -1,4 +1,4 @@
-import { BadRequestError } from "../errors/index.js";
+import { BadRequestError, NotFoundError } from "../errors/index.js";
 import createTenantConnection from "../db/batchingTenant.js";
 
 const getAllMaterials = async (req, res, next) => {
@@ -58,7 +58,38 @@ const createMaterial = async (req, res, next) => {
 };
 
 const updateMaterial = async (req, res, next) => {
-  res.send("edit material");
+  const {
+    customerCodeName,
+    materialID,
+    commonMaterialID,
+    name,
+    description,
+    available,
+  } = req.body;
+
+  if (!commonMaterialID || !name) {
+    const error = new BadRequestError("Please provide all required values");
+    return next(error);
+  }
+
+  const conn = createTenantConnection(customerCodeName);
+  const materialModel = conn.model("Material");
+  const material = await materialModel.findOne({ _id: materialID });
+
+  if (!material) {
+    const error = new NotFoundError(`No material with id: ${materialID}`);
+    return next(error);
+  }
+  try {
+    const updatedMaterial = await materialModel.findOneAndUpdate(
+      { _id: materialID },
+      { commonMaterialID, name, description, available },
+      { new: true, runValidators: true }
+    );
+    res.status(200).json({ updatedMaterial });
+  } catch (error) {
+    return next(error);
+  }
 };
 
 const deleteMaterial = async (req, res, next) => {

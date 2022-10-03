@@ -2,6 +2,8 @@ import {
   LANGUAGE,
   DISPLAY_ALERT,
   CLEAR_ALERT,
+  HANDLE_CHANGE,
+  CLEAR_VALUES,
   LOGIN_USER_BEGIN,
   LOGIN_USER_SUCCESS,
   LOGIN_USER_ERROR,
@@ -32,6 +34,9 @@ import {
   CREATE_MATERIAL_BEGIN,
   CREATE_MATERIAL_SUCCESS,
   CREATE_MATERIAL_ERROR,
+  EDIT_MATERIAL_BEGIN,
+  EDIT_MATERIAL_SUCCESS,
+  EDIT_MATERIAL_ERROR,
   // Formulas
   GET_FORMULAS_BEGIN,
   GET_FORMULAS_SUCCESS,
@@ -40,6 +45,7 @@ import {
   CREATE_FORMULA_ERROR,
   GET_WAREHOUSES_BEGIN,
   GET_WAREHOUSES_SUCCESS,
+  SET_EDIT_MATERIAL,
 } from "./actions";
 
 import { initialState } from "./appContext";
@@ -63,6 +69,23 @@ const reducer = (state, action) => {
       alertType: "",
       alertText: "",
     };
+  }
+  if (action.type === HANDLE_CHANGE) {
+    if (action.payload.type === "checkbox") {
+      return { ...state, [action.payload.name]: action.payload.checked };
+    }
+    return { ...state, [action.payload.name]: action.payload.value };
+  }
+  if (action.type === CLEAR_VALUES) {
+    const initialState = {
+      isEditing: false,
+      editMaterialID: "",
+      materialName: "",
+      commonMaterialID: "",
+      materialDescription: "",
+      materialAvailable: true,
+    };
+    return { ...state, ...initialState };
   }
   if (action.type === OPEN_MODAL) {
     return {
@@ -267,6 +290,42 @@ const reducer = (state, action) => {
     return {
       ...state,
       isLoadingCreateMaterial: false,
+      showAlert: true,
+      alertType: "danger",
+      alertText: action.payload.msg,
+    };
+  }
+  if (action.type === SET_EDIT_MATERIAL) {
+    const material = state.materialsArr.find(
+      (material) => material._id === action.payload.id
+    );
+    const { _id, commonMaterialID, name, description, available } = material;
+    return {
+      ...state,
+      isEditing: true,
+      editMaterialID: _id,
+      commonMaterialID,
+      materialName: name,
+      materialDescription: description,
+      materialAvailable: available,
+    };
+  }
+  if (action.type === EDIT_MATERIAL_BEGIN) {
+    return { ...state, isLoading: true };
+  }
+  if (action.type === EDIT_MATERIAL_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: "success",
+      alertText: "Material Updated!",
+    };
+  }
+  if (action.type === EDIT_MATERIAL_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
       showAlert: true,
       alertType: "danger",
       alertText: action.payload.msg,

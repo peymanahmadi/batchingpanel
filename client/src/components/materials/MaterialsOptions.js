@@ -27,7 +27,9 @@ const MaterialsOptions = () => {
       <section className="dashboard-form__options">
         <div className="dashboard-form__options__title">
           <h6>{t("MATERIALS")}</h6>
-          <Badge content={totalMaterials} />
+          <div>
+            <Badge content={totalMaterials} />
+          </div>
         </div>
         <div className="navbar-controls">
           <input placeholder={t("SEARCH")} />

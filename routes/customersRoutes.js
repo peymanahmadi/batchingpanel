@@ -10,6 +10,7 @@ import {
 // Materials
 import {
   createMaterial,
+  updateMaterial,
   getAllMaterials,
 } from "../controllers/materialsController.js";
 
@@ -41,6 +42,7 @@ router.route("/").get(getAllCustomers).post(createCustomer);
 
 // Materials
 router.route("/materials").post(createMaterial);
+router.route("/materials").patch(updateMaterial);
 router.route("/materials/all").post(getAllMaterials);
 
 // Formulas

@@ -2,7 +2,7 @@
 const CheckBox = ({
   type,
   name,
-  value,
+  checked,
   handleChange,
   labelText,
   className,
@@ -21,7 +21,7 @@ const CheckBox = ({
         type="checkbox"
         name={name}
         // value={value}
-        checked={value}
+        checked={checked}
         onChange={handleChange}
         // className={`form-input ${className} ${
         //   type === "checkbox" ? "styled-checkbox" : null

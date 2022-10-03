@@ -3,41 +3,39 @@ import { FaTimes, FaNutritionix } from "react-icons/fa";
 import { useAppContext } from "../../context/appContext";
 import { FormRow, Alert, CheckBox } from "../shared";
 
-const initialState = {
-  commonMaterialID: "",
-  name: "",
-  description: "",
-  available: true,
-};
+// const initialState = {
+//   commonMaterialID: "",
+//   name: "",
+//   description: "",
+//   available: true,
+// };
 
 const MaterialEditModal = () => {
   const {
-    createMaterial,
     isLoadingCreateMaterial,
-    customerCodeName,
+    isLoading,
+    isEditing,
     showAlert,
     displayAlert,
+    commonMaterialID,
+    materialName,
+    materialDescription,
+    materialAvailable,
+    handleChange,
+    clearValues,
+    createMaterial,
+    editMaterial,
     alertType,
     hideModal,
   } = useAppContext();
-  const [values, setValues] = useState(initialState);
+  // const [values, setValues] = useState(initialState);
 
-  const handleValuesChange = (e) => {
-    // console.log(e.target.value);
-    // console.log(e.target.checked);
-    if (e.target.name === "available") {
-      setValues({ ...values, [e.target.name]: e.target.checked });
-      return;
-    }
-    setValues({ ...values, [e.target.name]: e.target.value });
-  };
-
-  const condition = {
-    customerCodeName,
-    commonMaterialID: values.commonMaterialID,
-    name: values.name,
-    description: values.description,
-    available: values.available,
+  const handleMaterialInput = (e) => {
+    const type = e.target.type;
+    const name = e.target.name;
+    const value = e.target.value;
+    const checked = e.target.checked;
+    handleChange({ type, name, value, checked });
   };
 
   const closeModal = () => {
@@ -46,11 +44,15 @@ const MaterialEditModal = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    if (!condition.commonMaterialID || !condition.name) {
+    if (!commonMaterialID || !materialName) {
       displayAlert();
       return;
     }
-    createMaterial(condition);
+    if (isEditing) {
+      editMaterial();
+      return;
+    }
+    createMaterial();
   };
 
   useEffect(() => {
@@ -80,50 +82,35 @@ const MaterialEditModal = () => {
           name="commonMaterialID"
           labelText="Common Mateiral ID"
           type="text"
-          value={values.commonMaterialID}
-          handleChange={handleValuesChange}
+          value={commonMaterialID}
+          handleChange={handleMaterialInput}
         />
         <FormRow
-          name="name"
+          name="materialName"
           labelText="Name"
           type="text"
-          value={values.name}
-          handleChange={handleValuesChange}
+          value={materialName}
+          handleChange={handleMaterialInput}
         />
         <FormRow
-          name="description"
+          name="materialDescription"
           labelText="Description"
           type="text"
-          value={values.description}
-          handleChange={handleValuesChange}
+          value={materialDescription}
+          handleChange={handleMaterialInput}
         />
-        {/* <FormRow
-          name="available"
-          labelText="Available"
-          type="checkbox"
-          value={values.available}
-          handleChange={handleValuesChange}
-        /> */}
         <CheckBox
-          name="available"
+          name="materialAvailable"
           labelText="Available"
-          value={values.available}
-          handleChange={handleValuesChange}
+          checked={materialAvailable}
+          handleChange={handleMaterialInput}
         />
-        {/* <input
-          className="form-select"
-          type="checkbox"
-          name="available"
-          id=""
-          checked={values.available}
-          onChange={handleValuesChange}
-        /> */}
       </div>
       <div className="modal-form__footer">
         <button
-          className="btn"
+          className="btn btn-block"
           type="submit"
-          disabled={isLoadingCreateMaterial}
+          disabled={isLoadingCreateMaterial || isLoading}
         >
           Submit
         </button>

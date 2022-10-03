@@ -32,6 +32,10 @@ import {
   CREATE_MATERIAL_BEGIN,
   CREATE_MATERIAL_SUCCESS,
   CREATE_MATERIAL_ERROR,
+  SET_EDIT_MATERIAL,
+  EDIT_MATERIAL_BEGIN,
+  EDIT_MATERIAL_SUCCESS,
+  EDIT_MATERIAL_ERROR,
   // Formulas
   GET_FORMULAS_BEGIN,
   GET_FORMULAS_SUCCESS,
@@ -46,6 +50,8 @@ import {
   // Users
   GET_USERS_BEGIN,
   GET_USERS_SUCCESS,
+  HANDLE_CHANGE,
+  CLEAR_VALUES,
 } from "./actions";
 
 const token = localStorage.getItem("token");
@@ -89,12 +95,18 @@ const initialState = {
   totalMaterials: 0,
   numOfMaterialPages: 1,
   isLoadingCreateMaterial: false,
+  isEditing: false,
+  editMaterialID: "",
+  commonMaterialID: "",
+  materialName: "",
+  materialDescription: "",
+  materialAvailable: true,
   // Formulas
   isLoadingFormulas: false,
   formulasArr: [],
   totalFormulas: 0,
   numOfFormulaPages: 1,
-  isLoadingCreateMaterial: false,
+  // isLoadingCreateMaterial: false,
   // users
   isLoadingUsers: false,
   usersArr: [],
@@ -152,6 +164,14 @@ const AppProvider = ({ children }) => {
     setTimeout(() => {
       dispatch({ type: CLEAR_ALERT });
     }, 3000);
+  };
+
+  const handleChange = ({ type, name, value, checked }) => {
+    dispatch({ type: HANDLE_CHANGE, payload: { type, name, value, checked } });
+  };
+
+  const clearValues = () => {
+    dispatch({ type: CLEAR_VALUES });
   };
 
   const showModal = () => {
@@ -411,15 +431,68 @@ const AppProvider = ({ children }) => {
   const createMaterial = async (condition) => {
     dispatch({ type: CREATE_MATERIAL_BEGIN });
     try {
-      await authFetch.post("/customers/materials", condition);
+      const {
+        customerCodeName,
+        commonMaterialID,
+        materialName,
+        materialDescription,
+        materialAvailable,
+      } = state;
+      await authFetch.post("/customers/materials", {
+        customerCodeName,
+        commonMaterialID,
+        name: materialName,
+        description: materialDescription,
+        available: materialAvailable,
+      });
       dispatch({ type: CREATE_MATERIAL_SUCCESS });
     } catch (error) {
+      if (error.response.status === 401) return;
       dispatch({
         type: CREATE_MATERIAL_ERROR,
         payload: { msg: error.response.data.msg },
       });
     }
     clearAlert();
+  };
+
+  const setEditMaterial = (id) => {
+    dispatch({ type: SET_EDIT_MATERIAL, payload: { id } });
+  };
+
+  const editMaterial = async () => {
+    dispatch({ type: EDIT_MATERIAL_BEGIN });
+    try {
+      const {
+        customerCodeName,
+        commonMaterialID,
+        editMaterialID,
+        materialName,
+        materialDescription,
+        materialAvailable,
+      } = state;
+      await authFetch.patch("/customers/materials", {
+        customerCodeName,
+        materialID: editMaterialID,
+        commonMaterialID,
+        name: materialName,
+        description: materialDescription,
+        available: materialAvailable,
+      });
+      dispatch({ type: EDIT_MATERIAL_SUCCESS });
+      dispatch({ type: CLEAR_VALUES });
+    } catch (error) {
+      if (error.response.status === 401) return;
+      dispatch({
+        type: EDIT_MATERIAL_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+    clearAlert();
+  };
+
+  const deleteMaterial = (id) => {
+    console.log(`delete material ${id}`);
   };
 
   // Users
@@ -479,6 +552,8 @@ const AppProvider = ({ children }) => {
       value={{
         ...state,
         displayAlert,
+        handleChange,
+        clearValues,
         showModal,
         hideModal,
         loginUser,
@@ -495,6 +570,9 @@ const AppProvider = ({ children }) => {
         getAllInventory,
         getMaterials,
         createMaterial,
+        setEditMaterial,
+        editMaterial,
+        deleteMaterial,
         getFormulas,
         createFormula,
       }}

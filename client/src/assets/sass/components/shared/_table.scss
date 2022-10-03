@@ -65,22 +65,26 @@
   gap: 1rem;
 }
 
-.table-row__actions__edit {
+.table-row__actions__btn-edit {
   display: flex;
   align-items: center;
   padding: 0.5rem;
   border-radius: $border-radius;
   background: $primary-50;
   color: $primary-500;
+  cursor: pointer;
+  border: transparent;
 }
 
-.table-row__actions__delete {
+.table-row__actions__btn-delete {
   display: flex;
   align-items: center;
   padding: 0.5rem;
   border-radius: $border-radius;
   background: $red-50;
   color: $red-500;
+  cursor: pointer;
+  border: transparent;
 }
 
 .table-subTitle {
