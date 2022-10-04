@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { FaTimes, FaNutritionix } from "react-icons/fa";
 import { useAppContext } from "../../context/appContext";
-import { FormRow, Alert, CheckBox } from "../shared";
+import { FormRow, Alert, CheckBox, Toast } from "../shared";
 
 // const initialState = {
 //   commonMaterialID: "",
@@ -55,13 +55,14 @@ const MaterialEditModal = () => {
     createMaterial();
   };
 
-  useEffect(() => {
-    if (alertType === "success") {
-      setTimeout(() => {
-        closeModal();
-      }, 3000);
-    }
-  }, [alertType]);
+  // useEffect(() => {
+  //   if (alertType === "success") {
+  //     closeModal();
+  //     // setTimeout(() => {
+  //     //   closeModal();
+  //     // }, 3000);
+  //   }
+  // }, [alertType]);
 
   return (
     <form className="modal-form" onSubmit={submitHandler}>
@@ -72,11 +73,7 @@ const MaterialEditModal = () => {
         </div>
         <FaTimes onClick={closeModal} />
       </nav>
-      {showAlert && (
-        <div className="modal-form__content">
-          <Alert />
-        </div>
-      )}
+      {/* {showAlert && <Toast />} */}
       <div className="modal-form__content">
         <FormRow
           name="commonMaterialID"

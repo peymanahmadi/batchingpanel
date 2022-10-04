@@ -8,6 +8,8 @@
 @forward "../components/shared/checkbox";
 @forward "../components/shared/alert";
 @forward "../components/shared/modal";
+@forward "../components/shared/message";
+@forward "../components/shared/btnGroup";
 @forward "./form";
 @forward "./smallSidebar";
 @forward "./select";
@@ -17,7 +19,6 @@
 @forward "./users/users";
 @forward "./stats/statsContainer";
 @forward "./stats/statsForm";
-@forward "./btnGroup";
 // Stats
 @forward "./stats/batchingMessages";
 @forward "./stats/headingStats";

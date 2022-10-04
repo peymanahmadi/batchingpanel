@@ -2,7 +2,7 @@
 @use "../../base/index" as f;
 
 button {
-  line-height: 1.15;
+  // line-height: 1.15;
 
   &:disabled {
     cursor: not-allowed;
@@ -50,14 +50,23 @@ button {
 //   // }
 // }
 
-// .btn-delete {
-//   background: $grey-100;
-//   border: 1px solid $grey-200;
-//   color: $grey-900;
-//   // &:hover {
-//   //   box-shadow: $shadow-2;
-//   // }
-// }
+.btn-cancel {
+  background: $gray-100;
+  border: 1px solid $gray-200;
+  color: $gray-900;
+  &:hover {
+    background: $gray-200;
+  }
+}
+
+.btn-delete {
+  background: $red-100;
+  border: 1px solid $red-200;
+  color: $red-900;
+  &:hover {
+    background: $red-200;
+  }
+}
 
 // .btn-secondary {
 //   cursor: pointer;

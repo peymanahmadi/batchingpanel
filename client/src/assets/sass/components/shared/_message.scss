@@ -1,0 +1,10 @@
+.message-container {
+  padding: 1rem;
+}
+
+.message-container__buttons {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}

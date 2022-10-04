@@ -8,8 +8,10 @@ import ButtonGroup from "./ButtonGroup";
 import Badge from "./Badge";
 import CheckBox from "./CheckBox";
 import Toast from "./Toast";
+import Message from "./Message";
 // import Form from "./Form";
 import Modal from "./Modal";
+import MessageModal from "./MessageModal";
 import Loading from "./Loading";
 // Stats
 import HeadingStats from "../stats/HeadingStats";
@@ -45,8 +47,10 @@ export {
   Badge,
   CheckBox,
   Toast,
+  Message,
   // Form,
   Modal,
+  MessageModal,
   Loading,
   // Stats
   HeadingStats,

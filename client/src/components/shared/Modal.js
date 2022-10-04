@@ -16,7 +16,7 @@ const ModalOverlay = ({ children, className }) => {
   );
 };
 
-const portalElement = document.getElementById("root");
+const portalElement = document.getElementById("action-modal");
 
 const Modal = ({ children, onClose, className }) => {
   return (

@@ -20,6 +20,8 @@ import {
   GET_MATERIAL_INVENTORY_SUCCESS,
   OPEN_MODAL,
   CLOSE_MODAL,
+  OPEN_MODAL_CONFIRM,
+  CLOSE_MODAL_CONFIRM,
   // Stats
   GET_DAILY_PRODUCTION_BEGIN,
   GET_DAILY_PRODUCTION_SUCCESS,
@@ -36,6 +38,9 @@ import {
   EDIT_MATERIAL_BEGIN,
   EDIT_MATERIAL_SUCCESS,
   EDIT_MATERIAL_ERROR,
+  DELETE_MATERIAL_BEGIN,
+  DELETE_MATERIAL_SUCCESS,
+  DELETE_MATERIAL_ERROR,
   // Formulas
   GET_FORMULAS_BEGIN,
   GET_FORMULAS_SUCCESS,
@@ -73,6 +78,7 @@ const initialState = {
   customerID: customerID,
   showSidebar: false,
   openModal: false,
+  openModalConfirm: false,
   // Stats
   isLoadingStatsDailyProduction: false,
   dailyBatchingArr: [],
@@ -163,7 +169,7 @@ const AppProvider = ({ children }) => {
   const clearAlert = () => {
     setTimeout(() => {
       dispatch({ type: CLEAR_ALERT });
-    }, 3000);
+    }, 5000);
   };
 
   const handleChange = ({ type, name, value, checked }) => {
@@ -180,6 +186,14 @@ const AppProvider = ({ children }) => {
 
   const hideModal = () => {
     dispatch({ type: CLOSE_MODAL });
+  };
+
+  const showModalConfirm = () => {
+    dispatch({ type: OPEN_MODAL_CONFIRM });
+  };
+
+  const hideModalConfirm = () => {
+    dispatch({ type: CLOSE_MODAL_CONFIRM });
   };
 
   const addUserToLocalStorage = ({
@@ -491,8 +505,25 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
-  const deleteMaterial = (id) => {
-    console.log(`delete material ${id}`);
+  const deleteMaterial = async () => {
+    dispatch({ type: DELETE_MATERIAL_BEGIN });
+    try {
+      const { customerCodeName, editMaterialID } = state;
+      console.log(customerCodeName, editMaterialID);
+      await authFetch.delete("/customers/materials", {
+        data: {
+          customerCodeName,
+          materialID: editMaterialID,
+        },
+      });
+      dispatch({ type: DELETE_MATERIAL_SUCCESS });
+    } catch (error) {
+      if (error.response.status === 401) return;
+      dispatch({
+        type: DELETE_MATERIAL_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
   };
 
   // Users
@@ -556,6 +587,8 @@ const AppProvider = ({ children }) => {
         clearValues,
         showModal,
         hideModal,
+        showModalConfirm,
+        hideModalConfirm,
         loginUser,
         registerUser,
         toggleSidebar,

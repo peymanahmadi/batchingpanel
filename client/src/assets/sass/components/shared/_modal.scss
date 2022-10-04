@@ -7,9 +7,13 @@
   left: 0;
   width: 100%;
   height: 100vh;
-  z-index: 1;
+  z-index: 2;
   // background-color: rgba(0, 0, 0, 0.75);
-  background-color: rgba(42, 63, 37, 0.5);
+  background-color: rgba(33, 51, 29, 0.5);
+}
+
+.type-red {
+  background-color: rgba(61, 27, 27, 0.5);
 }
 
 .modal {
@@ -20,7 +24,7 @@
   background-color: white;
   border-radius: $border-radius;
   // box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-  z-index: 2;
+  z-index: 3;
   animation: slide-down 500ms ease-out forwards;
   border-top: 5px solid $green-500;
   max-height: calc(90vh);
@@ -93,8 +97,8 @@
   top: 5%;
   left: calc(100% - 17rem);
   margin-inline-end: 20px;
-  animation: fadein ease-out forwards 0.5s, fadeout ease-out forwards 0.5s 2.5s;
-  z-index: 3;
+  animation: fadein ease-out forwards 0.5s, fadeout ease-out forwards 0.5s 4s;
+  z-index: 4;
 }
 
 .alert-success {
@@ -108,10 +112,6 @@
   color: $red-800;
   border-top: 5px solid $red-500;
 }
-
-// .toast-close {
-//   animation: fadeout 500ms ease-out forwards;
-// }
 
 @keyframes fadein {
   from {
@@ -134,3 +134,41 @@
     transform: translateX(2rem);
   }
 }
+
+.modal-message {
+  background: $white;
+  z-index: 3;
+  position: fixed;
+  top: 40vh;
+  left: 5%;
+  width: 90%;
+  height: 20%;
+  background-color: white;
+  border-radius: $border-radius;
+  // box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  animation: slide-down 500ms ease-out forwards;
+  border-top: 5px solid $red-500;
+  max-height: calc(90vh);
+  overflow-y: auto;
+}
+
+@media (min-width: 768px) {
+  .modal-message {
+    width: 40rem;
+    left: calc(50% - 20rem);
+  }
+}
+
+// @media (min-width: 992px) {
+//   .modal-message {
+//     width: 60rem;
+//     left: calc(50% - 30rem);
+//   }
+// }
+
+// @media (min-width: 1200px) {
+//   .modal-message {
+//     width: 70rem;
+//     left: calc(50% - 35rem);
+//   }
+// }

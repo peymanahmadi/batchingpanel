@@ -20,6 +20,8 @@ import {
   GET_USERS_SUCCESS,
   OPEN_MODAL,
   CLOSE_MODAL,
+  OPEN_MODAL_CONFIRM,
+  CLOSE_MODAL_CONFIRM,
   // Stats
   GET_DAILY_PRODUCTION_BEGIN,
   GET_DAILY_PRODUCTION_SUCCESS,
@@ -37,6 +39,9 @@ import {
   EDIT_MATERIAL_BEGIN,
   EDIT_MATERIAL_SUCCESS,
   EDIT_MATERIAL_ERROR,
+  DELETE_MATERIAL_BEGIN,
+  DELETE_MATERIAL_SUCCESS,
+  DELETE_MATERIAL_ERROR,
   // Formulas
   GET_FORMULAS_BEGIN,
   GET_FORMULAS_SUCCESS,
@@ -78,6 +83,7 @@ const reducer = (state, action) => {
   }
   if (action.type === CLEAR_VALUES) {
     const initialState = {
+      isLoading: false,
       isEditing: false,
       editMaterialID: "",
       materialName: "",
@@ -97,6 +103,18 @@ const reducer = (state, action) => {
     return {
       ...state,
       openModal: false,
+    };
+  }
+  if (action.type === OPEN_MODAL_CONFIRM) {
+    return {
+      ...state,
+      openModalConfirm: true,
+    };
+  }
+  if (action.type === CLOSE_MODAL_CONFIRM) {
+    return {
+      ...state,
+      openModalConfirm: false,
     };
   }
   if (action.type === LOGIN_USER_BEGIN) {
@@ -284,6 +302,7 @@ const reducer = (state, action) => {
       showAlert: true,
       alertType: "success",
       alertText: "Create Successful!",
+      openModal: false,
     };
   }
   if (action.type === CREATE_MATERIAL_ERROR) {
@@ -323,6 +342,28 @@ const reducer = (state, action) => {
     };
   }
   if (action.type === EDIT_MATERIAL_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: "danger",
+      alertText: action.payload.msg,
+    };
+  }
+  if (action.type === DELETE_MATERIAL_BEGIN) {
+    return { ...state, isLoading: true };
+  }
+  if (action.type === DELETE_MATERIAL_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: "success",
+      alertText: "Material Deleted!",
+      openModalConfirm: false,
+    };
+  }
+  if (action.type === DELETE_MATERIAL_ERROR) {
     return {
       ...state,
       isLoading: false,

@@ -1,44 +1,33 @@
-import { useState } from "react";
+// import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useAppContext } from "../../context/appContext";
 import { Modal, MaterialEditModal, Badge } from "../shared";
 
 const MaterialsOptions = () => {
-  const { openModal, showModal, hideModal, totalMaterials } = useAppContext();
+  const { openModal, showModal, clearValues, hideModal, totalMaterials } =
+    useAppContext();
   const { t } = useTranslation();
 
-  const [showForm, setShowForm] = useState();
-
   const handleOpenForm = () => {
-    setShowForm(true);
-  };
-
-  const handleCloseForm = () => {
-    setShowForm(false);
+    clearValues();
+    showModal();
   };
 
   return (
-    <>
-      {openModal && (
-        <Modal className="modal-one-column" onClose={() => hideModal()}>
-          <MaterialEditModal />
-        </Modal>
-      )}
-      <section className="dashboard-form__options">
-        <div className="dashboard-form__options__title">
-          <h6>{t("MATERIALS")}</h6>
-          <div>
-            <Badge content={totalMaterials} />
-          </div>
+    <section className="dashboard-form__options">
+      <div className="dashboard-form__options__title">
+        <h6>{t("MATERIALS")}</h6>
+        <div>
+          <Badge content={totalMaterials} />
         </div>
-        <div className="navbar-controls">
-          <input placeholder={t("SEARCH")} />
-          <button className="btn" onClick={() => showModal()}>
-            {t("MATERIALS.ADDMATERIAL")}
-          </button>
-        </div>
-      </section>
-    </>
+      </div>
+      <div className="navbar-controls">
+        <input placeholder={t("SEARCH")} />
+        <button className="btn" onClick={handleOpenForm}>
+          {t("MATERIALS.ADDMATERIAL")}
+        </button>
+      </div>
+    </section>
   );
 };
 

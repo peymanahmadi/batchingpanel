@@ -1,5 +1,6 @@
 import { BadRequestError, NotFoundError } from "../errors/index.js";
 import createTenantConnection from "../db/batchingTenant.js";
+import checkIfThereIsRefToThisObjectInWholeModel from "../middleware/ref-finder.js";
 
 const getAllMaterials = async (req, res, next) => {
   const { customerCodeName } = req.body;
@@ -93,7 +94,26 @@ const updateMaterial = async (req, res, next) => {
 };
 
 const deleteMaterial = async (req, res, next) => {
-  res.send("delete material");
+  const { customerCodeName, materialID } = req.body;
+  console.log(req.body);
+
+  const conn = createTenantConnection(customerCodeName);
+  const materialModel = conn.model("Material");
+  const formulationModel = conn.model("Formulation");
+
+  const material = await materialModel.findOne({ _id: materialID });
+
+  if (!material) {
+    const error = new NotFoundError(`No material with id: ${materialID}`);
+    return next(error);
+  }
+
+  try {
+    await materialModel.findByIdAndDelete(materialID);
+    res.status(200).json({ msg: "Success! Material removed" });
+  } catch (error) {
+    return next(error);
+  }
 };
 
 export {

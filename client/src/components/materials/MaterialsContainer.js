@@ -1,7 +1,13 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { MdEdit, MdDelete } from "react-icons/md";
 import { useAppContext } from "../../context/appContext";
-import { Modal, MaterialEditModal, Loading, Badge } from "../shared";
+import {
+  Modal,
+  MessageModal,
+  MaterialEditModal,
+  Loading,
+  Badge,
+} from "../shared";
 
 const MaterialsContainer = () => {
   const {
@@ -10,6 +16,7 @@ const MaterialsContainer = () => {
     isLoadingMaterials,
     materialsArr,
     showModal,
+    showModalConfirm,
     hideModal,
     openModal,
     customerCodeName,
@@ -31,13 +38,33 @@ const MaterialsContainer = () => {
     showModal();
   };
 
+  const handleDeleteMaterial = (_id) => {
+    setEditMaterial(_id);
+    showModalConfirm();
+  };
+
   return (
     <>
-      {openModal && (
+      {/* {openModal && (
         <Modal className="modal-one-column" onClose={() => hideModal()}>
           <MaterialEditModal />
         </Modal>
-      )}
+      )} */}
+      {/* {openModal && (
+        <Modal className="modal-one-column" onClose={() => hideModal()}>
+          <h5>Are you sure you want to delete Material 1?</h5>
+          <button className="btn btn-delete">delete</button>
+        </Modal>
+      )} */}
+      {/* {openModal && (
+        <MessageModal
+          type="red"
+          className="modal-one-column"
+          onClose={() => hideModal()}
+        >
+          <h5>Are you sure you want to delete Material 1?</h5>
+        </MessageModal>
+      )} */}
       <div className="users-container">
         {isLoadingMaterials ? (
           <Loading center />
@@ -55,8 +82,8 @@ const MaterialsContainer = () => {
                 const { _id, commonMaterialID, name, description, available } =
                   material;
                 return (
-                  <tr className="table-row" key={index}>
-                    <td>
+                  <tr key={index}>
+                    <td className="table-row__text">
                       <div className="table-row__text">{name}</div>
                       <div className="table-subTitle">{description}</div>
                     </td>
@@ -75,7 +102,10 @@ const MaterialsContainer = () => {
                         >
                           <MdEdit />
                         </button>
-                        <button className="table-row__actions__btn-delete">
+                        <button
+                          className="table-row__actions__btn-delete"
+                          onClick={() => handleDeleteMaterial(_id)}
+                        >
                           <MdDelete />
                         </button>
                       </div>

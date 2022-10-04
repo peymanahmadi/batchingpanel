@@ -12,6 +12,7 @@ import {
   createMaterial,
   updateMaterial,
   getAllMaterials,
+  deleteMaterial,
 } from "../controllers/materialsController.js";
 
 // Formulas
@@ -43,6 +44,7 @@ router.route("/").get(getAllCustomers).post(createCustomer);
 // Materials
 router.route("/materials").post(createMaterial);
 router.route("/materials").patch(updateMaterial);
+router.route("/materials").delete(deleteMaterial);
 router.route("/materials/all").post(getAllMaterials);
 
 // Formulas

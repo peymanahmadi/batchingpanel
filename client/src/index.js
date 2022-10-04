@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./services/i18n/i18n";
 import "normalize.css";
+import "react-toastify/dist/ReactToastify.css";
 import App from "./App";
 import { AppProvider } from "./context/appContext";
 

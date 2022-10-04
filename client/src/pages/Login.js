@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
-import { Logo, FormRow, Alert, Toast } from "../components/shared";
+import { Logo, FormRow, Toast } from "../components/shared";
 import { useAppContext } from "../context/appContext";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
 const initialState = {
   email: "",
@@ -22,7 +23,8 @@ const Login = () => {
     e.preventDefault();
     const { email, password } = values;
     if (!email || !password) {
-      displayAlert();
+      // displayAlert();
+      notify();
       return;
     }
     const currentUser = { email, password };
@@ -41,13 +43,14 @@ const Login = () => {
     }
   }, [user, navigate]);
 
+  const notify = () => toast.error("Wow so easy !");
+
   return (
     <section className="login-page full-page">
       <form className="form" onSubmit={onSubmit}>
         <Logo />
         <h3>Login</h3>
-        {/* {showAlert && <Alert />} */}
-        {showAlert && <Toast />}
+        {/* {showAlert && <Toast />} */}
         {/* email input */}
         <FormRow
           type="email"
@@ -66,6 +69,7 @@ const Login = () => {
           login
         </button>
       </form>
+      <ToastContainer />
     </section>
   );
 };
