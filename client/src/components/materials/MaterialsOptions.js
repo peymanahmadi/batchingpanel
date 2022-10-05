@@ -18,7 +18,7 @@ const MaterialsOptions = () => {
       <div className="dashboard-form__options__title">
         <h6>{t("MATERIALS")}</h6>
         <div>
-          <Badge content={totalMaterials} />
+          <Badge type="badge-success" content={totalMaterials} />
         </div>
       </div>
       <div className="navbar-controls">

@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./assets/sass/main.scss";
+import { ToastContainer, Slide } from "react-toastify";
 import { useAppContext } from "./context/appContext";
 import { Login, Error, Landing, ProtectedRoute } from "./pages";
 import {
@@ -51,6 +52,12 @@ const App = () => {
           <Route path="/landing" element={<Landing />} />
           <Route path="*" element={<Error />} />
         </Routes>
+        <ToastContainer
+          closeButton={false}
+          autoClose={3000}
+          hideProgressBar={true}
+          transition={Slide}
+        />
       </div>
     </BrowserRouter>
   );

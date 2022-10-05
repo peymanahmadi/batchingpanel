@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Logo, FormRow, Toast } from "../components/shared";
 import { useAppContext } from "../context/appContext";
 import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 const initialState = {
   email: "",
@@ -28,11 +28,17 @@ const Login = () => {
       return;
     }
     const currentUser = { email, password };
+    // const id = toast.loading("Please wait...");
     loginUser({
       currentUser,
       endPoint: "login",
       alertText: "Login Successful! Redirecting...",
     });
+    // toast.update(id, {
+    //   render: "All is good",
+    //   type: "loading",
+    //   isLoading: false,
+    // });
   };
 
   useEffect(() => {
@@ -43,7 +49,7 @@ const Login = () => {
     }
   }, [user, navigate]);
 
-  const notify = () => toast.error("Wow so easy !");
+  const notify = () => toast.error("Please provide all values!");
 
   return (
     <section className="login-page full-page">
@@ -69,7 +75,6 @@ const Login = () => {
           login
         </button>
       </form>
-      <ToastContainer />
     </section>
   );
 };

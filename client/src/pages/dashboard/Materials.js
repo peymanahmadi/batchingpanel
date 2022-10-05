@@ -3,7 +3,6 @@ import {
   MaterialsContainer,
   Modal,
   MaterialEditModal,
-  Toast,
   MessageModal,
   Message,
 } from "../../components/shared";
@@ -15,11 +14,9 @@ const Materials = () => {
     hideModal,
     openModalConfirm,
     hideModalConfirm,
-    showAlert,
     materialName,
     deleteMaterial,
   } = useAppContext();
-  console.log(showAlert);
 
   const handleDeleteMaterial = () => {
     deleteMaterial();
@@ -27,7 +24,6 @@ const Materials = () => {
 
   return (
     <>
-      {showAlert && <Toast />}
       {openModal && (
         <Modal className="modal-one-column" onClose={() => hideModal()}>
           <MaterialEditModal />

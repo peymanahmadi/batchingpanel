@@ -44,80 +44,58 @@ const MaterialsContainer = () => {
   };
 
   return (
-    <>
-      {/* {openModal && (
-        <Modal className="modal-one-column" onClose={() => hideModal()}>
-          <MaterialEditModal />
-        </Modal>
-      )} */}
-      {/* {openModal && (
-        <Modal className="modal-one-column" onClose={() => hideModal()}>
-          <h5>Are you sure you want to delete Material 1?</h5>
-          <button className="btn btn-delete">delete</button>
-        </Modal>
-      )} */}
-      {/* {openModal && (
-        <MessageModal
-          type="red"
-          className="modal-one-column"
-          onClose={() => hideModal()}
-        >
-          <h5>Are you sure you want to delete Material 1?</h5>
-        </MessageModal>
-      )} */}
-      <div className="users-container">
-        {isLoadingMaterials ? (
-          <Loading center />
-        ) : (
-          <table className="form-table">
-            <thead>
-              <tr className="table-header">
-                {header.map((title, index) => (
-                  <th key={index}>{title}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {materialsArr.map((material, index) => {
-                const { _id, commonMaterialID, name, description, available } =
-                  material;
-                return (
-                  <tr key={index}>
-                    <td className="table-row__text">
-                      <div className="table-row__text">{name}</div>
-                      <div className="table-subTitle">{description}</div>
-                    </td>
-                    <td className="table-row__text">{commonMaterialID}</td>
-                    <td className="table-row__text">
-                      <Badge
-                        type={available ? "badge-success" : "badge-fail"}
-                        content={available ? "Available" : "Not Available"}
-                      />
-                    </td>
-                    <td className="table-row__text">
-                      <div className="table-row__actions">
-                        <button
-                          className="table-row__actions__btn-edit"
-                          onClick={() => handleEditMaterial(_id)}
-                        >
-                          <MdEdit />
-                        </button>
-                        <button
-                          className="table-row__actions__btn-delete"
-                          onClick={() => handleDeleteMaterial(_id)}
-                        >
-                          <MdDelete />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        )}
-      </div>
-    </>
+    <div className="users-container">
+      {isLoadingMaterials ? (
+        <Loading center />
+      ) : (
+        <table className="form-table">
+          <thead>
+            <tr className="table-header">
+              {header.map((title, index) => (
+                <th key={index}>{title}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {materialsArr.map((material, index) => {
+              const { _id, commonMaterialID, name, description, available } =
+                material;
+              return (
+                <tr key={index}>
+                  <td className="table-row__text">
+                    <div className="table-row__text">{name}</div>
+                    <div className="table-subTitle">{description}</div>
+                  </td>
+                  <td className="table-row__text">{commonMaterialID}</td>
+                  <td className="table-row__text">
+                    <Badge
+                      type={available ? "badge-success" : "badge-fail"}
+                      content={available ? "Available" : "Not Available"}
+                    />
+                  </td>
+                  <td className="table-row__text">
+                    <div className="table-row__actions">
+                      <button
+                        className="table-row__actions__btn-edit"
+                        onClick={() => handleEditMaterial(_id)}
+                      >
+                        <MdEdit />
+                      </button>
+                      <button
+                        className="table-row__actions__btn-delete"
+                        onClick={() => handleDeleteMaterial(_id)}
+                      >
+                        <MdDelete />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      )}
+    </div>
   );
 };
 

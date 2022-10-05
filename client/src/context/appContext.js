@@ -1,6 +1,7 @@
 import React, { useReducer, useContext } from "react";
 import axios from "axios";
 import reducer from "./reducer";
+import { toast } from "react-toastify";
 
 import {
   LANGUAGE,
@@ -220,6 +221,7 @@ const AppProvider = ({ children }) => {
 
   const loginUser = async ({ currentUser, endPoint, alertText }) => {
     dispatch({ type: LOGIN_USER_BEGIN });
+    let id = toast.loading("Please wait...");
     try {
       const { data } = await axios.post(
         `http://localhost:5000/api/v1/auth/${endPoint}`,
@@ -243,6 +245,11 @@ const AppProvider = ({ children }) => {
         customerName,
         customerCodeName,
         customerID,
+      });
+      toast.update(id, {
+        render: "All is good",
+        type: "success",
+        isLoading: false,
       });
     } catch (error) {
       dispatch({
@@ -444,6 +451,7 @@ const AppProvider = ({ children }) => {
 
   const createMaterial = async (condition) => {
     dispatch({ type: CREATE_MATERIAL_BEGIN });
+    let id = toast.loading("Adding new material. Please wait...");
     try {
       const {
         customerCodeName,
@@ -460,11 +468,23 @@ const AppProvider = ({ children }) => {
         available: materialAvailable,
       });
       dispatch({ type: CREATE_MATERIAL_SUCCESS });
+      toast.update(id, {
+        render: "New material saved",
+        type: "success",
+        isLoading: false,
+        autoClose: 4000,
+      });
     } catch (error) {
       if (error.response.status === 401) return;
       dispatch({
         type: CREATE_MATERIAL_ERROR,
         payload: { msg: error.response.data.msg },
+      });
+      toast.update(id, {
+        render: error.response.data.msg,
+        type: "error",
+        isLoading: false,
+        autoClose: 4000,
       });
     }
     clearAlert();
@@ -476,6 +496,7 @@ const AppProvider = ({ children }) => {
 
   const editMaterial = async () => {
     dispatch({ type: EDIT_MATERIAL_BEGIN });
+    let id = toast.loading("Updating material. Please wait...");
     try {
       const {
         customerCodeName,
@@ -495,11 +516,23 @@ const AppProvider = ({ children }) => {
       });
       dispatch({ type: EDIT_MATERIAL_SUCCESS });
       dispatch({ type: CLEAR_VALUES });
+      toast.update(id, {
+        render: "Material updated",
+        type: "success",
+        isLoading: false,
+        autoClose: 4000,
+      });
     } catch (error) {
       if (error.response.status === 401) return;
       dispatch({
         type: EDIT_MATERIAL_ERROR,
         payload: { msg: error.response.data.msg },
+      });
+      toast.update(id, {
+        render: error.response.data.msg,
+        type: "error",
+        isLoading: false,
+        autoClose: 4000,
       });
     }
     clearAlert();
@@ -507,6 +540,7 @@ const AppProvider = ({ children }) => {
 
   const deleteMaterial = async () => {
     dispatch({ type: DELETE_MATERIAL_BEGIN });
+    let id = toast.loading("Deleting material. Please wait...");
     try {
       const { customerCodeName, editMaterialID } = state;
       console.log(customerCodeName, editMaterialID);
@@ -517,6 +551,12 @@ const AppProvider = ({ children }) => {
         },
       });
       dispatch({ type: DELETE_MATERIAL_SUCCESS });
+      toast.update(id, {
+        render: "Material deleted",
+        type: "success",
+        isLoading: false,
+        autoClose: 5000,
+      });
     } catch (error) {
       if (error.response.status === 401) return;
       dispatch({

@@ -28,7 +28,6 @@ const MaterialEditModal = () => {
     alertType,
     hideModal,
   } = useAppContext();
-  // const [values, setValues] = useState(initialState);
 
   const handleMaterialInput = (e) => {
     const type = e.target.type;
@@ -55,15 +54,6 @@ const MaterialEditModal = () => {
     createMaterial();
   };
 
-  // useEffect(() => {
-  //   if (alertType === "success") {
-  //     closeModal();
-  //     // setTimeout(() => {
-  //     //   closeModal();
-  //     // }, 3000);
-  //   }
-  // }, [alertType]);
-
   return (
     <form className="modal-form" onSubmit={submitHandler}>
       <nav className="modal-form__header">
@@ -73,7 +63,6 @@ const MaterialEditModal = () => {
         </div>
         <FaTimes onClick={closeModal} />
       </nav>
-      {/* {showAlert && <Toast />} */}
       <div className="modal-form__content">
         <FormRow
           name="commonMaterialID"

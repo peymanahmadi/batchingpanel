@@ -339,6 +339,7 @@ const reducer = (state, action) => {
       showAlert: true,
       alertType: "success",
       alertText: "Material Updated!",
+      openModal: false,
     };
   }
   if (action.type === EDIT_MATERIAL_ERROR) {
