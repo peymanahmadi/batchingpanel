@@ -1,13 +1,7 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { MdEdit, MdDelete } from "react-icons/md";
 import { useAppContext } from "../../context/appContext";
-import {
-  Modal,
-  MessageModal,
-  MaterialEditModal,
-  Loading,
-  Badge,
-} from "../shared";
+import { Loading, Badge } from "../shared";
 
 const MaterialsContainer = () => {
   const {
@@ -17,20 +11,13 @@ const MaterialsContainer = () => {
     materialsArr,
     showModal,
     showModalConfirm,
-    hideModal,
-    openModal,
-    customerCodeName,
     alertType,
   } = useAppContext();
 
   const header = ["Name", "Common ID", "Available", "Actions"];
 
-  const condition = {
-    customerCodeName,
-  };
-
   useEffect(() => {
-    getMaterials(condition);
+    getMaterials();
   }, [alertType === "success"]);
 
   const handleEditMaterial = (_id) => {

@@ -36,6 +36,7 @@ import {
   CREATE_MATERIAL_BEGIN,
   CREATE_MATERIAL_SUCCESS,
   CREATE_MATERIAL_ERROR,
+  SET_EDIT_MATERIAL,
   EDIT_MATERIAL_BEGIN,
   EDIT_MATERIAL_SUCCESS,
   EDIT_MATERIAL_ERROR,
@@ -48,9 +49,16 @@ import {
   CREATE_FORMULA_BEGIN,
   CREATE_FORMULA_SUCCESS,
   CREATE_FORMULA_ERROR,
+  SET_EDIT_FORMULA,
+  EDIT_FORMULA_BEGIN,
+  EDIT_FORMULA_SUCCESS,
+  EDIT_FORMULA_ERROR,
+  DELETE_FORMULA_BEGIN,
+  DELETE_FORMULA_SUCCESS,
+  DELETE_FORMULA_ERROR,
+  // Warehouse
   GET_WAREHOUSES_BEGIN,
   GET_WAREHOUSES_SUCCESS,
-  SET_EDIT_MATERIAL,
 } from "./actions";
 
 import { initialState } from "./appContext";
@@ -90,6 +98,14 @@ const reducer = (state, action) => {
       commonMaterialID: "",
       materialDescription: "",
       materialAvailable: true,
+      editFormulaID: "",
+      commonFormulaID: "",
+      formulaVersion: "",
+      formulaName: "",
+      formulaDescription: "",
+      formulaBatchSize: "",
+      formulaAvailable: true,
+      availableMaterialsArr: [],
     };
     return { ...state, ...initialState };
   }
@@ -280,12 +296,18 @@ const reducer = (state, action) => {
 
   // Materials
   if (action.type === GET_MATERIALS_BEGIN) {
-    return { ...state, isLoadingMaterials: true, showAlert: false };
+    return {
+      ...state,
+      isLoadingMaterials: true,
+      isLoading: true,
+      showAlert: false,
+    };
   }
   if (action.type === GET_MATERIALS_SUCCESS) {
     return {
       ...state,
       isLoadingMaterials: false,
+      isLoading: false,
       materialsArr: action.payload.materials,
       availableMaterialsArr: action.payload.availableMaterials,
       totalMaterials: action.payload.totalMaterials,
@@ -397,12 +419,84 @@ const reducer = (state, action) => {
       showAlert: true,
       alertType: "success",
       alertText: "Create Successful!",
+      openModal: false,
     };
   }
   if (action.type === CREATE_FORMULA_ERROR) {
     return {
       ...state,
       isLoadingCreateFormula: false,
+      showAlert: true,
+      alertType: "danger",
+      alertText: action.payload.msg,
+    };
+  }
+  if (action.type === SET_EDIT_FORMULA) {
+    const formula = state.formulasArr.find(
+      (formula) => formula._id === action.payload.id
+    );
+    const {
+      _id,
+      commonFormulaID,
+      version,
+      name,
+      description,
+      formulaBatchSize,
+      available,
+      ingredients,
+    } = formula;
+    return {
+      ...state,
+      isEditing: true,
+      editMaterialID: _id,
+      commonFormulaID,
+      formulaVersion: version,
+      formulaName: name,
+      formulaDescription: description,
+      formulaBatchSize,
+      formulaAvailable: available,
+      ingredients,
+    };
+  }
+  if (action.type === EDIT_FORMULA_BEGIN) {
+    return { ...state, isLoading: true };
+  }
+  if (action.type === EDIT_FORMULA_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: "success",
+      alertText: "Formula Updated!",
+      openModal: false,
+    };
+  }
+  if (action.type === EDIT_FORMULA_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: "danger",
+      alertText: action.payload.msg,
+    };
+  }
+  if (action.type === DELETE_FORMULA_BEGIN) {
+    return { ...state, isLoading: true };
+  }
+  if (action.type === DELETE_FORMULA_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: "success",
+      alertText: "Formula Deleted!",
+      openModalConfirm: false,
+    };
+  }
+  if (action.type === DELETE_FORMULA_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
       showAlert: true,
       alertType: "danger",
       alertText: action.payload.msg,

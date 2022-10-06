@@ -1,11 +1,9 @@
-// import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useAppContext } from "../../context/appContext";
-import { Modal, MaterialEditModal, Badge } from "../shared";
+import { Badge } from "../shared";
 
 const MaterialsOptions = () => {
-  const { openModal, showModal, clearValues, hideModal, totalMaterials } =
-    useAppContext();
+  const { showModal, clearValues, totalMaterials } = useAppContext();
   const { t } = useTranslation();
 
   const handleOpenForm = () => {

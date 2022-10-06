@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { FormRow, Alert } from "../shared";
+import { FormRow } from "../shared";
 import { useAppContext } from "../../context/appContext";
-import { FaTimes } from "react-icons/fa";
+import { FaTimes, FaNutritionix } from "react-icons/fa";
 
 const initialState = {
   commonUserID: "",
@@ -27,18 +27,38 @@ const UserEditModal = () => {
   const [values, setValues] = useState(initialState);
   const {
     isLoading,
+    isEditing,
     displayAlert,
+    commonUserID,
+    firstName,
+    lastName,
+    email,
+    password,
+    jobTitle,
+    handleChange,
     showAlert,
     hideModal,
     registerUser,
     customerID,
   } = useAppContext();
 
-  const handleValuesChange = (e) => {
-    setValues({ ...values, [e.target.name]: e.target.value });
+  const handleUserInput = (e) => {
+    const type = e.target.type;
+    const name = e.target.name;
+    const value = e.target.value;
+    const checked = e.target.checked;
+    handleChange({ type, name, value, checked });
   };
 
-  const onSubmit = (e) => {
+  const closeModal = () => {
+    hideModal();
+  };
+
+  // const handleValuesChange = (e) => {
+  //   setValues({ ...values, [e.target.name]: e.target.value });
+  // };
+
+  const submitHandler = (e) => {
     e.preventDefault();
     const { firstName, lastName, email, password } = values;
     if (!firstName || !lastName || !email || !password) {
@@ -52,54 +72,62 @@ const UserEditModal = () => {
   };
 
   return (
-    <form className="user-modal" onSubmit={onSubmit}>
-      <nav className="header-form">
-        <h5>{t("USERS.ADDUSER")}</h5>
-        <FaTimes />
+    <form className="modal-form" onSubmit={submitHandler}>
+      <nav className="modal-form__header">
+        <div className="modal-form__header__title">
+          <FaNutritionix />
+          <h5>{t("USERS.ADDUSER")}</h5>
+        </div>
+        <FaTimes onClick={closeModal} />
       </nav>
-      {showAlert && <Alert />}
-      <div className="userform">
+      <div className="modal-form__content">
         <FormRow
           name="commonUserID"
           labelText={t("USERS.COMMONUSERID")}
           type="text"
-          value={values.commonUserID}
-          handleChange={handleValuesChange}
+          value={commonUserID}
+          // handleChange={handleValuesChange}
+          handleChange={handleUserInput}
         />
         <FormRow
           name="firstName"
           labelText={t("USERS.FIRSTNAME")}
           type="text"
-          value={values.firstName}
-          handleChange={handleValuesChange}
+          value={firstName}
+          // handleChange={handleValuesChange}
+          handleChange={handleUserInput}
         />
         <FormRow
           name="lastName"
           labelText={t("USERS.LASTNAME")}
           type="text"
-          value={values.lastName}
-          handleChange={handleValuesChange}
+          value={lastName}
+          // handleChange={handleValuesChange}
+          handleChange={handleUserInput}
         />
         <FormRow
           name="email"
           labelText={t("USERS.EMAIL")}
           type="email"
-          value={values.email}
-          handleChange={handleValuesChange}
+          value={email}
+          // handleChange={handleValuesChange}
+          handleChange={handleUserInput}
         />
         <FormRow
           name="password"
           labelText={t("USERS.PASSWORD")}
           type="password"
-          value={values.password}
-          handleChange={handleValuesChange}
+          value={password}
+          // handleChange={handleValuesChange}
+          handleChange={handleUserInput}
         />
         <FormRow
           name="jobTitle"
           labelText={t("USERS.JOBTITLE")}
           type="text"
-          value={values.jobTitle}
-          handleChange={handleValuesChange}
+          value={jobTitle}
+          // handleChange={handleValuesChange}
+          handleChange={handleUserInput}
         />
         {/* <div>
           <div className="form-label">Access Level</div>
@@ -120,9 +148,9 @@ const UserEditModal = () => {
           handleChange={handleValuesChange}
         /> */}
       </div>
-      <div className="footer-form">
-        <button type="submit" className="btn" disabled={isLoading}>
-          submit
+      <div className="modal-form__footer">
+        <button className="btn btn-block" type="submit" disabled={isLoading}>
+          Submit
         </button>
       </div>
     </form>

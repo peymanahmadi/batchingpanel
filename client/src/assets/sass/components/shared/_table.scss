@@ -90,16 +90,15 @@
 .table-subTitle {
   font-size: 0.875rem;
   font-style: italic;
-  color: $gray-300;
+  color: $gray-400;
 }
 
 .ingredients {
   background: $white;
   width: 100%;
-  list-style: none;
   padding: 0;
   margin: 0;
-  min-height: 300px;
+  // height: 100px;
   max-height: 300px;
   overflow-y: auto;
 }
@@ -107,36 +106,36 @@
 .list-header {
   position: sticky;
   display: grid;
-  grid-template-columns: 1fr 3fr 2fr;
-  background: $gray-300;
-  margin: 0.25rem;
-  padding: 0.5rem;
+  grid-template-columns: 0.5fr 1fr 3fr 2fr;
+  background: $gray-600;
+  color: $white;
+  margin: 0.125rem;
+  padding: 0.125rem 0.5rem;
   border-radius: $border-radius $border-radius 0 0;
 }
 
 .ingredients-list {
-  padding: 0.25rem 0.5rem;
-  background: $gray-50;
-  margin: 0.25rem;
+  padding: 0.125rem 0.5rem;
+  background: $gray-100;
+  margin: 0.125rem;
   cursor: pointer;
   display: grid;
-  grid-template-columns: 1fr 3fr 2fr;
+  grid-template-columns: 0.5fr 1fr 3fr 2fr;
   align-items: center;
   line-height: 1.15rem;
 }
 
 .materials-list {
-  grid-template-columns: 1fr 3fr;
+  grid-template-columns: 0.5fr 1fr 3fr;
+  padding: 0.25rem 0.5rem;
 }
 
 .list-input {
   outline: none;
   padding: 0.25rem;
-  border: 1px solid $gray-100;
-  border: 1px solid red;
+  border: 1px solid $gray-300;
 }
 
 .list-active {
-  background: $gray-100;
-  // color: #a8dadc;
+  background: $gray-300;
 }

@@ -48,6 +48,13 @@ import {
   CREATE_FORMULA_BEGIN,
   CREATE_FORMULA_SUCCESS,
   CREATE_FORMULA_ERROR,
+  SET_EDIT_FORMULA,
+  EDIT_FORMULA_BEGIN,
+  EDIT_FORMULA_SUCCESS,
+  EDIT_FORMULA_ERROR,
+  DELETE_FORMULA_BEGIN,
+  DELETE_FORMULA_SUCCESS,
+  DELETE_FORMULA_ERROR,
   // Warehouse
   GET_WAREHOUSES_BEGIN,
   GET_WAREHOUSES_SUCCESS,
@@ -113,6 +120,14 @@ const initialState = {
   formulasArr: [],
   totalFormulas: 0,
   numOfFormulaPages: 1,
+  editFormulaID: "",
+  commonFormulaID: "",
+  formulaVersion: "",
+  formulaName: "",
+  formulaDescription: "",
+  formulaBatchSize: "",
+  formulaAvailable: true,
+  // ingredients: [],
   // isLoadingCreateMaterial: false,
   // users
   isLoadingUsers: false,
@@ -423,13 +438,13 @@ const AppProvider = ({ children }) => {
 
   // Materials
 
-  const getMaterials = async (condition) => {
+  const getMaterials = async () => {
     dispatch({ type: GET_MATERIALS_BEGIN });
     try {
-      const { data } = await authFetch.post(
-        "/customers/materials/all",
-        condition
-      );
+      const { customerCodeName } = state;
+      const { data } = await authFetch.post("/customers/materials/all", {
+        customerCodeName,
+      });
       const { materials, totalMaterials, numOfPages } = data;
       let availableMaterials = [];
       materials.map((material) => {
@@ -449,7 +464,7 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
-  const createMaterial = async (condition) => {
+  const createMaterial = async () => {
     dispatch({ type: CREATE_MATERIAL_BEGIN });
     let id = toast.loading("Adding new material. Please wait...");
     try {
@@ -543,7 +558,6 @@ const AppProvider = ({ children }) => {
     let id = toast.loading("Deleting material. Please wait...");
     try {
       const { customerCodeName, editMaterialID } = state;
-      console.log(customerCodeName, editMaterialID);
       await authFetch.delete("/customers/materials", {
         data: {
           customerCodeName,
@@ -587,13 +601,13 @@ const AppProvider = ({ children }) => {
 
   // Formulas
 
-  const getFormulas = async (condition) => {
+  const getFormulas = async () => {
     dispatch({ type: GET_FORMULAS_BEGIN });
     try {
-      const { data } = await authFetch.post(
-        "/customers/formulas/all",
-        condition
-      );
+      const { customerCodeName } = state;
+      const { data } = await authFetch.post("/customers/formulas/all", {
+        customerCodeName,
+      });
       const { formulas, totalFormulas, numOfPages } = data;
       dispatch({
         type: GET_FORMULAS_SUCCESS,
@@ -604,18 +618,129 @@ const AppProvider = ({ children }) => {
     }
   };
 
-  const createFormula = async (condition) => {
+  const createFormula = async (ingredients) => {
     dispatch({ type: CREATE_FORMULA_BEGIN });
+    let id = toast.loading("Adding new formula. Please wait...");
     try {
-      await authFetch.post("/customers/formulas", condition);
+      const {
+        customerCodeName,
+        commonFormulaID,
+        formulaVersion,
+        formulaName,
+        formulaDescription,
+        formulaBatchSize,
+        formulaAvailable,
+        // ingredients,
+      } = state;
+      await authFetch.post("/customers/formulas", {
+        customerCodeName,
+        commonFormulaID,
+        version: formulaVersion,
+        name: formulaName,
+        description: formulaDescription,
+        formulaBatchSize,
+        available: formulaAvailable,
+        ingredients,
+      });
       dispatch({ type: CREATE_FORMULA_SUCCESS });
+      toast.update(id, {
+        render: "New formula created",
+        type: "success",
+        isLoading: false,
+        autoClose: 4000,
+      });
     } catch (error) {
       dispatch({
         type: CREATE_FORMULA_ERROR,
         payload: { msg: error.response.data.msg },
       });
+      toast.update(id, {
+        render: error.response.data.msg,
+        type: "error",
+        isLoading: false,
+        autoClose: 4000,
+      });
     }
     clearAlert();
+  };
+
+  const setEditFormula = (id) => {
+    dispatch({ type: SET_EDIT_FORMULA, payload: { id } });
+  };
+
+  const editFormula = async () => {
+    dispatch({ type: EDIT_FORMULA_BEGIN });
+    let id = toast.loading("Updating formula. Please wait...");
+    try {
+      const {
+        customerCodeName,
+        commonFormulaID,
+        formulaVersion,
+        formulaName,
+        formulaDescription,
+        formulaBatchSize,
+        formulaAvailable,
+        ingredients,
+      } = state;
+      await authFetch.patch("/customers/materials", {
+        customerCodeName,
+        commonFormulaID,
+        version: formulaVersion,
+        name: formulaName,
+        description: formulaDescription,
+        formulaBatchSize,
+        available: formulaAvailable,
+        ingredients,
+      });
+      dispatch({ type: EDIT_FORMULA_SUCCESS });
+      dispatch({ type: CLEAR_VALUES });
+      toast.update(id, {
+        render: "Formula updated",
+        type: "success",
+        isLoading: false,
+        autoClose: 4000,
+      });
+    } catch (error) {
+      if (error.response.status === 401) return;
+      dispatch({
+        type: EDIT_FORMULA_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+      toast.update(id, {
+        render: error.response.data.msg,
+        type: "error",
+        isLoading: false,
+        autoClose: 4000,
+      });
+    }
+    clearAlert();
+  };
+
+  const deleteFormula = async () => {
+    dispatch({ type: DELETE_FORMULA_BEGIN });
+    let id = toast.loading("Deleting formula. Please wait...");
+    try {
+      const { customerCodeName, editFormulaID } = state;
+      await authFetch.delete("/customers/materials", {
+        data: {
+          customerCodeName,
+          formulaID: editFormulaID,
+        },
+      });
+      dispatch({ type: DELETE_FORMULA_SUCCESS });
+      toast.update(id, {
+        render: "Formula deleted",
+        type: "success",
+        isLoading: false,
+        autoClose: 5000,
+      });
+    } catch (error) {
+      if (error.response.status === 401) return;
+      dispatch({
+        type: DELETE_FORMULA_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
   };
 
   return (
@@ -648,6 +773,9 @@ const AppProvider = ({ children }) => {
         deleteMaterial,
         getFormulas,
         createFormula,
+        setEditFormula,
+        editFormula,
+        deleteFormula,
       }}
     >
       {children}

@@ -18,16 +18,15 @@
 
 .modal {
   position: fixed;
-  top: 10vh;
+  top: 5vh;
   left: 5%;
   width: 90%;
   background-color: white;
   border-radius: $border-radius;
-  // box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   z-index: 3;
   animation: slide-down 500ms ease-out forwards;
   border-top: 5px solid $green-500;
-  max-height: calc(90vh);
+  max-height: 90vh;
   overflow-y: auto;
 }
 

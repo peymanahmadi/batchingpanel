@@ -1,14 +1,6 @@
-import { useEffect, useState } from "react";
 import { FaTimes, FaNutritionix } from "react-icons/fa";
 import { useAppContext } from "../../context/appContext";
-import { FormRow, Alert, CheckBox, Toast } from "../shared";
-
-// const initialState = {
-//   commonMaterialID: "",
-//   name: "",
-//   description: "",
-//   available: true,
-// };
+import { FormRow, CheckBox } from "../shared";
 
 const MaterialEditModal = () => {
   const {
