@@ -721,7 +721,7 @@ const AppProvider = ({ children }) => {
     let id = toast.loading("Deleting formula. Please wait...");
     try {
       const { customerCodeName, editFormulaID } = state;
-      await authFetch.delete("/customers/materials", {
+      await authFetch.delete("/customers/formulas", {
         data: {
           customerCodeName,
           formulaID: editFormulaID,

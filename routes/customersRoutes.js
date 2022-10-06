@@ -19,6 +19,7 @@ import {
 import {
   createFormula,
   getAllFormulas,
+  deleteFormula,
 } from "../controllers/formulasController.js";
 
 // Batchings
@@ -49,6 +50,7 @@ router.route("/materials/all").post(getAllMaterials);
 
 // Formulas
 router.route("/formulas").post(createFormula);
+router.route("/formulas").delete(deleteFormula);
 router.route("/formulas/all").post(getAllFormulas);
 
 // Batchings

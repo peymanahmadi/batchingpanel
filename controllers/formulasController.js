@@ -70,8 +70,27 @@ const updateFormula = (req, res, next) => {
   res.send("update formula");
 };
 
-const deleteFormula = (req, res, next) => {
-  res.send("delete formula");
+const deleteFormula = async (req, res, next) => {
+  const { customerCodeName, formulaID } = req.body;
+  console.log(req.body);
+
+  const conn = createTenantConnection(customerCodeName);
+  const formulaModel = conn.model("Formula");
+  const formulationModel = conn.model("Formulation");
+
+  const formula = await formulaModel.findOne({ _id: formulaID });
+
+  if (!formula) {
+    const error = new NotFoundError(`No formula with id: ${formulaID}`);
+    return next(error);
+  }
+
+  try {
+    await formulaModel.findByIdAndDelete(formulaID);
+    res.status(200).json({ msg: "Success! Formula removed" });
+  } catch (error) {
+    return next(error);
+  }
 };
 
 export {

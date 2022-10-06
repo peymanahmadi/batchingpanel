@@ -443,19 +443,19 @@ const reducer = (state, action) => {
       description,
       formulaBatchSize,
       available,
-      ingredients,
+      // ingredients,
     } = formula;
     return {
       ...state,
       isEditing: true,
-      editMaterialID: _id,
+      editFormulaID: _id,
       commonFormulaID,
       formulaVersion: version,
       formulaName: name,
       formulaDescription: description,
       formulaBatchSize,
       formulaAvailable: available,
-      ingredients,
+      // ingredients,
     };
   }
   if (action.type === EDIT_FORMULA_BEGIN) {

@@ -4,22 +4,30 @@ import { useAppContext } from "../../context/appContext";
 import { Loading, Badge } from "../shared";
 
 const FormulasContainer = () => {
-  const { getFormulas, isLoadingFormulas, formulasArr } = useAppContext();
+  const {
+    getFormulas,
+    setEditFormula,
+    isLoadingFormulas,
+    formulasArr,
+    showModal,
+    showModalConfirm,
+    alertType,
+  } = useAppContext();
 
   const header = ["Name", "Common ID", "Available", "Actions"];
 
   useEffect(() => {
     getFormulas();
-  }, []);
+  }, [alertType === "success"]);
 
   const handleEditFormula = (_id) => {
-    // setEditMaterial(_id);
-    // showModal();
+    setEditFormula(_id);
+    showModal();
   };
 
   const handleDeleteFormula = (_id) => {
-    // setEditMaterial(_id);
-    // showModalConfirm();
+    setEditFormula(_id);
+    showModalConfirm();
   };
 
   return (
