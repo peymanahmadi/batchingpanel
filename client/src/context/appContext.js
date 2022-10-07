@@ -1,4 +1,5 @@
 import React, { useReducer, useContext } from "react";
+import { useLocation } from "react-router-dom";
 import axios from "axios";
 import reducer from "./reducer";
 import { toast } from "react-toastify";
@@ -13,6 +14,9 @@ import {
   REGISTER_USER_BEGIN,
   REGISTER_USER_SUCCESS,
   REGISTER_USER_ERROR,
+  VERIFY_TOKEN_BEGIN,
+  VERIFY_TOKEN_SUCCESS,
+  VERIFY_TOKEN_ERROR,
   TOGGLE_SIDEBAR,
   LOGOUT_USER,
   GET_MATERIALS_CONSUMPTION_BEGIN,
@@ -81,6 +85,7 @@ const initialState = {
   alertType: "",
   user: user ? JSON.parse(user) : null,
   token: token,
+  verificationStatus: "",
   customerName: customerName,
   customerCodeName: customerCodeName,
   customerID: customerID,
@@ -142,10 +147,15 @@ const initialState = {
   warehouseInventory: [],
 };
 
+const useQuery = () => {
+  return new URLSearchParams(useLocation().search);
+};
+
 const AppContext = React.createContext();
 
 const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const query = useQuery();
 
   // create axios request config - to prevent sending token to external resources
   const authFetch = axios.create({
@@ -236,7 +246,7 @@ const AppProvider = ({ children }) => {
 
   const loginUser = async ({ currentUser, endPoint, alertText }) => {
     dispatch({ type: LOGIN_USER_BEGIN });
-    let id = toast.loading("Please wait...");
+    let id = toast.loading("Login...");
     try {
       const { data } = await axios.post(
         `http://localhost:5000/api/v1/auth/${endPoint}`,
@@ -262,14 +272,21 @@ const AppProvider = ({ children }) => {
         customerID,
       });
       toast.update(id, {
-        render: "All is good",
+        render: "Login Successful! Redirecting...",
         type: "success",
         isLoading: false,
+        autoClose: 4000,
       });
     } catch (error) {
       dispatch({
         type: LOGIN_USER_ERROR,
         payload: { msg: error.response.data.msg },
+      });
+      toast.update(id, {
+        render: error.response.data.msg,
+        type: "error",
+        isLoading: false,
+        autoClose: 4000,
       });
     }
     clearAlert();
@@ -284,6 +301,27 @@ const AppProvider = ({ children }) => {
       console.log(error);
       dispatch({
         type: REGISTER_USER_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+    clearAlert();
+  };
+
+  const verifyToken = async () => {
+    dispatch({ type: VERIFY_TOKEN_BEGIN });
+    try {
+      const { data } = await axios.post(
+        "http://localhost:5000/api/v1/auth/verify-email",
+        {
+          verificationToken: query.get("token"),
+          email: query.get("email"),
+        }
+      );
+      dispatch({ type: VERIFY_TOKEN_SUCCESS });
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: VERIFY_TOKEN_ERROR,
         payload: { msg: error.response.data.msg },
       });
     }
@@ -756,6 +794,7 @@ const AppProvider = ({ children }) => {
         hideModalConfirm,
         loginUser,
         registerUser,
+        verifyToken,
         toggleSidebar,
         logoutUser,
         changeLanguage,

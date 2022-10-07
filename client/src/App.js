@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import "./assets/sass/main.scss";
 import { ToastContainer, Slide } from "react-toastify";
 import { useAppContext } from "./context/appContext";
-import { Login, Error, Landing, ProtectedRoute } from "./pages";
+import { Login, Verify, Error, Landing, ProtectedRoute } from "./pages";
 import {
   Stats,
   Reports,
@@ -29,37 +29,36 @@ const App = () => {
   }, [i18n, i18n.language]);
 
   return (
-    <BrowserRouter>
-      <div className={i18n.language === "en" ? "english-font" : "farsi-font"}>
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <ProtectedRoute>
-                <SharedLayout />
-              </ProtectedRoute>
-            }
-          >
-            <Route index element={<Stats />} />
-            <Route path="reports" element={<Reports />} />
-            <Route path="materials" element={<Materials />} />
-            <Route path="formulas" element={<Formulas />} />
-            <Route path="warehouses" element={<Warehouses />} />
-            <Route path="users" element={<Users />} />
-            <Route path="profile" element={<Profile />} />
-          </Route>
-          <Route path="/login" element={<Login />} />
-          <Route path="/landing" element={<Landing />} />
-          <Route path="*" element={<Error />} />
-        </Routes>
-        <ToastContainer
-          closeButton={false}
-          autoClose={3000}
-          hideProgressBar={true}
-          transition={Slide}
-        />
-      </div>
-    </BrowserRouter>
+    <div className={i18n.language === "en" ? "english-font" : "farsi-font"}>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <SharedLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route index element={<Stats />} />
+          <Route path="reports" element={<Reports />} />
+          <Route path="materials" element={<Materials />} />
+          <Route path="formulas" element={<Formulas />} />
+          <Route path="warehouses" element={<Warehouses />} />
+          <Route path="users" element={<Users />} />
+          <Route path="profile" element={<Profile />} />
+        </Route>
+        <Route path="/login" element={<Login />} />
+        <Route path="/user/verify-email" element={<Verify />} />
+        <Route path="/landing" element={<Landing />} />
+        <Route path="*" element={<Error />} />
+      </Routes>
+      <ToastContainer
+        closeButton={false}
+        autoClose={3000}
+        hideProgressBar={true}
+        transition={Slide}
+      />
+    </div>
   );
 };
 

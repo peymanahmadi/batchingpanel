@@ -1,4 +1,6 @@
+import crypto from "crypto";
 import { BadRequestError, UnAuthenticatedError } from "../errors/index.js";
+import { sendVerificationEmail } from "../utils/index.js";
 import conn from "../db/batchingAdmin.js";
 
 const userModel = conn.model("User");
@@ -47,6 +49,8 @@ const register = async (req, res, next) => {
     }
   }
 
+  const verificationToken = crypto.randomBytes(40).toString("hex");
+
   const newUser = new userModel({
     commonUserID,
     firstName,
@@ -56,6 +60,7 @@ const register = async (req, res, next) => {
     jobTitle,
     customerID,
     accessLevel,
+    verificationToken,
   });
 
   try {
@@ -68,6 +73,16 @@ const register = async (req, res, next) => {
 
     session.commitTransaction();
 
+    const origin = "http://localhost:3000";
+
+    await sendVerificationEmail({
+      firstName: newUser.firstName,
+      lastName: newUser.lastName,
+      email: newUser.email,
+      verificationToken: newUser.verificationToken,
+      origin,
+    });
+
     res.status(201).json({
       newUser: {
         commonUserID: newUser.commonUserID,
@@ -77,11 +92,37 @@ const register = async (req, res, next) => {
         jobTitle: newUser.jobTitle,
         customerID: newUser.customerID,
         accessLevel: newUser.accessLevel,
+        msg: "Success! Please check your email to verify your account",
       },
     });
   } catch (error) {
     return next(error);
   }
+};
+
+const verifyEmail = async (req, res, next) => {
+  const { verificationToken, email } = req.body;
+  const user = await userModel.findOne({ email });
+
+  if (!user) {
+    const error = new UnAuthenticatedError(
+      "Verification Failed - User not found"
+    );
+    return next(error);
+  }
+
+  if (user.verificationToken !== verificationToken) {
+    const error = new UnAuthenticatedError("Verification Failed");
+    return next(error);
+  }
+
+  user.isVerified = true;
+  user.verified = Date.now();
+  user.verificationToken = "";
+
+  await user.save();
+
+  res.status(200).json({ msg: "Email Verified" });
 };
 
 const login = async (req, res, next) => {
@@ -105,6 +146,11 @@ const login = async (req, res, next) => {
   const isPasswordCorrect = await user.comparePassword(password);
   if (!isPasswordCorrect) {
     const error = new UnAuthenticatedError("Invalid Credentials");
+    return next(error);
+  }
+
+  if (!user.isVerified) {
+    const error = new UnAuthenticatedError("Please verify your email");
     return next(error);
   }
 
@@ -152,4 +198,4 @@ const getUsersByCustomerID = async (req, res, next) => {
   }
 };
 
-export { register, login, updateUser, getUsersByCustomerID };
+export { register, login, updateUser, getUsersByCustomerID, verifyEmail };

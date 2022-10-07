@@ -59,6 +59,12 @@ const userSchema = new mongoose.Schema(
       allowedReports: Boolean,
       allowedManageUsers: Boolean,
     },
+    verificationToken: String,
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
+    verified: Date,
   },
   { timestamps: true }
 );

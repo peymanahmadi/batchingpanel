@@ -10,6 +10,9 @@ import {
   REGISTER_USER_BEGIN,
   REGISTER_USER_SUCCESS,
   REGISTER_USER_ERROR,
+  VERIFY_TOKEN_BEGIN,
+  VERIFY_TOKEN_SUCCESS,
+  VERIFY_TOKEN_ERROR,
   TOGGLE_SIDEBAR,
   LOGOUT_USER,
   GET_MATERIALS_CONSUMPTION_BEGIN,
@@ -184,6 +187,23 @@ const reducer = (state, action) => {
       showAlert: true,
       alertType: "danger",
       alertText: action.payload.msg,
+    };
+  }
+  if (action.type === VERIFY_TOKEN_BEGIN) {
+    return { ...state, isLoading: true };
+  }
+  if (action.type === VERIFY_TOKEN_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      verificationStatus: "verified",
+    };
+  }
+  if (action.type === VERIFY_TOKEN_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      verificationStatus: "not verified",
     };
   }
   if (action.type === TOGGLE_SIDEBAR) {
