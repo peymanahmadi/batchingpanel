@@ -4,7 +4,15 @@ import { Routes, Route } from "react-router-dom";
 import "./assets/sass/main.scss";
 import { ToastContainer, Slide } from "react-toastify";
 import { useAppContext } from "./context/appContext";
-import { Login, Verify, Error, Landing, ProtectedRoute } from "./pages";
+import {
+  Login,
+  Verify,
+  ForgotPassword,
+  ResetPassword,
+  Error,
+  Landing,
+  ProtectedRoute,
+} from "./pages";
 import {
   Stats,
   Reports,
@@ -49,6 +57,8 @@ const App = () => {
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/user/verify-email" element={<Verify />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/user/reset-password" element={<ResetPassword />} />
         <Route path="/landing" element={<Landing />} />
         <Route path="*" element={<Error />} />
       </Routes>

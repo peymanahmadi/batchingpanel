@@ -13,6 +13,12 @@ import {
   VERIFY_TOKEN_BEGIN,
   VERIFY_TOKEN_SUCCESS,
   VERIFY_TOKEN_ERROR,
+  FORGOT_PASSWORD_BEGIN,
+  FORGOT_PASSWORD_SUCCESS,
+  FORGOT_PASSWORD_ERROR,
+  RESET_PASSWORD_BEGIN,
+  RESET_PASSWORD_SUCCESS,
+  RESET_PASSWORD_ERROR,
   TOGGLE_SIDEBAR,
   LOGOUT_USER,
   GET_MATERIALS_CONSUMPTION_BEGIN,
@@ -204,6 +210,36 @@ const reducer = (state, action) => {
       ...state,
       isLoading: false,
       verificationStatus: "not verified",
+    };
+  }
+  if (action.type === FORGOT_PASSWORD_BEGIN) {
+    return { ...state, isLoading: true };
+  }
+  if (action.type === FORGOT_PASSWORD_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+    };
+  }
+  if (action.type === FORGOT_PASSWORD_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+    };
+  }
+  if (action.type === RESET_PASSWORD_BEGIN) {
+    return { ...state, isLoading: true };
+  }
+  if (action.type === RESET_PASSWORD_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+    };
+  }
+  if (action.type === RESET_PASSWORD_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
     };
   }
   if (action.type === TOGGLE_SIDEBAR) {

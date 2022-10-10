@@ -1,6 +1,9 @@
 import crypto from "crypto";
 import { BadRequestError, UnAuthenticatedError } from "../errors/index.js";
-import { sendVerificationEmail } from "../utils/index.js";
+import {
+  sendVerificationEmail,
+  sendResetPasswordEmail,
+} from "../utils/index.js";
 import conn from "../db/batchingAdmin.js";
 
 const userModel = conn.model("User");
@@ -74,6 +77,12 @@ const register = async (req, res, next) => {
     session.commitTransaction();
 
     const origin = "http://localhost:3000";
+
+    // const tempOrigin = req.get('origin');
+    // const protocol = req.protocol;
+    // const host = req.get('host');
+    // const forwardedHost = req.get('x-forwarded-host');
+    // const forwardedProtocol = req.get('x-forwarded-proto');
 
     await sendVerificationEmail({
       firstName: newUser.firstName,
@@ -198,4 +207,73 @@ const getUsersByCustomerID = async (req, res, next) => {
   }
 };
 
-export { register, login, updateUser, getUsersByCustomerID, verifyEmail };
+const forgotPassword = async (req, res, next) => {
+  const { email } = req.body;
+  if (!email) {
+    const error = new BadRequestError("Please provide a valid email");
+    return next(error);
+  }
+
+  try {
+    const user = await userModel.findOne({ email });
+    if (user) {
+      const passwordToken = crypto.randomBytes(70).toString("hex");
+
+      const origin = "http://localhost:3000";
+      await sendResetPasswordEmail({
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        token: passwordToken,
+        origin,
+      });
+
+      const tenMinutes = 1000 * 60 * 10;
+      const passwordTokenExpirationDate = new Date(Date.now() + tenMinutes);
+
+      user.passwordToken = passwordToken;
+      user.passwordTokenExpirationDate = passwordTokenExpirationDate;
+      await user.save();
+    }
+    res.status(200).json({ msg: "Please check your email for reset password" });
+  } catch (error) {
+    return next(error);
+  }
+};
+
+const resetPassword = async (req, res, next) => {
+  const { token, email, password } = req.body;
+  if (!token || !email || !password) {
+    const error = new UnAuthenticatedError("Please provide all values");
+    return next(error);
+  }
+
+  try {
+    const user = await userModel.findOne({ email });
+    if (user) {
+      const currentDate = new Date();
+      if (
+        user.passwordToken === token &&
+        user.passwordTokenExpirationDate > currentDate
+      ) {
+        user.password = password;
+        user.passwordToken = null;
+        user.passwordTokenExpirationDate = null;
+        await user.save();
+      }
+    }
+    res.status(200).json({ msg: "Reset Password" });
+  } catch (error) {
+    return next(error);
+  }
+};
+
+export {
+  register,
+  login,
+  updateUser,
+  getUsersByCustomerID,
+  verifyEmail,
+  forgotPassword,
+  resetPassword,
+};

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Logo, FormRow, Toast } from "../components/shared";
 import { useAppContext } from "../context/appContext";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const initialState = {
@@ -45,7 +45,7 @@ const Login = () => {
     if (user) {
       setTimeout(() => {
         navigate("/");
-      }, 3000);
+      }, 1);
     }
   }, [user, navigate]);
 
@@ -53,10 +53,12 @@ const Login = () => {
 
   return (
     <section className="login-page full-page">
-      <form className="form" onSubmit={onSubmit}>
+      <form
+        className={isLoading ? `form form-loading` : `form`}
+        onSubmit={onSubmit}
+      >
         <Logo />
-        <h3>Login</h3>
-        {/* {showAlert && <Toast />} */}
+        <h4>Login</h4>
         {/* email input */}
         <FormRow
           type="email"
@@ -74,6 +76,12 @@ const Login = () => {
         <button type="submit" className="btn btn-block" disabled={isLoading}>
           login
         </button>
+        <p>
+          Forgot your password?{" "}
+          <Link to="/forgot-password" className="member-btn">
+            Reset Password
+          </Link>
+        </p>
       </form>
     </section>
   );

@@ -17,6 +17,12 @@ import {
   VERIFY_TOKEN_BEGIN,
   VERIFY_TOKEN_SUCCESS,
   VERIFY_TOKEN_ERROR,
+  FORGOT_PASSWORD_BEGIN,
+  FORGOT_PASSWORD_SUCCESS,
+  FORGOT_PASSWORD_ERROR,
+  RESET_PASSWORD_BEGIN,
+  RESET_PASSWORD_SUCCESS,
+  RESET_PASSWORD_ERROR,
   TOGGLE_SIDEBAR,
   LOGOUT_USER,
   GET_MATERIALS_CONSUMPTION_BEGIN,
@@ -86,6 +92,8 @@ const initialState = {
   user: user ? JSON.parse(user) : null,
   token: token,
   verificationStatus: "",
+  forgotEmail: "",
+  newPassword: "",
   customerName: customerName,
   customerCodeName: customerCodeName,
   customerID: customerID,
@@ -310,13 +318,10 @@ const AppProvider = ({ children }) => {
   const verifyToken = async () => {
     dispatch({ type: VERIFY_TOKEN_BEGIN });
     try {
-      const { data } = await axios.post(
-        "http://localhost:5000/api/v1/auth/verify-email",
-        {
-          verificationToken: query.get("token"),
-          email: query.get("email"),
-        }
-      );
+      await axios.post("http://localhost:5000/api/v1/auth/verify-email", {
+        verificationToken: query.get("token"),
+        email: query.get("email"),
+      });
       dispatch({ type: VERIFY_TOKEN_SUCCESS });
     } catch (error) {
       console.log(error);
@@ -326,6 +331,62 @@ const AppProvider = ({ children }) => {
       });
     }
     clearAlert();
+  };
+
+  const forgotPassword = async () => {
+    dispatch({ type: FORGOT_PASSWORD_BEGIN });
+    let id = toast.loading("Sending Forgot Password Reset Link...");
+    try {
+      const { forgotEmail } = state;
+      await axios.post("http://localhost:5000/api/v1/auth/forgot-password", {
+        email: forgotEmail,
+      });
+      dispatch({ type: FORGOT_PASSWORD_SUCCESS });
+      toast.update(id, {
+        render: "Send Reset Password Successfully!",
+        type: "success",
+        isLoading: false,
+        autoClose: 4000,
+      });
+    } catch (error) {
+      console.log(error);
+      dispatch({ type: FORGOT_PASSWORD_ERROR });
+      toast.update(id, {
+        render: error.response.data.msg,
+        type: "error",
+        isLoading: false,
+        autoClose: 4000,
+      });
+    }
+    clearAlert();
+  };
+
+  const resetPassword = async () => {
+    dispatch({ type: RESET_PASSWORD_BEGIN });
+    let id = toast.loading("Reseting password...");
+    try {
+      const { newPassword } = state;
+      await axios.post("http://localhost:5000/api/v1/auth/reset-password", {
+        password: newPassword,
+        token: query.get("token"),
+        email: query.get("email"),
+      });
+      dispatch({ type: RESET_PASSWORD_SUCCESS });
+      toast.update(id, {
+        render: "Reset Password Successfully!",
+        type: "success",
+        isLoading: false,
+        autoClose: 4000,
+      });
+    } catch (error) {
+      dispatch({ type: RESET_PASSWORD_ERROR });
+      toast.update(id, {
+        render: error.response.data.msg,
+        type: "error",
+        isLoading: false,
+        autoClose: 4000,
+      });
+    }
   };
 
   const toggleSidebar = () => {
@@ -795,6 +856,8 @@ const AppProvider = ({ children }) => {
         loginUser,
         registerUser,
         verifyToken,
+        forgotPassword,
+        resetPassword,
         toggleSidebar,
         logoutUser,
         changeLanguage,

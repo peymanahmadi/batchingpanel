@@ -1,5 +1,12 @@
+import { ProfileOptions, ProfileContainer } from "../../components/shared";
+
 const Profile = () => {
-  return <section className="dashboard-form-page">Profile</section>;
+  return (
+    <>
+      <ProfileOptions />
+      <ProfileContainer />
+    </>
+  );
 };
 
 export default Profile;
