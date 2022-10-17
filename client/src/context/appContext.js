@@ -14,6 +14,10 @@ import {
   REGISTER_USER_BEGIN,
   REGISTER_USER_SUCCESS,
   REGISTER_USER_ERROR,
+  SET_EDIT_USER,
+  EDIT_USER_BEGIN,
+  EDIT_USER_SUCCESS,
+  EDIT_USER_ERROR,
   VERIFY_TOKEN_BEGIN,
   VERIFY_TOKEN_SUCCESS,
   VERIFY_TOKEN_ERROR,
@@ -148,6 +152,14 @@ const initialState = {
   totalUsers: 0,
   numOfUserPages: 1,
   page: 1,
+  editUserID: "",
+  commonUserID: "",
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
+  jobTitle: "",
+  userAvailable: true,
   // Warehouse
   isLoadingWarehouses: false,
   warehouses: [],
@@ -300,19 +312,65 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
-  const registerUser = async (newUser) => {
+  const registerUser = async () => {
     dispatch({ type: REGISTER_USER_BEGIN });
+    let id = toast.loading("Adding new user. Please wait...");
     try {
-      await authFetch.post("/auth/register", newUser);
+      const {
+        customerID,
+        commonUserID,
+        firstName,
+        lastName,
+        email,
+        password,
+        jobTitle,
+        userAvailable,
+        user,
+      } = state;
+      const { _id } = user;
+      await authFetch.post("/auth/register", {
+        customerID,
+        commonUserID,
+        firstName,
+        lastName,
+        email,
+        password,
+        jobTitle,
+        available: userAvailable,
+        accessLevel: {
+          isAdmin: true,
+          allowDefineWarehouse: false,
+          allowdefineFormula: false,
+          allowCreateReports: false,
+          allowManageUsers: false,
+        },
+        createdBy: _id,
+      });
       dispatch({ type: REGISTER_USER_SUCCESS });
+      toast.update(id, {
+        render: "New user created",
+        type: "success",
+        isLoading: false,
+        autoClose: 4000,
+      });
     } catch (error) {
       console.log(error);
       dispatch({
         type: REGISTER_USER_ERROR,
         payload: { msg: error.response.data.msg },
       });
+      toast.update(id, {
+        render: error.response.data.msg,
+        type: "error",
+        isLoading: false,
+        autoClose: 4000,
+      });
     }
     clearAlert();
+  };
+
+  const setEditUser = (id) => {
+    dispatch({ type: SET_EDIT_USER, payload: { id } });
   };
 
   const verifyToken = async () => {
@@ -681,10 +739,13 @@ const AppProvider = ({ children }) => {
 
   // Users
 
-  const getUsers = async (condition) => {
+  const getUsers = async () => {
     dispatch({ type: GET_USERS_BEGIN });
     try {
-      const { data } = await authFetch.post("/auth/users", condition);
+      const { customerCodeName } = state;
+      const { data } = await authFetch.post("/auth/users", {
+        customerCodeName,
+      });
       const { users, totalUsers, numOfPages } = data;
       dispatch({
         type: GET_USERS_SUCCESS,
@@ -697,6 +758,54 @@ const AppProvider = ({ children }) => {
     }
     clearAlert();
   };
+
+  const editUser = async () => {
+    dispatch({ type: EDIT_USER_BEGIN });
+    let id = toast.loading("Updating user. Please wait...");
+    try {
+      const {
+        editUserID,
+        commonUserID,
+        firstName,
+        lastName,
+        email,
+        jobTitle,
+        userAvailable,
+      } = state;
+      await authFetch.patch("/customers/update-user", {
+        userID: editUserID,
+        commonUserID,
+        firstName,
+        lastName,
+        email,
+        jobTitle,
+        available: userAvailable,
+      });
+      dispatch({ type: EDIT_USER_SUCCESS });
+      dispatch({ type: CLEAR_VALUES });
+      toast.update(id, {
+        render: "User updated",
+        type: "success",
+        isLoading: false,
+        autoClose: 4000,
+      });
+    } catch (error) {
+      if (error.response.status === 401) return;
+      dispatch({
+        type: EDIT_USER_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+      toast.update(id, {
+        render: error.response.data.msg,
+        type: "error",
+        isLoading: false,
+        autoClose: 4000,
+      });
+    }
+    clearAlert();
+  };
+
+  const deleteUser = async () => {};
 
   // Formulas
 
@@ -855,6 +964,8 @@ const AppProvider = ({ children }) => {
         hideModalConfirm,
         loginUser,
         registerUser,
+        setEditUser,
+        editUser,
         verifyToken,
         forgotPassword,
         resetPassword,

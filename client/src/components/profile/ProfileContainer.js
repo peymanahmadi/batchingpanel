@@ -10,11 +10,11 @@ const ProfileContainer = () => {
         <MdAccountCircle />
         <div className="profile">
           <label htmlFor="firstName">First Name</label>
-          <input type="text" name="firstName" value={firstName} />
+          <input type="text" name="firstName" value={firstName} disabled />
         </div>
         <div className="profile">
           <label htmlFor="lastName">Last Name</label>
-          <input type="text" name="lastName" value={lastName} />
+          <input type="text" name="lastName" value={lastName} disabled />
         </div>
         <div className="profile">
           <label htmlFor="email">Email</label>
@@ -22,14 +22,14 @@ const ProfileContainer = () => {
         </div>
         <div className="profile">
           <label htmlFor="jobTitle">Job Title</label>
-          <input type="text" name="jobTitle" value={jobTitle} />
+          <input type="text" name="jobTitle" value={jobTitle} disabled />
         </div>
-        <div className="profile">
+        {/* <div className="profile">
           <label htmlFor="jobTitle">Password</label>
           <button className="btn-outline" style={{ width: "75%" }}>
             Change Password
           </button>
-        </div>
+        </div> */}
         <div className="profile-save">
           <button className="btn">Save Changes</button>
         </div>

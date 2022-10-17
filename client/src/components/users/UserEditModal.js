@@ -1,45 +1,26 @@
-import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { FormRow } from "../shared";
+import { FormRow, CheckBox } from "../shared";
 import { useAppContext } from "../../context/appContext";
-import { FaTimes, FaNutritionix } from "react-icons/fa";
-
-const initialState = {
-  commonUserID: "",
-  firstName: "",
-  lastName: "",
-  email: "",
-  password: "",
-  jobTitle: "",
-  available: true,
-  customerIDs: [""],
-  accessLevel: {
-    isAdmin: true,
-    allowDefineWarehouse: false,
-    allowdefineFormula: false,
-    allowCreateReports: false,
-    allowManageUsers: false,
-  },
-};
+import { ImUsers } from "react-icons/im";
+import { FaTimes } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 const UserEditModal = () => {
   const { t } = useTranslation();
-  const [values, setValues] = useState(initialState);
   const {
     isLoading,
     isEditing,
-    displayAlert,
     commonUserID,
     firstName,
     lastName,
     email,
     password,
     jobTitle,
+    userAvailable,
     handleChange,
-    showAlert,
-    hideModal,
     registerUser,
-    customerID,
+    editUser,
+    hideModal,
   } = useAppContext();
 
   const handleUserInput = (e) => {
@@ -54,28 +35,26 @@ const UserEditModal = () => {
     hideModal();
   };
 
-  // const handleValuesChange = (e) => {
-  //   setValues({ ...values, [e.target.name]: e.target.value });
-  // };
-
   const submitHandler = (e) => {
     e.preventDefault();
-    const { firstName, lastName, email, password } = values;
     if (!firstName || !lastName || !email || !password) {
-      displayAlert();
+      notify();
       return;
     }
-    values.customerIDs[0] = customerID;
-    const newUser = values;
-    registerUser(newUser);
-    hideModal();
+    if (isEditing) {
+      editUser();
+      return;
+    }
+    registerUser();
   };
+
+  const notify = () => toast.error("Please provide all required values!");
 
   return (
     <form className="modal-form" onSubmit={submitHandler}>
       <nav className="modal-form__header">
         <div className="modal-form__header__title">
-          <FaNutritionix />
+          <ImUsers />
           <h5>{t("USERS.ADDUSER")}</h5>
         </div>
         <FaTimes onClick={closeModal} />
@@ -86,7 +65,6 @@ const UserEditModal = () => {
           labelText={t("USERS.COMMONUSERID")}
           type="text"
           value={commonUserID}
-          // handleChange={handleValuesChange}
           handleChange={handleUserInput}
         />
         <FormRow
@@ -94,7 +72,6 @@ const UserEditModal = () => {
           labelText={t("USERS.FIRSTNAME")}
           type="text"
           value={firstName}
-          // handleChange={handleValuesChange}
           handleChange={handleUserInput}
         />
         <FormRow
@@ -102,7 +79,6 @@ const UserEditModal = () => {
           labelText={t("USERS.LASTNAME")}
           type="text"
           value={lastName}
-          // handleChange={handleValuesChange}
           handleChange={handleUserInput}
         />
         <FormRow
@@ -110,43 +86,30 @@ const UserEditModal = () => {
           labelText={t("USERS.EMAIL")}
           type="email"
           value={email}
-          // handleChange={handleValuesChange}
           handleChange={handleUserInput}
         />
-        <FormRow
-          name="password"
-          labelText={t("USERS.PASSWORD")}
-          type="password"
-          value={password}
-          // handleChange={handleValuesChange}
-          handleChange={handleUserInput}
-        />
+        {!isEditing && (
+          <FormRow
+            name="password"
+            labelText={t("USERS.PASSWORD")}
+            type="password"
+            value={password}
+            handleChange={handleUserInput}
+          />
+        )}
         <FormRow
           name="jobTitle"
           labelText={t("USERS.JOBTITLE")}
           type="text"
           value={jobTitle}
-          // handleChange={handleValuesChange}
           handleChange={handleUserInput}
         />
-        {/* <div>
-          <div className="form-label">Access Level</div>
-          <div>
-            <input type="checkbox" name="cbAdmin" id="" />
-            <span>Admin</span>
-          </div>
-          <div>
-            <input type="checkbox" name="cbAdmin" id="" />
-            Admin
-          </div>
-        </div> */}
-        {/* <FormRow
-          name="available"
-          labelText={t("USERS.AVAILABLE")}
-          type="checkbox"
-          value={values.available}
-          handleChange={handleValuesChange}
-        /> */}
+        <CheckBox
+          name="userAvailable"
+          labelText="Available"
+          checked={userAvailable}
+          handleChange={handleUserInput}
+        />
       </div>
       <div className="modal-form__footer">
         <button className="btn btn-block" type="submit" disabled={isLoading}>

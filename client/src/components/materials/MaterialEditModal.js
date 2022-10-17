@@ -7,17 +7,14 @@ const MaterialEditModal = () => {
     isLoadingCreateMaterial,
     isLoading,
     isEditing,
-    showAlert,
     displayAlert,
     commonMaterialID,
     materialName,
     materialDescription,
     materialAvailable,
     handleChange,
-    clearValues,
     createMaterial,
     editMaterial,
-    alertType,
     hideModal,
   } = useAppContext();
 

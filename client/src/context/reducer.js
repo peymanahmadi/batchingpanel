@@ -10,6 +10,10 @@ import {
   REGISTER_USER_BEGIN,
   REGISTER_USER_SUCCESS,
   REGISTER_USER_ERROR,
+  SET_EDIT_USER,
+  EDIT_USER_BEGIN,
+  EDIT_USER_SUCCESS,
+  EDIT_USER_ERROR,
   VERIFY_TOKEN_BEGIN,
   VERIFY_TOKEN_SUCCESS,
   VERIFY_TOKEN_ERROR,
@@ -115,6 +119,13 @@ const reducer = (state, action) => {
       formulaBatchSize: "",
       formulaAvailable: true,
       availableMaterialsArr: [],
+      commonUserID: "",
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      jobTitle: "",
+      userAvailable: true,
     };
     return { ...state, ...initialState };
   }
@@ -184,9 +195,55 @@ const reducer = (state, action) => {
       showAlert: true,
       alertType: "success",
       alertText: "Register Successful! Redirecting...",
+      openModal: false,
     };
   }
   if (action.type === REGISTER_USER_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: "danger",
+      alertText: action.payload.msg,
+    };
+  }
+  if (action.type === SET_EDIT_USER) {
+    const user = state.usersArr.find((user) => user._id === action.payload.id);
+    const {
+      _id,
+      commonUserID,
+      firstName,
+      lastName,
+      email,
+      jobTitle,
+      available,
+    } = user;
+    return {
+      ...state,
+      isEditing: true,
+      editUserID: _id,
+      commonUserID,
+      firstName,
+      lastName,
+      email,
+      jobTitle,
+      userAvailable: available,
+    };
+  }
+  if (action.type === EDIT_USER_BEGIN) {
+    return { ...state, isLoading: true };
+  }
+  if (action.type === EDIT_USER_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: "success",
+      alertText: "User Updated!",
+      openModal: false,
+    };
+  }
+  if (action.type === EDIT_USER_ERROR) {
     return {
       ...state,
       isLoading: false,

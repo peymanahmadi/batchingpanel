@@ -7,7 +7,8 @@ import {
 import { useAppContext } from "../../context/appContext";
 
 const Users = () => {
-  const { openModal, hideModal } = useAppContext();
+  const { openModal, hideModal, openModalConfirm, hideModalConfirm } =
+    useAppContext();
   return (
     <>
       {openModal && (

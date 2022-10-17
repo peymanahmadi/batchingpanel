@@ -9,7 +9,7 @@
 
     svg {
       color: $gray-400;
-      cursor: pointer;
+      // cursor: pointer;
       font-size: 1.5rem;
 
       &:hover {
@@ -45,7 +45,7 @@
         grid-template-columns: repeat(12, 1fr);
       }
       .form-row {
-        margin-bottom: 0rem;
+        margin-bottom: 1rem;
       }
       .cfi {
         grid-column-start: 1;

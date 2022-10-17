@@ -95,7 +95,6 @@ const updateMaterial = async (req, res, next) => {
 
 const deleteMaterial = async (req, res, next) => {
   const { customerCodeName, materialID } = req.body;
-  console.log(req.body);
 
   const conn = createTenantConnection(customerCodeName);
   const materialModel = conn.model("Material");

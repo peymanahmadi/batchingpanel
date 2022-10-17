@@ -59,6 +59,7 @@ const userSchema = new mongoose.Schema(
       allowedReports: Boolean,
       allowedManageUsers: Boolean,
     },
+    createdBy: { type: mongoose.Types.ObjectId, ref: "User" },
     verificationToken: String,
     isVerified: {
       type: Boolean,

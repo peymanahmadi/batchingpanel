@@ -9,7 +9,6 @@
     height: 6rem;
     display: flex;
     align-items: center;
-    // background-color: red;
     justify-content: space-between;
   }
 
@@ -19,7 +18,6 @@
     display: grid;
     align-items: center;
     // margin-top: -3rem;
-    // background-color: aqua;
   }
 
   h1 {
@@ -32,6 +30,7 @@
 
   p {
     color: $gray-600;
+    margin-bottom: 1rem;
   }
 
   .main-img {

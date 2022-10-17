@@ -41,6 +41,11 @@
       font-size: 1.125rem;
       cursor: pointer;
     }
+
+    h6 {
+      font-size: 1rem;
+      line-height: 1.25rem;
+    }
   }
 }
 
@@ -85,6 +90,10 @@
   color: $red-500;
   cursor: pointer;
   border: transparent;
+}
+
+.table-title {
+  font-size: 0.875rem;
 }
 
 .table-subTitle {
