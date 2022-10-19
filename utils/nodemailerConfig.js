@@ -1,8 +1,19 @@
+// export default {
+//   host: "smtp.gmail.com",
+//   port: 465,
+//   secure: true, // use SSL
+//   auth: {
+//     user: "ielts.peyman@gmail.com",
+//     pass: "zramdavorilrjihr",
+//   },
+// };
+
 export default {
-  host: "smtp.ethereal.email",
-  port: 587,
+  host: "mail.thingssolution.com",
+  port: 465,
+  secure: true, // use SSL
   auth: {
-    user: "aliya.larkin93@ethereal.email",
-    pass: "kAqxVD2Tv9RPCugZGZ",
+    user: "register@thingssolution.com",
+    pass: "register4550",
   },
 };

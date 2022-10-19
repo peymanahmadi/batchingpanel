@@ -39,6 +39,13 @@ const links = [
     text: i18n.t("warehouses", "warehouses"),
     path: "warehouses",
     icon: <FaWarehouse />,
+    subMenu: [
+      {
+        id: 51,
+        text: "Add Warehouse",
+        path: "warehouses/new",
+      },
+    ],
   },
   {
     id: 6,
