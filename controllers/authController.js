@@ -40,15 +40,20 @@ const register = async (req, res, next) => {
     }
   }
 
-  const userAlreadyExists = await userModel.findOne({ email });
-  if (userAlreadyExists) {
-    const error = new BadRequestError("email already in use");
-    return next(error);
-  }
-
   const customer = await customerModel.findById(customerID);
   if (!customer) {
     const error = new BadRequestError(`customer not found`);
+    return next(error);
+  }
+
+  const isAdmin = await userModel.findOne({ customerID });
+  if (!isAdmin) {
+    accessLevel.isAdmin = true;
+  }
+
+  const userAlreadyExists = await userModel.findOne({ email });
+  if (userAlreadyExists) {
+    const error = new BadRequestError("email already in use");
     return next(error);
   }
 
@@ -102,14 +107,14 @@ const register = async (req, res, next) => {
 
     res.status(201).json({
       newUser: {
-        commonUserID: newUser.commonUserID,
-        firstName: newUser.firstName,
-        lastName: newUser.lastName,
-        email: newUser.email,
-        jobTitle: newUser.jobTitle,
-        customerID: newUser.customerID,
-        accessLevel: newUser.accessLevel,
-        createdBy: newUser.createdBy,
+        // commonUserID: newUser.commonUserID,
+        // firstName: newUser.firstName,
+        // lastName: newUser.lastName,
+        // email: newUser.email,
+        // jobTitle: newUser.jobTitle,
+        // customerID: newUser.customerID,
+        // accessLevel: newUser.accessLevel,
+        // createdBy: newUser.createdBy,
         msg: "Success! Please check your email to verify your account",
       },
     });

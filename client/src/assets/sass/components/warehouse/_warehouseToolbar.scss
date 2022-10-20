@@ -1,0 +1,8 @@
+@use "../../abstracts/index" as *;
+
+.warehouse-toolbar--container {
+  display: flex;
+
+  background: $white;
+  //   width: 100%;
+}

@@ -11,6 +11,7 @@ const UsersContainer = () => {
     setEditUser,
     usersArr,
     isLoadingUsers,
+    user,
     page,
     totalUsers,
     showModalConfirm,
@@ -18,6 +19,7 @@ const UsersContainer = () => {
   } = useAppContext();
 
   const header = ["Name", "Job Title", "Last Login", "Available", "Actions"];
+  const userID = user._id;
 
   useEffect(() => {
     getUsers();
@@ -63,9 +65,7 @@ const UsersContainer = () => {
                 available,
               } = user;
               const date = new Date(lastLoginAt);
-              var datetime = moment(date);
-              // console.log(datetime);
-              // console.log(moment(datetime).fromNow());
+              let datetime = moment(date);
               let lastLogin = moment(datetime).fromNow();
               return (
                 <tr className="table-row" key={index}>
@@ -95,18 +95,22 @@ const UsersContainer = () => {
                       >
                         <MdEdit />
                       </button>
-                      <button
-                        className="table-row__actions__btn-delete"
-                        onClick={() => handleDeleteUser(_id)}
-                      >
-                        <MdDelete />
-                      </button>
-                      <button
-                        className="table-row__actions__btn-delete"
-                        onClick={() => handleBlockUser(_id)}
-                      >
-                        <MdBlock />
-                      </button>
+                      {_id !== userID && (
+                        <button
+                          className="table-row__actions__btn-delete"
+                          onClick={() => handleDeleteUser(_id)}
+                        >
+                          <MdDelete />
+                        </button>
+                      )}
+                      {_id !== userID && (
+                        <button
+                          className="table-row__actions__btn-delete"
+                          onClick={() => handleBlockUser(_id)}
+                        >
+                          <MdBlock />
+                        </button>
+                      )}
                     </div>
                   </td>
                 </tr>

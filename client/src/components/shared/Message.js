@@ -2,23 +2,19 @@ import React from "react";
 import { useAppContext } from "../../context/appContext";
 
 const Message = ({ content, onClose, onDelete }) => {
-  const { isLoading } = useAppContext();
+  const { isLoadingCreateMaterial } = useAppContext();
   return (
-    <div className="message-container">
+    <div
+      className={`message-container ${
+        isLoadingCreateMaterial ? "form-loading" : ""
+      }`}
+    >
       <p>{content}</p>
       <div className="message-container__buttons">
-        <button
-          className="btn btn-cancel"
-          onClick={onClose}
-          disabled={isLoading}
-        >
+        <button className="btn btn-cancel" onClick={onClose}>
           Cancel
         </button>
-        <button
-          className="btn btn-delete"
-          onClick={onDelete}
-          disabled={isLoading}
-        >
+        <button className="btn btn-delete" onClick={onDelete}>
           Delete
         </button>
       </div>

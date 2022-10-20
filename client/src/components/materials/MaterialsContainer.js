@@ -7,18 +7,17 @@ const MaterialsContainer = () => {
   const {
     getMaterials,
     setEditMaterial,
-    isLoadingMaterials,
+    isLoading,
     materialsArr,
     showModal,
     showModalConfirm,
-    alertType,
   } = useAppContext();
 
   const header = ["Name", "Common ID", "Available", "Actions"];
 
   useEffect(() => {
     getMaterials();
-  }, [alertType === "success"]);
+  }, []);
 
   const handleEditMaterial = (_id) => {
     setEditMaterial(_id);
@@ -32,7 +31,7 @@ const MaterialsContainer = () => {
 
   return (
     <div className="users-container">
-      {isLoadingMaterials ? (
+      {isLoading ? (
         <Loading center />
       ) : (
         <table className="form-table">

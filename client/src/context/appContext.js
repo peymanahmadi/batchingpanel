@@ -120,7 +120,6 @@ const initialState = {
   batchedFormulaArr: [],
   materialInventory: [],
   // Materials
-  isLoadingMaterials: false,
   materialsArr: [],
   availableMaterialsArr: [],
   totalMaterials: 0,
@@ -144,8 +143,6 @@ const initialState = {
   formulaDescription: "",
   formulaBatchSize: "",
   formulaAvailable: true,
-  // ingredients: [],
-  // isLoadingCreateMaterial: false,
   // users
   isLoadingUsers: false,
   usersArr: [],
@@ -206,6 +203,24 @@ const AppProvider = ({ children }) => {
       return Promise.reject(error);
     }
   );
+
+  const errorToastUpdate = (id, render) => {
+    toast.update(id, {
+      render,
+      type: "error",
+      isLoading: false,
+      autoClose: 4000,
+    });
+  };
+
+  const successToastUpdate = (id, render) => {
+    toast.update(id, {
+      render,
+      type: "success",
+      isLoading: false,
+      autoClose: 4000,
+    });
+  };
 
   const displayAlert = () => {
     dispatch({ type: DISPLAY_ALERT });
@@ -640,26 +655,14 @@ const AppProvider = ({ children }) => {
         available: materialAvailable,
       });
       dispatch({ type: CREATE_MATERIAL_SUCCESS });
-      toast.update(id, {
-        render: "New material saved",
-        type: "success",
-        isLoading: false,
-        autoClose: 4000,
-      });
+      getMaterials();
+      successToastUpdate(id, "New material saved");
     } catch (error) {
       if (error.response.status === 401) return;
-      dispatch({
-        type: CREATE_MATERIAL_ERROR,
-        payload: { msg: error.response.data.msg },
-      });
-      toast.update(id, {
-        render: error.response.data.msg,
-        type: "error",
-        isLoading: false,
-        autoClose: 4000,
-      });
+      let msg = error.response.data.msg;
+      dispatch({ type: CREATE_MATERIAL_ERROR });
+      errorToastUpdate(id, msg);
     }
-    clearAlert();
   };
 
   const setEditMaterial = (id) => {
@@ -688,26 +691,17 @@ const AppProvider = ({ children }) => {
       });
       dispatch({ type: EDIT_MATERIAL_SUCCESS });
       dispatch({ type: CLEAR_VALUES });
-      toast.update(id, {
-        render: "Material updated",
-        type: "success",
-        isLoading: false,
-        autoClose: 4000,
-      });
+      getMaterials();
+      successToastUpdate(id, "Material updated");
     } catch (error) {
       if (error.response.status === 401) return;
+      let msg = error.response.data.msg;
       dispatch({
         type: EDIT_MATERIAL_ERROR,
         payload: { msg: error.response.data.msg },
       });
-      toast.update(id, {
-        render: error.response.data.msg,
-        type: "error",
-        isLoading: false,
-        autoClose: 4000,
-      });
+      errorToastUpdate(id, msg);
     }
-    clearAlert();
   };
 
   const deleteMaterial = async () => {
@@ -722,18 +716,13 @@ const AppProvider = ({ children }) => {
         },
       });
       dispatch({ type: DELETE_MATERIAL_SUCCESS });
-      toast.update(id, {
-        render: "Material deleted",
-        type: "success",
-        isLoading: false,
-        autoClose: 5000,
-      });
+      getMaterials();
+      successToastUpdate(id, "Material deleted");
     } catch (error) {
       if (error.response.status === 401) return;
-      dispatch({
-        type: DELETE_MATERIAL_ERROR,
-        payload: { msg: error.response.data.msg },
-      });
+      let msg = error.response.data.msg;
+      dispatch({ type: DELETE_MATERIAL_ERROR });
+      errorToastUpdate(id, msg);
     }
   };
 

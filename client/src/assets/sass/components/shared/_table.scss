@@ -67,7 +67,7 @@
 .table-row__actions {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.5rem;
 }
 
 .table-row__actions__btn-edit {
@@ -75,10 +75,15 @@
   align-items: center;
   padding: 0.5rem;
   border-radius: $border-radius;
-  background: $primary-50;
+  background: $white;
   color: $primary-500;
   cursor: pointer;
   border: transparent;
+  transition: $transition;
+
+  &:hover {
+    background: $primary-50;
+  }
 }
 
 .table-row__actions__btn-delete {
@@ -86,10 +91,15 @@
   align-items: center;
   padding: 0.5rem;
   border-radius: $border-radius;
-  background: $red-50;
+  background: $white;
   color: $red-500;
   cursor: pointer;
   border: transparent;
+  transition: $transition;
+
+  &:hover {
+    background: $red-50;
+  }
 }
 
 .table-title {

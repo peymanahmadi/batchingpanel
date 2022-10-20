@@ -411,15 +411,12 @@ const reducer = (state, action) => {
   if (action.type === GET_MATERIALS_BEGIN) {
     return {
       ...state,
-      isLoadingMaterials: true,
       isLoading: true,
-      showAlert: false,
     };
   }
   if (action.type === GET_MATERIALS_SUCCESS) {
     return {
       ...state,
-      isLoadingMaterials: false,
       isLoading: false,
       materialsArr: action.payload.materials,
       availableMaterialsArr: action.payload.availableMaterials,
@@ -428,15 +425,16 @@ const reducer = (state, action) => {
     };
   }
   if (action.type === CREATE_MATERIAL_BEGIN) {
-    return { ...state, isLoadingCreateMaterial: true };
+    return {
+      ...state,
+      isLoadingCreateMaterial: true,
+    };
   }
   if (action.type === CREATE_MATERIAL_SUCCESS) {
     return {
       ...state,
       isLoadingCreateMaterial: false,
-      showAlert: true,
-      alertType: "success",
-      alertText: "Create Successful!",
+      // addUpdateSuccess: true,
       openModal: false,
     };
   }
@@ -444,9 +442,6 @@ const reducer = (state, action) => {
     return {
       ...state,
       isLoadingCreateMaterial: false,
-      showAlert: true,
-      alertType: "danger",
-      alertText: action.payload.msg,
     };
   }
   if (action.type === SET_EDIT_MATERIAL) {
@@ -465,47 +460,35 @@ const reducer = (state, action) => {
     };
   }
   if (action.type === EDIT_MATERIAL_BEGIN) {
-    return { ...state, isLoading: true };
+    return { ...state, isLoadingCreateMaterial: true };
   }
   if (action.type === EDIT_MATERIAL_SUCCESS) {
     return {
       ...state,
-      isLoading: false,
-      showAlert: true,
-      alertType: "success",
-      alertText: "Material Updated!",
+      isLoadingCreateMaterial: false,
       openModal: false,
     };
   }
   if (action.type === EDIT_MATERIAL_ERROR) {
     return {
       ...state,
-      isLoading: false,
-      showAlert: true,
-      alertType: "danger",
-      alertText: action.payload.msg,
+      isLoadingCreateMaterial: false,
     };
   }
   if (action.type === DELETE_MATERIAL_BEGIN) {
-    return { ...state, isLoading: true };
+    return { ...state, isLoadingCreateMaterial: true };
   }
   if (action.type === DELETE_MATERIAL_SUCCESS) {
     return {
       ...state,
-      isLoading: false,
-      showAlert: true,
-      alertType: "success",
-      alertText: "Material Deleted!",
+      isLoadingCreateMaterial: false,
       openModalConfirm: false,
     };
   }
   if (action.type === DELETE_MATERIAL_ERROR) {
     return {
       ...state,
-      isLoading: false,
-      showAlert: true,
-      alertType: "danger",
-      alertText: action.payload.msg,
+      isLoadingCreateMaterial: false,
     };
   }
 
@@ -556,7 +539,6 @@ const reducer = (state, action) => {
       description,
       formulaBatchSize,
       available,
-      // ingredients,
     } = formula;
     return {
       ...state,

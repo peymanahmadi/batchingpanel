@@ -14,13 +14,15 @@ const MaterialsOptions = () => {
   return (
     <section className="dashboard-form__options">
       <div className="dashboard-form__options__title">
-        <h6>{t("MATERIALS")}</h6>
-        <div>
-          <Badge type="badge-success" content={totalMaterials} />
+        <div className="title-badge">
+          <h6>{t("MATERIALS")}</h6>
+          <div>
+            <Badge type="badge-success" content={totalMaterials} />
+          </div>
         </div>
+        <input placeholder={t("SEARCH")} />
       </div>
       <div className="navbar-controls">
-        <input placeholder={t("SEARCH")} />
         <button className="btn" onClick={handleOpenForm}>
           {t("MATERIALS.ADDMATERIAL")}
         </button>

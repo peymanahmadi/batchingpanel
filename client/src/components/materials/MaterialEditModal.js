@@ -1,13 +1,12 @@
 import { FaTimes, FaNutritionix } from "react-icons/fa";
+import { toast } from "react-toastify";
 import { useAppContext } from "../../context/appContext";
 import { FormRow, CheckBox } from "../shared";
 
 const MaterialEditModal = () => {
   const {
     isLoadingCreateMaterial,
-    isLoading,
     isEditing,
-    displayAlert,
     commonMaterialID,
     materialName,
     materialDescription,
@@ -16,6 +15,7 @@ const MaterialEditModal = () => {
     createMaterial,
     editMaterial,
     hideModal,
+    clearValues,
   } = useAppContext();
 
   const handleMaterialInput = (e) => {
@@ -28,12 +28,13 @@ const MaterialEditModal = () => {
 
   const closeModal = () => {
     hideModal();
+    clearValues();
   };
 
   const submitHandler = (e) => {
     e.preventDefault();
     if (!commonMaterialID || !materialName) {
-      displayAlert();
+      notify();
       return;
     }
     if (isEditing) {
@@ -43,8 +44,13 @@ const MaterialEditModal = () => {
     createMaterial();
   };
 
+  const notify = () => toast.error("Please provide all required values!");
+
   return (
-    <form className="modal-form" onSubmit={submitHandler}>
+    <form
+      className={`modal-form ${isLoadingCreateMaterial ? "form-loading" : ""}`}
+      onSubmit={submitHandler}
+    >
       <nav className="modal-form__header">
         <div className="modal-form__header__title">
           <FaNutritionix />
@@ -85,7 +91,7 @@ const MaterialEditModal = () => {
         <button
           className="btn btn-block"
           type="submit"
-          disabled={isLoadingCreateMaterial || isLoading}
+          disabled={isLoadingCreateMaterial}
         >
           Submit
         </button>
