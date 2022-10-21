@@ -15,35 +15,51 @@ const links = [
     text: i18n.t("stats", "stats"),
     path: "/",
     icon: <IoBarChartSharp />,
+    type: "simple",
   },
   {
     id: 2,
     text: i18n.t("reports", "reports"),
     path: "reports",
     icon: <FaWpforms />,
+    type: "simple",
   },
   {
     id: 3,
     text: i18n.t("materials", "materials"),
     path: "materials",
     icon: <FaNutritionix />,
+    type: "simple",
   },
   {
     id: 4,
     text: i18n.t("formulas", "formulas"),
     path: "formulas",
     icon: <FaFlask />,
+    type: "simple",
   },
   {
     id: 5,
     text: i18n.t("warehouses", "warehouses"),
     path: "warehouses",
     icon: <FaWarehouse />,
-    subMenu: [
+    type: "dropdown",
+    subMenus: [
       {
         id: 51,
-        text: "Add Warehouse",
-        path: "warehouses/new",
+        text: "warehouses",
+        path: "warehouses",
+        icon: <FaWarehouse />,
+      },
+      {
+        id: 52,
+        text: "warehouse Operations",
+        path: "warehouses/operations",
+      },
+      {
+        id: 53,
+        text: "warehouse Inventory",
+        path: "warehouses/inventory",
       },
     ],
   },
@@ -52,12 +68,14 @@ const links = [
     text: i18n.t("USERS", "users"),
     path: "users",
     icon: <ImUsers />,
+    type: "simple",
   },
   {
     id: 7,
     text: i18n.t("profile", "profile"),
     path: "profile",
     icon: <ImProfile />,
+    type: "simple",
   },
 ];
 

@@ -19,6 +19,8 @@ import {
   Materials,
   Formulas,
   Warehouses,
+  WarehouseOperations,
+  WarehouseInventory,
   Users,
   Profile,
   SharedLayout,
@@ -52,6 +54,11 @@ const App = () => {
           <Route path="materials" element={<Materials />} />
           <Route path="formulas" element={<Formulas />} />
           <Route path="warehouses" element={<Warehouses />} />
+          <Route
+            path="warehouses/operations"
+            element={<WarehouseOperations />}
+          />
+          <Route path="warehouses/inventory" element={<WarehouseInventory />} />
           <Route path="users" element={<Users />} />
           <Route path="profile" element={<Profile />} />
         </Route>

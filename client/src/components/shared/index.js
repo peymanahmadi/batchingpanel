@@ -39,7 +39,6 @@ import FormulaEditModal from "../formulas/FormulaEditModal";
 import ProfileOptions from "../profile/ProfileOptions";
 import ProfileContainer from "../profile/ProfileContainer";
 // Warehouses
-import WarehouseToolbar from "../warehouse/WarehouseToolbar";
 
 export {
   Logo,
@@ -76,7 +75,6 @@ export {
   MaterialEditModal,
   // Warehouse
   InventoryChart,
-  WarehouseToolbar,
   // Formulas
   FormulasOptions,
   FormulasContainer,

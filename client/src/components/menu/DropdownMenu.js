@@ -1,49 +1,49 @@
+import { useState } from "react";
+import { MdKeyboardArrowRight } from "react-icons/md";
 import { NavLink } from "react-router-dom";
+// import "./DropDown.css";
 
-const DropdownMenu = ({ menu, handleClick }) => {
-  const { icon, title, path, subMenus } = menu;
+const DropDownMenu = ({ icon, text, subMenu }) => {
+  const [showSubMenu, setShowSubMenu] = useState();
 
-  let menuContent, subMenusContent, subMenusContents;
-  if (subMenus.length) {
-    subMenusContent = subMenus.map((subMenu, index) => {
-      return (
-        <li key={index}>
-          <NavLink to={path} className="nav-link">
-            <span className="icon">{icon}</span>
-            {title}
-          </NavLink>
-        </li>
-      );
-    });
-    subMenusContents = <ul>{subMenusContent}</ul>;
-  }
-
-  const handleMenuDropDownClick = (e) => {
-    handleClick();
-    //setOpen(!open);
+  const handleSubMenu = () => {
+    setShowSubMenu((prev) => !showSubMenu);
   };
 
-  const linkMenu = (
-    <a
-      href="#s"
-      className="nav-link"
-      onClick={(e) => {
-        handleMenuDropDownClick(e);
-      }}
-    >
-      <span className="icon">{icon}</span>
-      {title}
-    </a>
-  );
-
-  menuContent = (
+  return (
     <>
-      {linkMenu}
-      {subMenusContents}
+      <div onClick={handleSubMenu}>
+        <li
+          className="nav-link"
+          style={{ cursor: "pointer", justifyContent: "space-between" }}
+        >
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <span className="icon">{icon}</span>
+            <div>{text}</div>
+          </div>
+          <MdKeyboardArrowRight />
+        </li>
+      </div>
+      {showSubMenu && (
+        <div>
+          {subMenu.map((sub) => {
+            return (
+              <li key={sub.id}>
+                <NavLink
+                  to={sub.path}
+                  className={({ isActive }) =>
+                    isActive ? "nav-link active" : "nav-link"
+                  }
+                >
+                  {sub.text}
+                </NavLink>
+              </li>
+            );
+          })}
+        </div>
+      )}
     </>
   );
-
-  return <li>{menuContent}</li>;
 };
 
-export default DropdownMenu;
+export default DropDownMenu;
