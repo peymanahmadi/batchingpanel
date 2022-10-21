@@ -16,6 +16,8 @@
   "SEARCH": "search",
   "MATERIALS": "Materials",
   "MATERIALS.ADDMATERIAL": "add material",
+  "WAREHOUSES": "Warehouses",
+  "WAREHOUSES.ADDWAREHOUSE": "add warehouse",
   "USERS": "Users",
   "USERS.ADDUSER": "Add User",
   "USERS.COMMONUSERID": "common user ID",

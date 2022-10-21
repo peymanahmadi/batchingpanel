@@ -1,5 +1,21 @@
+import { BadRequestError, NotFoundError } from "../errors/index.js";
 import createTenantConnection from "../db/batchingTenant.js";
-import { BadRequestError } from "../errors/index.js";
+
+const getAllWarehouses = async (req, res, next) => {
+  const { customerCodeName } = req.body;
+
+  const conn = createTenantConnection(customerCodeName);
+  const warehouseModel = conn.model("Warehouse");
+
+  try {
+    const warehouses = await warehouseModel.find({});
+    res
+      .status(200)
+      .json({ warehouses, totalWarehouses: warehouses.length, numOfPages: 1 });
+  } catch (error) {
+    return next(error);
+  }
+};
 
 const createWarehouse = async (req, res, next) => {
   const { customerCodeName, commonWarehouseID, name } = req.body;
@@ -37,24 +53,61 @@ const createWarehouse = async (req, res, next) => {
   }
 };
 
-const getAllWarehouses = async (req, res, next) => {
-  const { customerCodeName } = req.body;
+const updateWarehouse = async (req, res, next) => {
+  const {
+    customerCodeName,
+    warehouseID,
+    commonWarehouseID,
+    name,
+    description,
+    available,
+  } = req.body;
+
+  if (!commonWarehouseID || !name) {
+    const error = new BadRequestError("Please provide all required values");
+    return next(error);
+  }
 
   const conn = createTenantConnection(customerCodeName);
   const warehouseModel = conn.model("Warehouse");
+  const warehouse = await warehouseModel.findOne({ _id: warehouseID });
 
+  if (!warehouse) {
+    const error = new NotFoundError(`No warehouse with id: ${warehouseID}`);
+    return next(error);
+  }
   try {
-    const warehouses = await warehouseModel.find({});
-    res.status(200).json({ warehouses });
-  } catch (error) {}
-};
-
-const updateWarehouse = async (req, res, next) => {
-  res.send("update warehouse");
+    const updatedWarehouse = await warehouseModel.findOneAndUpdate(
+      { _id: warehouseID },
+      { commonWarehouseID, name, description, available },
+      { new: true, runValidators: true }
+    );
+    res.status(200).json({ updatedWarehouse });
+  } catch (error) {
+    return next(error);
+  }
 };
 
 const deleteWarehouse = async (req, res, next) => {
-  res.send("delete warehouse");
+  const { customerCodeName, warehouseID } = req.body;
+
+  const conn = createTenantConnection(customerCodeName);
+  const warehouseModel = conn.model("Warehouse");
+  // const formulationModel = conn.model("Formulation");
+
+  const warehouse = await warehouseModel.findOne({ _id: warehouseID });
+
+  if (!warehouse) {
+    const error = new NotFoundError(`No warehouse with id: ${warehouseID}`);
+    return next(error);
+  }
+
+  try {
+    await warehouseModel.findByIdAndDelete(warehouseID);
+    res.status(200).json({ msg: "Success! Warehouse removed" });
+  } catch (error) {
+    return next(error);
+  }
 };
 
 const createWarehouseOpDesc = async (req, res, next) => {

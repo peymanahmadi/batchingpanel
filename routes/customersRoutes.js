@@ -34,6 +34,8 @@ import {
 import {
   createWarehouse,
   getAllWarehouses,
+  updateWarehouse,
+  deleteWarehouse,
   createWarehouseOpDesc,
   transactionInventory,
   getAllInventory,
@@ -61,6 +63,8 @@ router.route("/batching/tolerance").post(materialTolerance);
 
 // Warehouses
 router.route("/warehouses").post(createWarehouse);
+router.route("/warehouses").patch(updateWarehouse);
+router.route("/warehouses").delete(deleteWarehouse);
 router.route("/warehouses/all").post(getAllWarehouses);
 router.route("/warehouses/opdesc").post(createWarehouseOpDesc);
 router.route("/inventory").post(transactionInventory);

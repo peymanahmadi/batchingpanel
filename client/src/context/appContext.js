@@ -168,7 +168,7 @@ const initialState = {
   jobTitle: "",
   userAvailable: true,
   // Warehouse
-  warehouses: [],
+  warehousesArr: [],
   isLoadingWarehouseInventory: false,
   warehouseInventory: [],
   isLoadingCreateWarehouse: false,
