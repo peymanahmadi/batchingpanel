@@ -72,6 +72,16 @@ import {
   // Warehouse
   GET_WAREHOUSES_BEGIN,
   GET_WAREHOUSES_SUCCESS,
+  CREATE_WAREHOUSE_BEGIN,
+  CREATE_WAREHOUSE_SUCCESS,
+  CREATE_WAREHOUSE_ERROR,
+  SET_EDIT_WAREHOUSE,
+  EDIT_WAREHOUSE_BEGIN,
+  EDIT_WAREHOUSE_SUCCESS,
+  EDIT_WAREHOUSE_ERROR,
+  DELETE_WAREHOUSE_BEGIN,
+  DELETE_WAREHOUSE_SUCCESS,
+  DELETE_WAREHOUSE_ERROR,
 } from "./actions";
 
 import { initialState } from "./appContext";
@@ -374,18 +384,6 @@ const reducer = (state, action) => {
     };
   }
 
-  if (action.type === GET_WAREHOUSES_BEGIN) {
-    return { ...state, isLoadingWarehouses: true };
-  }
-
-  if (action.type === GET_WAREHOUSES_SUCCESS) {
-    return {
-      ...state,
-      isLoadingWarehouses: true,
-      warehouses: action.payload.warehouses,
-    };
-  }
-
   if (action.type === GET_MATERIAL_TOLERANCE_BEGIN) {
     return { ...state, isLoadingMaterialTolerance: true };
   }
@@ -421,7 +419,7 @@ const reducer = (state, action) => {
       materialsArr: action.payload.materials,
       availableMaterialsArr: action.payload.availableMaterials,
       totalMaterials: action.payload.totalMaterials,
-      numOfMaterialPages: action.payload.numOfPages,
+      numOfPages: action.payload.numOfPages,
     };
   }
   if (action.type === CREATE_MATERIAL_BEGIN) {
@@ -595,6 +593,86 @@ const reducer = (state, action) => {
       showAlert: true,
       alertType: "danger",
       alertText: action.payload.msg,
+    };
+  }
+  // Warehouse
+  if (action.type === GET_WAREHOUSES_BEGIN) {
+    return { ...state, isLoading: true };
+  }
+  if (action.type === GET_WAREHOUSES_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      warehousesArr: action.payload.warehouses,
+      availableWarehousesArr: action.payload.availableWarehouses,
+      totalWarehouses: action.payload.totalWarehouses,
+      numOfPages: action.payload.numOfPages,
+    };
+  }
+  if (action.type === CREATE_WAREHOUSE_BEGIN) {
+    return {
+      ...state,
+      isLoadingCreateWarehouse: true,
+    };
+  }
+  if (action.type === CREATE_WAREHOUSE_SUCCESS) {
+    return {
+      ...state,
+      isLoadingCreateWarehouse: false,
+      openModal: false,
+    };
+  }
+  if (action.type === CREATE_WAREHOUSE_ERROR) {
+    return {
+      ...state,
+      isLoadingCreateWarehouse: false,
+    };
+  }
+  if (action.type === SET_EDIT_WAREHOUSE) {
+    const warehouse = state.warehousesArr.find(
+      (warehouse) => warehouse._id === action.payload.id
+    );
+    const { _id, commonWarehouseID, name, description, available } = warehouse;
+    return {
+      ...state,
+      isEditing: true,
+      editWarehouseID: _id,
+      commonWarehouseID,
+      warehouseName: name,
+      warehouseDescription: description,
+      warehouseAvailable: available,
+    };
+  }
+  if (action.type === EDIT_WAREHOUSE_BEGIN) {
+    return { ...state, isLoadingCreateWarehouse: true };
+  }
+  if (action.type === EDIT_WAREHOUSE_SUCCESS) {
+    return {
+      ...state,
+      isLoadingCreateWarehouse: false,
+      openModal: false,
+    };
+  }
+  if (action.type === EDIT_WAREHOUSE_ERROR) {
+    return {
+      ...state,
+      isLoadingCreateWarehouse: false,
+    };
+  }
+  if (action.type === DELETE_WAREHOUSE_BEGIN) {
+    return { ...state, isLoadingCreateWarehouse: true };
+  }
+  if (action.type === DELETE_WAREHOUSE_SUCCESS) {
+    return {
+      ...state,
+      isLoadingCreateWarehouse: false,
+      openModalConfirm: false,
+    };
+  }
+  if (action.type === DELETE_WAREHOUSE_ERROR) {
+    return {
+      ...state,
+      isLoadingCreateWarehouse: false,
     };
   }
   throw new Error(`no such action: ${action.type}`);

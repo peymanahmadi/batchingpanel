@@ -72,6 +72,16 @@ import {
   // Warehouse
   GET_WAREHOUSES_BEGIN,
   GET_WAREHOUSES_SUCCESS,
+  CREATE_WAREHOUSE_BEGIN,
+  CREATE_WAREHOUSE_SUCCESS,
+  CREATE_WAREHOUSE_ERROR,
+  SET_EDIT_WAREHOUSE,
+  EDIT_WAREHOUSE_BEGIN,
+  EDIT_WAREHOUSE_SUCCESS,
+  EDIT_WAREHOUSE_ERROR,
+  DELETE_WAREHOUSE_BEGIN,
+  DELETE_WAREHOUSE_SUCCESS,
+  DELETE_WAREHOUSE_ERROR,
   GET_WAREHOUSE_INVENTORY_BEGIN,
   GET_WAREHOUSE_INVENTORY_SUCCESS,
   // Users
@@ -104,6 +114,7 @@ const initialState = {
   showSidebar: false,
   openModal: false,
   openModalConfirm: false,
+  numOfPages: 1,
   // Stats
   isLoadingStatsDailyProduction: false,
   dailyBatchingArr: [],
@@ -123,7 +134,6 @@ const initialState = {
   materialsArr: [],
   availableMaterialsArr: [],
   totalMaterials: 0,
-  numOfMaterialPages: 1,
   isLoadingCreateMaterial: false,
   isEditing: false,
   editMaterialID: "",
@@ -158,10 +168,15 @@ const initialState = {
   jobTitle: "",
   userAvailable: true,
   // Warehouse
-  isLoadingWarehouses: false,
   warehouses: [],
   isLoadingWarehouseInventory: false,
   warehouseInventory: [],
+  isLoadingCreateWarehouse: false,
+  commonWarehouseID: "",
+  warehouseName: "",
+  warehouseDescription: "",
+  warehouseAvailable: true,
+  editWarehouseID: "",
 };
 
 const useQuery = () => {
@@ -505,20 +520,6 @@ const AppProvider = ({ children }) => {
     }
   };
 
-  const getWarehouses = async (condition) => {
-    dispatch({ type: GET_WAREHOUSES_BEGIN });
-    try {
-      const { data } = await authFetch.post(
-        "/customers/warehouses/all",
-        condition
-      );
-      const { warehouses } = data;
-      dispatch({ type: GET_WAREHOUSES_SUCCESS, payload: { warehouses } });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const getMaterialInventory = async (condition) => {
     dispatch({ type: GET_MATERIAL_INVENTORY_BEGIN });
     try {
@@ -630,10 +631,8 @@ const AppProvider = ({ children }) => {
         payload: { materials, availableMaterials, totalMaterials, numOfPages },
       });
     } catch (error) {
-      // logoutUser();
-      console.log(error);
+      logoutUser();
     }
-    clearAlert();
   };
 
   const createMaterial = async () => {
@@ -940,6 +939,127 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  // Warehouses
+
+  const getWarehouses = async () => {
+    dispatch({ type: GET_WAREHOUSES_BEGIN });
+    try {
+      const { customerCodeName } = state;
+      const { data } = await authFetch.post("/customers/warehouses/all", {
+        customerCodeName,
+      });
+      const { warehouses, totalWarehouses, numOfPages } = data;
+      let availableWarehouses = [];
+      warehouses.map((warehouse) => {
+        warehouse.selected = false;
+        if (warehouse.available) {
+          availableWarehouses = [...availableWarehouses, warehouse];
+        }
+      });
+      dispatch({
+        type: GET_WAREHOUSES_SUCCESS,
+        payload: {
+          warehouses,
+          availableWarehouses,
+          totalWarehouses,
+          numOfPages,
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const createWarehouse = async () => {
+    dispatch({ type: CREATE_WAREHOUSE_BEGIN });
+    let id = toast.loading("Adding new warehouse. Please wait...");
+    try {
+      const {
+        customerCodeName,
+        commonWarehouseID,
+        warehouseName,
+        warehouseDescription,
+        warehouseAvailable,
+      } = state;
+      await authFetch.post("/customers/warehouses", {
+        customerCodeName,
+        commonWarehouseID,
+        name: warehouseName,
+        description: warehouseDescription,
+        available: warehouseAvailable,
+      });
+      dispatch({ type: CREATE_WAREHOUSE_SUCCESS });
+      getWarehouses();
+      successToastUpdate(id, "New warehouse saved");
+    } catch (error) {
+      if (error.response.status === 401) return;
+      let msg = error.response.data.msg;
+      dispatch({ type: CREATE_WAREHOUSE_ERROR });
+      errorToastUpdate(id, msg);
+    }
+  };
+
+  const setEditWarehouse = (id) => {
+    dispatch({ type: SET_EDIT_WAREHOUSE, payload: { id } });
+  };
+
+  const editWarehouse = async () => {
+    dispatch({ type: EDIT_WAREHOUSE_BEGIN });
+    let id = toast.loading("Updating warehouse. Please wait...");
+    try {
+      const {
+        customerCodeName,
+        commonWarehouseID,
+        editWarehouseID,
+        warehouseName,
+        warehouseDescription,
+        warehouseAvailable,
+      } = state;
+      await authFetch.patch("/customers/warehouses", {
+        customerCodeName,
+        warehouseID: editWarehouseID,
+        commonWarehouseID,
+        name: warehouseName,
+        description: warehouseDescription,
+        available: warehouseAvailable,
+      });
+      dispatch({ type: EDIT_WAREHOUSE_SUCCESS });
+      dispatch({ type: CLEAR_VALUES });
+      getWarehouses();
+      successToastUpdate(id, "Warehouse updated");
+    } catch (error) {
+      if (error.response.status === 401) return;
+      let msg = error.response.data.msg;
+      dispatch({
+        type: EDIT_WAREHOUSE_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+      errorToastUpdate(id, msg);
+    }
+  };
+
+  const deleteWarehouse = async () => {
+    dispatch({ type: DELETE_WAREHOUSE_BEGIN });
+    let id = toast.loading("Deleting warehouse. Please wait...");
+    try {
+      const { customerCodeName, editWarehouseID } = state;
+      await authFetch.delete("/customers/warehouses", {
+        data: {
+          customerCodeName,
+          warehouseID: editWarehouseID,
+        },
+      });
+      dispatch({ type: DELETE_WAREHOUSE_SUCCESS });
+      getWarehouses();
+      successToastUpdate(id, "Warehouse deleted");
+    } catch (error) {
+      if (error.response.status === 401) return;
+      let msg = error.response.data.msg;
+      dispatch({ type: DELETE_WAREHOUSE_ERROR });
+      errorToastUpdate(id, msg);
+    }
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -966,7 +1086,6 @@ const AppProvider = ({ children }) => {
         getMaterialInventory,
         getDailyBatching,
         getMaterialTolerance,
-        getWarehouses,
         getAllInventory,
         getMaterials,
         createMaterial,
@@ -978,6 +1097,11 @@ const AppProvider = ({ children }) => {
         setEditFormula,
         editFormula,
         deleteFormula,
+        getWarehouses,
+        createWarehouse,
+        setEditWarehouse,
+        editWarehouse,
+        deleteWarehouse,
       }}
     >
       {children}

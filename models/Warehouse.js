@@ -14,6 +14,15 @@ const warehouseSchema = new mongoose.Schema(
       trim: true,
       unique: true,
     },
+    description: {
+      type: String,
+      maxLength: 200,
+      trim: true,
+    },
+    available: {
+      type: Boolean,
+      default: true,
+    },
   },
   { timestamps: true }
 );
