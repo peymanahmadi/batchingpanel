@@ -39,22 +39,26 @@
       padding-top: 2rem;
       display: flex;
       flex-direction: column;
+      max-height: calc(100vh - 8.5rem);
+      overflow-y: auto;
     }
 
     .nav-link {
       display: flex;
       align-items: center;
-      color: $gray-500;
-      padding: 1rem 0;
+      color: $gray-600;
+      padding: 0.75rem 0;
       // padding-left: 2.5rem;
-      padding-inline-start: 2.5rem;
+      padding-inline-start: 1.5rem;
       text-transform: capitalize;
+      border-left: 3px solid $white;
       transition: $transition;
 
       &:hover {
-        background: $gray-50;
+        // background: $gray-50;
+        background: $green-100;
         // padding-left: 3rem;
-        padding-inline-start: 3rem;
+        // padding-inline-start: 1.55rem;
         color: $gray-900;
         border-left: 3px solid $green-500;
 
@@ -65,8 +69,21 @@
       }
     }
 
+    .sub-nav-link {
+      padding-inline-start: 2.75rem;
+    }
+
     .icon {
-      font-size: 1.5rem;
+      font-size: 1.25rem;
+      // margin-right: 1rem;
+      margin-inline-end: 1rem;
+      display: grid;
+      place-items: center;
+      transition: $transition;
+    }
+
+    .arrow {
+      font-size: 1.25rem;
       // margin-right: 1rem;
       margin-inline-end: 1rem;
       display: grid;

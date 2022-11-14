@@ -154,6 +154,8 @@ const getAllInventory = async (req, res, next) => {
         materialList["materialID"] = items.materialID;
         const material = await materialModel.findById(items.materialID);
         materialList["name"] = material.name;
+        materialList["description"] = material.description;
+        materialList["available"] = material.available;
         materialList["weight"] = items.weight;
         materialListArr.push(materialList);
         warehousesList[items.warehouseID] = materialListArr;
@@ -163,6 +165,8 @@ const getAllInventory = async (req, res, next) => {
         materialList["materialID"] = items.materialID;
         const material = await materialModel.findById(items.materialID);
         materialList["name"] = material.name;
+        materialList["description"] = material.description;
+        materialList["available"] = material.available;
         materialList["weight"] = items.weight;
         materialListArr.push(materialList);
         warehousesList[items.warehouseID] = materialListArr;
@@ -179,6 +183,8 @@ const getAllInventory = async (req, res, next) => {
       for (let i of item[1]) {
         let mObj = {};
         mObj["name"] = i.name;
+        mObj["description"] = i.description;
+        mObj["available"] = i.available;
         mObj["weight"] = i.weight;
         wList["inventory"].push(mObj);
       }
@@ -191,7 +197,7 @@ const getAllInventory = async (req, res, next) => {
   }
 };
 
-const transactionInventory = async (req, res, next) => {
+const warehouseOperations = async (req, res, next) => {
   const {
     customerCodeName,
     warehouseID,
@@ -277,6 +283,27 @@ const transactionInventory = async (req, res, next) => {
   }
 };
 
+const getWarehouseOperations = async (req, res, next) => {
+  const { customerCodeName } = req.body;
+
+  const conn = createTenantConnection(customerCodeName);
+  const warehouseOperationsModel = conn.model("WarehouseOperations");
+
+  try {
+    const warehouseOperations = await warehouseOperationsModel
+      .find({})
+      .populate("materialID", "name")
+      .populate("descriptionID", "description");
+    res.status(200).json({
+      warehouseOperations,
+      totalWarehouseOperations: warehouseOperations.length,
+      numOfPages: 1,
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
+
 export {
   createWarehouse,
   getAllWarehouses,
@@ -284,5 +311,6 @@ export {
   deleteWarehouse,
   createWarehouseOpDesc,
   getAllInventory,
-  transactionInventory,
+  warehouseOperations,
+  getWarehouseOperations,
 };

@@ -84,6 +84,11 @@ import {
   DELETE_WAREHOUSE_ERROR,
   GET_WAREHOUSE_INVENTORY_BEGIN,
   GET_WAREHOUSE_INVENTORY_SUCCESS,
+  WAREHOUSE_OPERATIONS_BEGIN,
+  WAREHOUSE_OPERATIONS_SUCCESS,
+  WAREHOUSE_OPERATIONS_ERROR,
+  GET_WAREHOUSE_OPERATIONS_BEGIN,
+  GET_WAREHOUSE_OPERATIONS_SUCCESS,
   // Users
   GET_USERS_BEGIN,
   GET_USERS_SUCCESS,
@@ -170,13 +175,18 @@ const initialState = {
   // Warehouse
   warehousesArr: [],
   isLoadingWarehouseInventory: false,
-  warehouseInventory: [],
+  warehouseInventoryArr: [],
   isLoadingCreateWarehouse: false,
   commonWarehouseID: "",
   warehouseName: "",
   warehouseDescription: "",
   warehouseAvailable: true,
   editWarehouseID: "",
+  inbound: true,
+  weight: "",
+  warehouseOpsDescID: "",
+  warehouseOperationsArr: [],
+  totalWarehouseOperations: 0,
 };
 
 const useQuery = () => {
@@ -586,23 +596,6 @@ const AppProvider = ({ children }) => {
       dispatch({
         type: GET_MATERIAL_TOLERANCE_SUCCESS,
         payload: { materialToleranceArr },
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const getAllInventory = async (condition) => {
-    dispatch({ type: GET_WAREHOUSE_INVENTORY_BEGIN });
-    try {
-      const { data } = await authFetch.post(
-        "/customers/inventory/all",
-        condition
-      );
-      const { allInventories } = data;
-      dispatch({
-        type: GET_WAREHOUSE_INVENTORY_SUCCESS,
-        payload: { allInventories },
       });
     } catch (error) {
       console.log(error);
@@ -1060,6 +1053,76 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  const getWarehouseOperations = async () => {
+    dispatch({ type: GET_WAREHOUSE_OPERATIONS_BEGIN });
+    const { customerCodeName } = state;
+    try {
+      const { data } = await authFetch.post(
+        "/customers/warehouses-operations/get",
+        {
+          customerCodeName,
+        }
+      );
+      const { warehouseOperations, totalWarehouseOperations, numOfPages } =
+        data;
+      dispatch({
+        type: GET_WAREHOUSE_OPERATIONS_SUCCESS,
+        payload: { warehouseOperations, totalWarehouseOperations, numOfPages },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const warehouseOperations = async () => {
+    dispatch({ type: WAREHOUSE_OPERATIONS_BEGIN });
+    let id = toast.loading("Warehouse operations. Please wait...");
+    try {
+      const {
+        customerCodeName,
+        editWarehouseID,
+        inbound,
+        editMaterialID,
+        weight,
+        warehouseOpsDescID,
+      } = state;
+      await authFetch.post("/customer/warehouses-operations/ops", {
+        customerCodeName,
+        warehouseID: editWarehouseID,
+        inbound,
+        materialID: editMaterialID,
+        weight,
+        descriptionID: warehouseOpsDescID,
+      });
+      dispatch({ type: WAREHOUSE_OPERATIONS_SUCCESS });
+      successToastUpdate(id, "New warehouse saved");
+      getWarehouseOperations();
+    } catch (error) {
+      if (error.response.status === 401) return;
+      let msg = error.response.data.msg;
+      dispatch({ type: WAREHOUSE_OPERATIONS_ERROR });
+      errorToastUpdate(id, msg);
+    }
+  };
+
+  const getAllInventory = async () => {
+    dispatch({ type: GET_WAREHOUSE_INVENTORY_BEGIN });
+    try {
+      const { customerCodeName, editWarehouseID } = state;
+      const { data } = await authFetch.post("/customers/inventory/all", {
+        customerCodeName,
+        warehouseID: editWarehouseID,
+      });
+      const { allInventories } = data;
+      dispatch({
+        type: GET_WAREHOUSE_INVENTORY_SUCCESS,
+        payload: { allInventories },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -1086,7 +1149,6 @@ const AppProvider = ({ children }) => {
         getMaterialInventory,
         getDailyBatching,
         getMaterialTolerance,
-        getAllInventory,
         getMaterials,
         createMaterial,
         setEditMaterial,
@@ -1102,6 +1164,9 @@ const AppProvider = ({ children }) => {
         setEditWarehouse,
         editWarehouse,
         deleteWarehouse,
+        getWarehouseOperations,
+        warehouseOperations,
+        getAllInventory,
       }}
     >
       {children}

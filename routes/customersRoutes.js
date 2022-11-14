@@ -37,8 +37,9 @@ import {
   updateWarehouse,
   deleteWarehouse,
   createWarehouseOpDesc,
-  transactionInventory,
   getAllInventory,
+  warehouseOperations,
+  getWarehouseOperations,
 } from "../controllers/warehousesController.js";
 
 // Customers
@@ -67,7 +68,8 @@ router.route("/warehouses").patch(updateWarehouse);
 router.route("/warehouses").delete(deleteWarehouse);
 router.route("/warehouses/all").post(getAllWarehouses);
 router.route("/warehouses/opdesc").post(createWarehouseOpDesc);
-router.route("/inventory").post(transactionInventory);
+router.route("/warehouses-operations/ops").post(warehouseOperations);
 router.route("/inventory/all").post(getAllInventory);
+router.route("/warehouses-operations/get").post(getWarehouseOperations);
 
 export default router;

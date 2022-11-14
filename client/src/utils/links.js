@@ -40,8 +40,9 @@ const links = [
   },
   {
     id: 5,
-    text: i18n.t("warehouses", "warehouses"),
-    path: "warehouses",
+    // text: i18n.t("warehouses", "warehouses"),
+    text: "warehouses",
+    path: "",
     icon: <FaWarehouse />,
     type: "dropdown",
     subMenus: [
@@ -49,7 +50,7 @@ const links = [
         id: 51,
         text: "warehouses",
         path: "warehouses",
-        icon: <FaWarehouse />,
+        // icon: <FaWarehouse />,
       },
       {
         id: 52,

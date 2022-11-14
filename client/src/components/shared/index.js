@@ -42,6 +42,12 @@ import ProfileContainer from "../profile/ProfileContainer";
 import WarehousesOptions from "../warehouse/WarehousesOptions";
 import WarehousesContainer from "../warehouse/WarehousesContainer";
 import WarehouseEditModal from "../warehouse/WarehouseEditModal";
+import WarehousesOpsOptions from "../warehouse/WarehouseOpsOptions";
+import WarehouseOpsContainer from "../warehouse/WarehouseOpsContainer";
+import WarehouseOpsEditModal from "../warehouse/WarehouseOpsEditModal";
+import InventoryOptions from "../warehouse/InventoryOptions";
+import InventoryContainer from "../warehouse/InventoryContainer";
+
 export {
   Logo,
   FormRow,
@@ -80,6 +86,11 @@ export {
   WarehousesOptions,
   WarehousesContainer,
   WarehouseEditModal,
+  WarehousesOpsOptions,
+  WarehouseOpsContainer,
+  WarehouseOpsEditModal,
+  InventoryOptions,
+  InventoryContainer,
   // Formulas
   FormulasOptions,
   FormulasContainer,

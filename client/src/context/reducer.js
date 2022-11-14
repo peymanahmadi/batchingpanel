@@ -43,6 +43,9 @@ import {
   GET_MATERIAL_TOLERANCE_SUCCESS,
   GET_WAREHOUSE_INVENTORY_BEGIN,
   GET_WAREHOUSE_INVENTORY_SUCCESS,
+  WAREHOUSE_OPERATIONS_BEGIN,
+  WAREHOUSE_OPERATIONS_SUCCESS,
+  WAREHOUSE_OPERATIONS_ERROR,
   // Materials
   GET_MATERIALS_BEGIN,
   GET_MATERIALS_SUCCESS,
@@ -82,6 +85,8 @@ import {
   DELETE_WAREHOUSE_BEGIN,
   DELETE_WAREHOUSE_SUCCESS,
   DELETE_WAREHOUSE_ERROR,
+  GET_WAREHOUSE_OPERATIONS_BEGIN,
+  GET_WAREHOUSE_OPERATIONS_SUCCESS,
 } from "./actions";
 
 import { initialState } from "./appContext";
@@ -394,16 +399,6 @@ const reducer = (state, action) => {
       materialTolerance: action.payload.materialToleranceArr,
     };
   }
-  if (action.type === GET_WAREHOUSE_INVENTORY_BEGIN) {
-    return { ...state, isLoadingWarehouseInventory: true };
-  }
-  if (action.type === GET_WAREHOUSE_INVENTORY_SUCCESS) {
-    return {
-      ...state,
-      isLoadingWarehouseInventory: false,
-      warehouseInventory: action.payload.allInventories,
-    };
-  }
 
   // Materials
   if (action.type === GET_MATERIALS_BEGIN) {
@@ -595,6 +590,7 @@ const reducer = (state, action) => {
       alertText: action.payload.msg,
     };
   }
+
   // Warehouse
   if (action.type === GET_WAREHOUSES_BEGIN) {
     return { ...state, isLoading: true };
@@ -673,6 +669,37 @@ const reducer = (state, action) => {
     return {
       ...state,
       isLoadingCreateWarehouse: false,
+    };
+  }
+  if (action.type === GET_WAREHOUSE_OPERATIONS_BEGIN) {
+    return { ...state, isLoading: true };
+  }
+  if (action.type === GET_WAREHOUSE_OPERATIONS_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      warehouseOperationsArr: action.payload.warehouseOperations,
+      totalWarehouseOperations: action.payload.totalWarehouseOperations,
+      numOfPages: action.payload.numOfPages,
+    };
+  }
+  if (action.type === WAREHOUSE_OPERATIONS_BEGIN) {
+    return { ...state, isLoadingCreateWarehouse: true };
+  }
+  if (action.type === WAREHOUSE_OPERATIONS_SUCCESS) {
+    return { ...state, isLoadingCreateWarehouse: false, openModal: false };
+  }
+  if (action.type === WAREHOUSE_OPERATIONS_ERROR) {
+    return { ...state, isLoadingCreateWarehouse: false };
+  }
+  if (action.type === GET_WAREHOUSE_INVENTORY_BEGIN) {
+    return { ...state, isLoadingWarehouseInventory: true };
+  }
+  if (action.type === GET_WAREHOUSE_INVENTORY_SUCCESS) {
+    return {
+      ...state,
+      isLoadingWarehouseInventory: false,
+      warehouseInventoryArr: action.payload.allInventories,
     };
   }
   throw new Error(`no such action: ${action.type}`);

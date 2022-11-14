@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { MdKeyboardArrowRight } from "react-icons/md";
+import { MdKeyboardArrowRight, MdKeyboardArrowDown } from "react-icons/md";
 import { NavLink } from "react-router-dom";
-// import "./DropDown.css";
 
 const DropDownMenu = ({ icon, text, subMenu }) => {
   const [showSubMenu, setShowSubMenu] = useState();
@@ -21,7 +20,9 @@ const DropDownMenu = ({ icon, text, subMenu }) => {
             <span className="icon">{icon}</span>
             <div>{text}</div>
           </div>
-          <MdKeyboardArrowRight />
+          <span className="arrow">
+            {showSubMenu ? <MdKeyboardArrowDown /> : <MdKeyboardArrowRight />}
+          </span>
         </li>
       </div>
       {showSubMenu && (
@@ -32,7 +33,9 @@ const DropDownMenu = ({ icon, text, subMenu }) => {
                 <NavLink
                   to={sub.path}
                   className={({ isActive }) =>
-                    isActive ? "nav-link active" : "nav-link"
+                    isActive
+                      ? "nav-link sub-nav-link active"
+                      : "nav-link sub-nav-link"
                   }
                 >
                   {sub.text}
