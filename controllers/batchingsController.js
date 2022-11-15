@@ -1,6 +1,7 @@
 import conn from "../db/batchingAdmin.js";
 import batchingAdminConn from "../db/batchingAdmin.js";
 import batchingTenantConn from "../db/batchingTenant.js";
+import moment from "moment";
 
 // After the batching process finished at the factory,
 // the automation software send batching data through a json file
@@ -59,7 +60,13 @@ const createBatching = async (req, res, next) => {
 
     const batching = await newBatching.save({ session });
 
-    let dailyBatching = await dailyBatchingModel.findOne({ date: dateTime });
+    let dailyBatching = await dailyBatchingModel.findOne({
+      date: {
+        $gte: moment(dateTime).startOf("day"),
+        $lte: moment(dateTime).endOf("day"),
+      },
+    });
+    console.log(dailyBatching);
     if (!dailyBatching) {
       const newDailyBatching = new dailyBatchingModel({
         numOfBatches: 0,
@@ -228,7 +235,10 @@ const getDailyBatching = async (req, res, next) => {
     const dailyBatching = await dailyBatchingModel.find({
       date: { $gte: startDate, $lte: endDate },
     });
-    res.status(200).json({ dailyBatching });
+    const todayBatching = await dailyBatchingModel.find({
+      date: { $gte: moment().startOf("day"), $lte: moment().endOf("day") },
+    });
+    res.status(200).json({ dailyBatching, todayBatching });
   } catch (error) {
     return next(error);
   }

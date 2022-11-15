@@ -1,4 +1,5 @@
 import { useState } from "react";
+import moment from "moment";
 // import {
 //   sub,
 //   startOfDay,
@@ -12,32 +13,15 @@ const ButtonGroup = ({ btns, onPeriodClick }) => {
 
   const handleButtonClick = (index, btn) => {
     setBtnIndex(index);
-    // const now = new Date();
-    // if (btn === "Day") {
-    //   onPeriodClick(
-    //     startOfDay(new Date(now.getFullYear(), now.getMonth(), now.getDate()))
-    //   );
-    // }
-    // if (btn === "Week") {
-    //   // onPeriodClick(
-    //   //   sub(new Date(now.getFullYear(), now.getMonth(), now.getDate()), {
-    //   //     weeks: 1,
-    //   //   })
-    //   // );
-    //   onPeriodClick(
-    //     startOfWeek(new Date(now.getFullYear(), now.getMonth(), now.getDate()))
-    //   );
-    // }
-    // if (btn === "Month") {
-    //   onPeriodClick(
-    //     startOfMonth(new Date(now.getFullYear(), now.getMonth(), now.getDate()))
-    //   );
-    // }
-    // if (btn === "Year") {
-    //   onPeriodClick(
-    //     startOfYear(new Date(now.getFullYear(), now.getMonth(), now.getDate()))
-    //   );
-    // }
+    if (btn === "Day") {
+      onPeriodClick(moment().startOf("day"));
+    } else if (btn === "Week") {
+      onPeriodClick(moment().startOf("week"));
+    } else if (btn === "Month") {
+      onPeriodClick(moment().startOf("month"));
+    } else if (btn === "Year") {
+      onPeriodClick(moment().startOf("year"));
+    }
   };
 
   return (

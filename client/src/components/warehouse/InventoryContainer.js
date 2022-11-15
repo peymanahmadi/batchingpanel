@@ -10,7 +10,7 @@ const InventoryContainer = () => {
     editWarehouseID,
   } = useAppContext();
 
-  const header = ["Material Name", "Weight", "Available"];
+  const header = ["Material Name", "Weight (kg)", "Available"];
   // console.log("editWarehouseID: ", editWarehouseID);
   useEffect(() => {
     // if (editWarehouseID !== "") {

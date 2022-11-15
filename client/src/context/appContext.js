@@ -553,11 +553,12 @@ const AppProvider = ({ children }) => {
   const getDailyBatching = async (condition) => {
     dispatch({ type: GET_DAILY_PRODUCTION_BEGIN });
     try {
+      const { customerCodeName } = state;
       const { data } = await authFetch.post(
         "/customers/batching/daily",
         condition
       );
-      const { dailyBatching } = data;
+      const { dailyBatching, todayBatching } = data;
       if (dailyBatching.length === 0) {
         dispatch({
           type: GET_DAILY_PRODUCTION_EMPTY,
@@ -572,10 +573,8 @@ const AppProvider = ({ children }) => {
           type: GET_DAILY_PRODUCTION_SUCCESS,
           payload: {
             dailyBatching,
-            todayNumOfBatches:
-              dailyBatching[dailyBatching.length - 1].numOfBatches,
-            todayTotalBatchingWeight:
-              dailyBatching[dailyBatching.length - 1].weight,
+            todayNumOfBatches: todayBatching.numOfBatches ?? 0,
+            todayTotalBatchingWeight: todayBatching.weight ?? 0,
           },
         });
       }

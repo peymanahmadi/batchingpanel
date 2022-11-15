@@ -23,22 +23,23 @@ const WarehousesOpsOptions = () => {
 
         {/* </div> */}
       </div>
-      <div className="navbar-controls"></div>
-      <div>
-        <select name="warehouse" id="">
-          {warehousesArr.map((warehouse) => {
-            const { _id, name } = warehouse;
-            return (
-              <option key={_id} value={name}>
-                {name}
-              </option>
-            );
-          })}
-        </select>
+      <div className="navbar-controls">
+        <div>
+          <select name="warehouse" id="">
+            {warehousesArr.map((warehouse) => {
+              const { _id, name } = warehouse;
+              return (
+                <option key={_id} value={name}>
+                  {name}
+                </option>
+              );
+            })}
+          </select>
+        </div>
+        <button className="btn" onClick={handleOpenForm}>
+          Warehouse Entry
+        </button>
       </div>
-      <button className="btn" onClick={handleOpenForm}>
-        Warehouse Entry
-      </button>
     </section>
   );
 };

@@ -17,7 +17,7 @@ const ProductionChart = () => {
   const [startDate, setStartDate] = useState();
 
   const condition = {
-    customerCodeName: "goldasht",
+    customerCodeName: "isfSeamorgh",
     startDate: startDate,
     endDate: Date.now(),
   };
@@ -94,6 +94,7 @@ const ProductionChart = () => {
   const buttons = ["Week", "Month", "Year"];
 
   const handlePeriodClick = (newDate) => {
+    console.log(newDate);
     setStartDate(newDate);
   };
 

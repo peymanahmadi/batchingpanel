@@ -1,42 +1,23 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useAppContext } from "../../context/appContext";
 import { Loading } from "../shared";
 
 const InventoryOptions = () => {
-  const ref = useRef();
   const {
     isLoading,
     getWarehouses,
     warehousesArr,
-    editWarehouseID,
+    // editWarehouseID,
     handleChange,
     setEditWarehouse,
   } = useAppContext();
-  const [id, setID] = useState();
   const { t } = useTranslation();
-  console.log("editWarehouseID: ", editWarehouseID);
+  // console.log("editWarehouseID: ", editWarehouseID);
+
   useEffect(() => {
     getWarehouses();
-    setID(false);
   }, []);
-
-  if (!isLoading && !id) {
-    // setID(true);
-
-    console.log("isLoading: ", isLoading);
-    console.log(warehousesArr);
-    if (warehousesArr.length > 0) {
-      const id = warehousesArr[0]._id;
-      console.log(id);
-      // ref.current = id;
-      setEditWarehouse(id);
-      //   warehousesArr.map((warehouse) => {
-      //     const { _id } = warehouse;
-      //     return setEditWarehouse(_id);
-      //   });
-    }
-  }
 
   const handleSelectChange = (e) => {
     const type = e.target.type;
@@ -69,6 +50,9 @@ const InventoryOptions = () => {
             >
               {warehousesArr.map((warehouse) => {
                 const { _id, name } = warehouse;
+                {
+                  warehousesArr.length === 0 && setEditWarehouse(_id);
+                }
                 return (
                   <option key={_id} value={_id}>
                     {name}
