@@ -1,23 +1,30 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import ReactApexChart from "react-apexcharts";
 import { BsPercent } from "react-icons/bs";
 import { useAppContext } from "../../context/appContext";
+import StatsForm from "./StatsForm";
 import { Loading, ButtonGroup } from "../shared/index";
+import moment from "moment";
 
 const ProductionTolerance = () => {
   const {
     isLoadingMaterialTolerance,
     getMaterialTolerance,
     materialTolerance,
+    customerCodeName,
   } = useAppContext();
-
+  const { t } = useTranslation();
+  const [startDate, setStartDate] = useState(moment().startOf("day"));
   const condition = {
-    customerCodeName: "goldasht",
+    customerCodeName,
+    startDate,
+    endDate: Date.now(),
   };
 
   useEffect(() => {
     getMaterialTolerance(condition);
-  }, []);
+  }, [startDate]);
 
   const state = {
     series: [
@@ -109,46 +116,54 @@ const ProductionTolerance = () => {
     },
   };
 
-  const buttons = ["Week", "Month"];
+  const buttons = ["Day", "Week", "Month"];
+
+  const handlePeriodClick = (newDate) => {
+    setStartDate(newDate);
+  };
 
   return (
-    <div className="material-tolerance">
-      <div className="dashboard-card__header">
-        <div className="dashboard-card__title">
-          <BsPercent />
-          <h6>Material Tolerance</h6>
-          {isLoadingMaterialTolerance && <Loading center />}
-        </div>
-        <div className="dashboard-card__condition">
-          <ButtonGroup btns={buttons} />
-        </div>
-      </div>
-      {materialTolerance.map((pt, index) => {
-        return (
-          <div key={index} className="material-tolerance__chart">
-            {/* <div className={`${pt.length > 30 ? "full-width" : "half-width"}`}> */}
-            <div className="full-width">
-              <div>
-                <div key={index} className="subTitle2 space-between">
-                  <div>{pt.name}</div>
-                  <div className="badge">
-                    {pt.length}{" "}
-                    <span>{pt.length > 1 ? "batches" : "batch"}</span>
+    <StatsForm
+      handler="material-tolerance"
+      color="primary"
+      icon={<BsPercent />}
+      title={t("STATS.MATERIALTOLERANCE")}
+      btnGroup={true}
+      buttons={buttons}
+      onPeriodClick={handlePeriodClick}
+    >
+      {isLoadingMaterialTolerance ? (
+        <Loading center />
+      ) : (
+        <>
+          {materialTolerance.map((pt, index) => {
+            return (
+              <div key={index} className="material-tolerance__chart">
+                {/* <div className={`${pt.length > 30 ? "full-width" : "half-width"}`}> */}
+                <div className="full-width">
+                  <div>
+                    <div key={index} className="subTitle2 space-between">
+                      <div>{pt.name}</div>
+                      <div className="badge">
+                        {pt.length}{" "}
+                        <span>{pt.length > 1 ? "batches" : "batch"}</span>
+                      </div>
+                    </div>
                   </div>
+                  <ReactApexChart
+                    options={state.options}
+                    series={[{ name: pt.name, data: pt.tolerance }]}
+                    type="bar"
+                    height={150}
+                    className="material-tolerance__canvas"
+                  />
                 </div>
               </div>
-              <ReactApexChart
-                options={state.options}
-                series={[{ name: pt.name, data: pt.tolerance }]}
-                type="bar"
-                height={150}
-                className="material-tolerance__canvas"
-              />
-            </div>
-          </div>
-        );
-      })}
-    </div>
+            );
+          })}
+        </>
+      )}
+    </StatsForm>
   );
 };
 

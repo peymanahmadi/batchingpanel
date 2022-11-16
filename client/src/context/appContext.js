@@ -40,7 +40,6 @@ import {
   // Stats
   GET_DAILY_PRODUCTION_BEGIN,
   GET_DAILY_PRODUCTION_SUCCESS,
-  GET_DAILY_PRODUCTION_EMPTY,
   GET_MATERIAL_TOLERANCE_BEGIN,
   GET_MATERIAL_TOLERANCE_SUCCESS,
   // Materials
@@ -525,8 +524,7 @@ const AppProvider = ({ children }) => {
         },
       });
     } catch (error) {
-      console.log(error);
-      // logoutUser();
+      logoutUser();
     }
   };
 
@@ -553,34 +551,22 @@ const AppProvider = ({ children }) => {
   const getDailyBatching = async (condition) => {
     dispatch({ type: GET_DAILY_PRODUCTION_BEGIN });
     try {
-      const { customerCodeName } = state;
       const { data } = await authFetch.post(
         "/customers/batching/daily",
         condition
       );
       const { dailyBatching, todayBatching } = data;
-      if (dailyBatching.length === 0) {
-        dispatch({
-          type: GET_DAILY_PRODUCTION_EMPTY,
-          payload: {
-            dailyBatching,
-            todayNumOfBatches: 0,
-            todayTotalBatchingWeight: 0,
-          },
-        });
-      } else {
-        dispatch({
-          type: GET_DAILY_PRODUCTION_SUCCESS,
-          payload: {
-            dailyBatching,
-            todayNumOfBatches: todayBatching.numOfBatches ?? 0,
-            todayTotalBatchingWeight: todayBatching.weight ?? 0,
-          },
-        });
-      }
+
+      dispatch({
+        type: GET_DAILY_PRODUCTION_SUCCESS,
+        payload: {
+          dailyBatching,
+          todayNumOfBatches: todayBatching[0].numOfBatches ?? 0,
+          todayTotalBatchingWeight: todayBatching[0].weight ?? 0,
+        },
+      });
     } catch (error) {
-      // logoutUser();
-      console.log(error);
+      logoutUser();
     }
   };
 
@@ -597,7 +583,7 @@ const AppProvider = ({ children }) => {
         payload: { materialToleranceArr },
       });
     } catch (error) {
-      console.log(error);
+      logoutUser();
     }
   };
 

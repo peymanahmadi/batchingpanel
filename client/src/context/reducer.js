@@ -38,7 +38,6 @@ import {
   // Stats
   GET_DAILY_PRODUCTION_BEGIN,
   GET_DAILY_PRODUCTION_SUCCESS,
-  GET_DAILY_PRODUCTION_EMPTY,
   GET_MATERIAL_TOLERANCE_BEGIN,
   GET_MATERIAL_TOLERANCE_SUCCESS,
   GET_WAREHOUSE_INVENTORY_BEGIN,
@@ -379,16 +378,6 @@ const reducer = (state, action) => {
       todayTotalBatchingWeight: action.payload.todayTotalBatchingWeight,
     };
   }
-  if (action.type === GET_DAILY_PRODUCTION_EMPTY) {
-    return {
-      ...state,
-      isLoadingStatsDailyProduction: false,
-      dailyBatchingArr: action.payload.dailyBatching,
-      todayNumOfBatches: action.payload.todayNumOfBatches,
-      todayTotalBatchingWeight: action.payload.todayTotalBatchingWeight,
-    };
-  }
-
   if (action.type === GET_MATERIAL_TOLERANCE_BEGIN) {
     return { ...state, isLoadingMaterialTolerance: true };
   }

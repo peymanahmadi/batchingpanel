@@ -1,7 +1,5 @@
 import {
-  HeadingStats,
   MaterialConsumptions,
-  BatchingStats,
   BatchedFormulas,
   MaterialInventory,
   ProductionChart,
@@ -13,12 +11,10 @@ import {
 const Stats = () => {
   return (
     <div className="stats-container">
-      {/* <HeadingStats /> */}
       <ProductionChart />
       <BatchingMessages />
       {/* <BatchedFormulas /> */}
       <MaterialConsumptions />
-      {/* <BatchingStats /> */}
       {/* <MaterialInventory /> */}
       <MaterialTolerance />
       {/* <InventoryChart /> */}

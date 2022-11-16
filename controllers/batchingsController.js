@@ -245,14 +245,16 @@ const getDailyBatching = async (req, res, next) => {
 };
 
 const materialTolerance = async (req, res, next) => {
-  const { customerCodeName } = req.body;
+  const { customerCodeName, startDate, endDate } = req.body;
 
   const customerConn = batchingTenantConn(customerCodeName);
   const batchingModel = customerConn.model("Batching");
   const materialModel = customerConn.model("Material");
 
   try {
-    const batching = await batchingModel.find({});
+    const batching = await batchingModel.find({
+      dateTime: { $gte: startDate, $lte: endDate },
+    });
     let productionTol = {};
     let tolerance = [];
     for (let items of batching) {

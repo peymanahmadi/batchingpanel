@@ -4,6 +4,7 @@ import ReactApexChart from "react-apexcharts";
 import { BsGraphUp } from "react-icons/bs";
 import { useAppContext } from "../../context/appContext";
 import { Loading, ButtonGroup } from "../shared";
+import moment from "moment";
 
 const ProductionChart = () => {
   const {
@@ -12,12 +13,13 @@ const ProductionChart = () => {
     dailyBatchingArr,
     todayNumOfBatches,
     todayTotalBatchingWeight,
+    customerCodeName,
   } = useAppContext();
   const { t } = useTranslation();
-  const [startDate, setStartDate] = useState();
+  const [startDate, setStartDate] = useState(moment().startOf("week"));
 
   const condition = {
-    customerCodeName: "isfSeamorgh",
+    customerCodeName,
     startDate: startDate,
     endDate: Date.now(),
   };
@@ -99,45 +101,43 @@ const ProductionChart = () => {
   };
 
   return (
-    <>
-      <article className="stats-form daily-production">
-        <div className="dashboard-card__header">
-          <div className="dashboard-card__title">
-            <BsGraphUp />
-            <h6>Daily Production Chart</h6>
-            {isLoadingStatsDailyProduction && <Loading center />}
-          </div>
-          <div className="dashboard-card__condition">
-            <ButtonGroup btns={buttons} onPeriodClick={handlePeriodClick} />
-          </div>
+    <article className="stats-form daily-production">
+      <div className="dashboard-card__header">
+        <div className="dashboard-card__title">
+          <BsGraphUp />
+          <h6>Daily Production Chart</h6>
+          {isLoadingStatsDailyProduction && <Loading center />}
         </div>
-        <div className="daily-production__content">
-          {!isLoadingStatsDailyProduction && (
-            <>
-              <div className="today-stats">
-                <div className="subTitle2">Today stats</div>
-                <div className="subTitle2">
-                  {todayTotalBatchingWeight} <i>kg</i>
-                </div>
-                <div className="subTitle2">
-                  {todayNumOfBatches}{" "}
-                  {todayNumOfBatches > 1 ? "batches" : "batch"}
-                </div>
-              </div>
-              <div className="production-chart__chart">
-                <ReactApexChart
-                  options={state.options}
-                  series={state.series}
-                  type="area"
-                  className="chart-canvas"
-                  height="90%"
-                />
-              </div>
-            </>
-          )}
+        <div className="dashboard-card__condition">
+          <ButtonGroup btns={buttons} onPeriodClick={handlePeriodClick} />
         </div>
-      </article>
-    </>
+      </div>
+      <div className="daily-production__content">
+        {!isLoadingStatsDailyProduction && (
+          <>
+            <div className="today-stats">
+              <div className="subTitle2">Today stats</div>
+              <div className="subTitle2">
+                {todayTotalBatchingWeight} <i>kg</i>
+              </div>
+              <div className="subTitle2">
+                {todayNumOfBatches}{" "}
+                {todayNumOfBatches > 1 ? <i>batches</i> : <i>batch</i>}
+              </div>
+            </div>
+            <div className="production-chart__chart">
+              <ReactApexChart
+                options={state.options}
+                series={state.series}
+                type="area"
+                className="chart-canvas"
+                height="90%"
+              />
+            </div>
+          </>
+        )}
+      </div>
+    </article>
   );
 };
 

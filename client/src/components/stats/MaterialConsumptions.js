@@ -1,19 +1,24 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import moment from "moment";
+import { TbFileSpreadsheet } from "react-icons/tb";
 import { useAppContext } from "../../context/appContext";
 import StatsForm from "./StatsForm";
-import { TbFileSpreadsheet } from "react-icons/tb";
 import Loading from "../shared/Loading";
 
 const MaterialConsumptions = () => {
-  const { getMaterialConsumption, materialConsumption, isLoading } =
-    useAppContext();
+  const {
+    getMaterialConsumption,
+    materialConsumption,
+    isLoading,
+    customerCodeName,
+  } = useAppContext();
   const { t } = useTranslation();
-  const [startDate, setStartDate] = useState();
+  const [startDate, setStartDate] = useState(moment().startOf("day"));
 
   const condition = {
-    customerCodeName: "goldasht",
-    startDate: startDate,
+    customerCodeName,
+    startDate,
     endDate: Date.now(),
   };
 
@@ -27,7 +32,6 @@ const MaterialConsumptions = () => {
 
   const handlePeriodClick = (newDate) => {
     setStartDate(newDate);
-    console.log(newDate);
   };
 
   return (
