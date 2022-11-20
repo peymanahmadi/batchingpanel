@@ -17,13 +17,13 @@ const links = [
     icon: <IoBarChartSharp />,
     type: "simple",
   },
-  {
-    id: 2,
-    text: i18n.t("reports", "reports"),
-    path: "reports",
-    icon: <FaWpforms />,
-    type: "simple",
-  },
+  // {
+  //   id: 2,
+  //   text: i18n.t("reports", "reports"),
+  //   path: "reports",
+  //   icon: <FaWpforms />,
+  //   type: "simple",
+  // },
   {
     id: 3,
     text: i18n.t("materials", "materials"),
@@ -48,19 +48,19 @@ const links = [
     subMenus: [
       {
         id: 51,
-        text: "warehouses",
-        path: "warehouses",
-        // icon: <FaWarehouse />,
-      },
-      {
-        id: 52,
         text: "warehouse Operations",
         path: "warehouses/operations",
       },
       {
-        id: 53,
+        id: 52,
         text: "warehouse Inventory",
         path: "warehouses/inventory",
+      },
+      {
+        id: 53,
+        text: "warehouses",
+        path: "warehouses",
+        // icon: <FaWarehouse />,
       },
     ],
   },

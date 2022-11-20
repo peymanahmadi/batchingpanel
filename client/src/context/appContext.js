@@ -58,6 +58,8 @@ import {
   // Formulas
   GET_FORMULAS_BEGIN,
   GET_FORMULAS_SUCCESS,
+  GET_FORMULA_BY_ID_BEGIN,
+  GET_FORMULA_BY_ID_SUCCESS,
   CREATE_FORMULA_BEGIN,
   CREATE_FORMULA_SUCCESS,
   CREATE_FORMULA_ERROR,
@@ -148,6 +150,8 @@ const initialState = {
   // Formulas
   isLoadingFormulas: false,
   formulasArr: [],
+  formula: {},
+  formulation: [],
   totalFormulas: 0,
   numOfFormulaPages: 1,
   editFormulaID: "",
@@ -157,6 +161,7 @@ const initialState = {
   formulaDescription: "",
   formulaBatchSize: "",
   formulaAvailable: true,
+  ingredients: [],
   // users
   isLoadingUsers: false,
   usersArr: [],
@@ -556,16 +561,22 @@ const AppProvider = ({ children }) => {
         condition
       );
       const { dailyBatching, todayBatching } = data;
-
+      const numOfBatches =
+        todayBatching[0]?.numOfBatches === undefined
+          ? 0
+          : todayBatching[0].numOfBatches;
+      const totalBatchingWeight =
+        todayBatching[0]?.weight === undefined ? 0 : todayBatching[0].weight;
       dispatch({
         type: GET_DAILY_PRODUCTION_SUCCESS,
         payload: {
           dailyBatching,
-          todayNumOfBatches: todayBatching[0].numOfBatches ?? 0,
-          todayTotalBatchingWeight: todayBatching[0].weight ?? 0,
+          todayNumOfBatches: numOfBatches,
+          todayTotalBatchingWeight: totalBatchingWeight,
         },
       });
     } catch (error) {
+      // console.log(error);
       logoutUser();
     }
   };
@@ -788,11 +799,29 @@ const AppProvider = ({ children }) => {
         payload: { formulas, totalFormulas, numOfPages },
       });
     } catch (error) {
-      console.log(error);
+      logoutUser();
     }
   };
 
-  const createFormula = async (ingredients) => {
+  const getFormulaByID = async () => {
+    dispatch({ type: GET_FORMULA_BY_ID_BEGIN });
+    try {
+      const { customerCodeName, editFormulaID } = state;
+      const { data } = await authFetch.post("/customers/formulas/id", {
+        customerCodeName,
+        formulaID: editFormulaID,
+      });
+      const { formula, formulation } = data;
+      dispatch({
+        type: GET_FORMULA_BY_ID_SUCCESS,
+        payload: { formula, formulation },
+      });
+    } catch (error) {
+      logoutUser();
+    }
+  };
+
+  const createFormula = async () => {
     dispatch({ type: CREATE_FORMULA_BEGIN });
     let id = toast.loading("Adding new formula. Please wait...");
     try {
@@ -804,7 +833,8 @@ const AppProvider = ({ children }) => {
         formulaDescription,
         formulaBatchSize,
         formulaAvailable,
-        // ingredients,
+        user,
+        ingredients,
       } = state;
       await authFetch.post("/customers/formulas", {
         customerCodeName,
@@ -814,6 +844,7 @@ const AppProvider = ({ children }) => {
         description: formulaDescription,
         formulaBatchSize,
         available: formulaAvailable,
+        userID: user,
         ingredients,
       });
       dispatch({ type: CREATE_FORMULA_SUCCESS });
@@ -838,26 +869,41 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
-  const setEditFormula = (id) => {
-    dispatch({ type: SET_EDIT_FORMULA, payload: { id } });
+  const setEditFormula = async (id) => {
+    // dispatch({ type: SET_EDIT_FORMULA, payload: { id } });
+    try {
+      const { customerCodeName } = state;
+      const { data } = await authFetch.post("/customers/formulas/id", {
+        customerCodeName,
+        formulaID: id,
+      });
+      const { formula, formulation } = data;
+      dispatch({
+        type: SET_EDIT_FORMULA,
+        payload: { id, formula, formulation },
+      });
+    } catch (error) {
+      console.log("errrror", error);
+    }
   };
 
-  const editFormula = async () => {
+  const editFormula = async (ingredients) => {
     dispatch({ type: EDIT_FORMULA_BEGIN });
     let id = toast.loading("Updating formula. Please wait...");
     try {
       const {
         customerCodeName,
+        editFormulaID,
         commonFormulaID,
         formulaVersion,
         formulaName,
         formulaDescription,
         formulaBatchSize,
         formulaAvailable,
-        ingredients,
       } = state;
-      await authFetch.patch("/customers/materials", {
+      await authFetch.patch("/customers/formulas", {
         customerCodeName,
+        formulaID: editFormulaID,
         commonFormulaID,
         version: formulaVersion,
         name: formulaName,
@@ -895,6 +941,7 @@ const AppProvider = ({ children }) => {
     let id = toast.loading("Deleting formula. Please wait...");
     try {
       const { customerCodeName, editFormulaID } = state;
+      console.log(editFormulaID);
       await authFetch.delete("/customers/formulas", {
         data: {
           customerCodeName,
@@ -1140,6 +1187,7 @@ const AppProvider = ({ children }) => {
         editMaterial,
         deleteMaterial,
         getFormulas,
+        getFormulaByID,
         createFormula,
         setEditFormula,
         editFormula,

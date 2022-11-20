@@ -12,8 +12,11 @@ const BatchingMessages = () => {
       </div>
       <div className="batching-messages__content">
         <p>
-          batching system dashboard is a managerial assistant to monitor all
-          manufacturing processes less than 1 minute.
+          Batching System Dashboard is a tool used to present all important
+          management KPIs (key performance indicators) in a single place, share
+          insights with c-level executives in an efficient way, and empower the
+          management to make fast and data-driven decisions based on the latest
+          information.
         </p>
       </div>
     </section>

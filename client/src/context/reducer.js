@@ -61,6 +61,8 @@ import {
   // Formulas
   GET_FORMULAS_BEGIN,
   GET_FORMULAS_SUCCESS,
+  GET_FORMULA_BY_ID_BEGIN,
+  GET_FORMULA_BY_ID_SUCCESS,
   CREATE_FORMULA_BEGIN,
   CREATE_FORMULA_SUCCESS,
   CREATE_FORMULA_ERROR,
@@ -152,6 +154,7 @@ const reducer = (state, action) => {
   if (action.type === CLOSE_MODAL) {
     return {
       ...state,
+      isEditing: false,
       openModal: false,
     };
   }
@@ -164,6 +167,7 @@ const reducer = (state, action) => {
   if (action.type === CLOSE_MODAL_CONFIRM) {
     return {
       ...state,
+      isEditing: false,
       openModalConfirm: false,
     };
   }
@@ -487,6 +491,17 @@ const reducer = (state, action) => {
       numOfFormulaPages: action.payload.numOfPages,
     };
   }
+  if (action.type === GET_FORMULA_BY_ID_BEGIN) {
+    return { ...state, isLoading: true };
+  }
+  if (action.type === GET_FORMULA_BY_ID_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      formula: action.payload.formula,
+      formulation: action.payload.formulation,
+    };
+  }
   if (action.type === CREATE_FORMULA_BEGIN) {
     return { ...state, isLoadingCreateFormula: true };
   }
@@ -510,30 +525,45 @@ const reducer = (state, action) => {
     };
   }
   if (action.type === SET_EDIT_FORMULA) {
-    const formula = state.formulasArr.find(
-      (formula) => formula._id === action.payload.id
-    );
-    const {
-      _id,
-      commonFormulaID,
-      version,
-      name,
-      description,
-      formulaBatchSize,
-      available,
-    } = formula;
+    const { commonFormulaID, version, name, description, available } =
+      action.payload.formula;
+    const { formulaBatchSize, ingredients } = action.payload.formulation[0];
     return {
       ...state,
       isEditing: true,
-      editFormulaID: _id,
+      editFormulaID: action.payload.id,
       commonFormulaID,
       formulaVersion: version,
       formulaName: name,
       formulaDescription: description,
-      formulaBatchSize,
       formulaAvailable: available,
-      // ingredients,
+      formulaBatchSize,
+      ingredients,
     };
+    // const formula = state.formulasArr.find(
+    //   (formula) => formula._id === action.payload.id
+    // );
+    // const {
+    //   _id,
+    //   commonFormulaID,
+    //   version,
+    //   name,
+    //   description,
+    //   formulaBatchSize,
+    //   available,
+    // } = formula;
+    // return {
+    //   ...state,
+    //   isEditing: true,
+    //   editFormulaID: _id,
+    //   commonFormulaID,
+    //   formulaVersion: version,
+    //   formulaName: name,
+    //   formulaDescription: description,
+    //   formulaBatchSize,
+    //   formulaAvailable: available,
+    //   // ingredients,
+    // };
   }
   if (action.type === EDIT_FORMULA_BEGIN) {
     return { ...state, isLoading: true };
@@ -542,6 +572,7 @@ const reducer = (state, action) => {
     return {
       ...state,
       isLoading: false,
+      isEditing: false,
       showAlert: true,
       alertType: "success",
       alertText: "Formula Updated!",
@@ -552,6 +583,7 @@ const reducer = (state, action) => {
     return {
       ...state,
       isLoading: false,
+      isEditing: false,
       showAlert: true,
       alertType: "danger",
       alertText: action.payload.msg,

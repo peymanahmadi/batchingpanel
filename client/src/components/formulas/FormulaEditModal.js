@@ -1,46 +1,53 @@
 import { useEffect, useState } from "react";
 import { FaTimes, FaFlask } from "react-icons/fa";
-import { FormRow, CheckBox, Loading } from "../shared";
-import {
-  BsChevronDoubleLeft,
-  BsChevronDoubleRight,
-  BsChevronLeft,
-  BsChevronRight,
-} from "react-icons/bs";
 import { useAppContext } from "../../context/appContext";
+import AvailableMaterials from "./AvailableMaterials";
+import Formulation from "./Formulation";
+import ListControls from "./ListControls";
+import FormulaDefinition from "./FormulaDefinition";
 
 const FormulaEditModal = () => {
   const {
     isLoading,
     isEditing,
+    editFormulaID,
     commonFormulaID,
     formulaVersion,
     formulaName,
     formulaDescription,
     formulaBatchSize,
     formulaAvailable,
+    ingredients,
     handleChange,
     hideModal,
     getMaterials,
     createFormula,
+    editFormula,
     availableMaterialsArr,
+    getFormulaByID,
+    formula,
+    formulation,
   } = useAppContext();
 
   const [materials, setMaterials] = useState();
   const [startLoading, setStartLoading] = useState();
   const [rawMaterials, setRawMaterials] = useState([]);
 
+  const [editMaterials, setEditMaterials] = useState();
+  const [editRawMaterials, setEditRawMaterials] = useState([]);
+
   const handleFormulaInput = (e) => {
     const type = e.target.type;
     const name = e.target.name;
     const value = e.target.value;
     const checked = e.target.checked;
-    console.log(type, name, value, checked);
     handleChange({ type, name, value, checked });
   };
 
   useEffect(() => {
     getMaterials();
+    // the function fills availableMaterialsArr
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -49,10 +56,42 @@ const FormulaEditModal = () => {
       availableMaterialsArr.length > 0
     ) {
       setMaterials(availableMaterialsArr);
-      console.log("here", availableMaterialsArr);
       setStartLoading(true);
     }
   }, [availableMaterialsArr]);
+
+  useEffect(() => {
+    if (isEditing) {
+      getFormulaByID();
+      // the function fills formula and formulation
+    }
+  }, [isEditing]);
+
+  // useEffect(() => {
+  //   console.log("formula: ", formula);
+  //   console.log("formulation: ", formulation);
+  // }, [formulation]);
+
+  useEffect(() => {
+    if (
+      isEditing &&
+      formulation !== undefined &&
+      formulation.length > 0 &&
+      materials !== undefined &&
+      materials.length > 0
+    ) {
+      for (let i = 0; i < materials.length; i++) {
+        for (let j = 0; j < formulation[0].ingredients.length; j++) {
+          if (materials[i]._id === formulation[0].ingredients[j]._id) {
+            materials[i].selected = true;
+            materials[i].weight = formulation[0].ingredients[j].weight;
+          }
+        }
+      }
+      handleMoveLeft();
+    }
+    // eslint-disable-next-line
+  }, [formulation]);
 
   const closeModal = () => {
     setMaterials([]);
@@ -65,10 +104,24 @@ const FormulaEditModal = () => {
     const newData = materials.filter((material) => {
       return material.selected !== true;
     });
-    materials.map((material) => {
+    materials.map((material, index) => {
       if (material.selected) {
         material.selected = false;
-        material.weight = null;
+        if (!isEditing) {
+          material.weight = null;
+          ingredients.push(material);
+        } else {
+          // material.weight = editRawMaterials[index].weight;
+          //material.weight = ingredients[index]?.weight;
+          //console.log(index, "Code runs here");
+          // if (ingredients[index]?.weight === undefined) {
+          //   material.weight = null;
+          //   ingredients.push(material);
+          //   console.log(ingredients);
+          // } else {
+          //   material.weight = ingredients[index]?.weight;
+          // }
+        }
         setRawMaterials((prevState) => [...prevState, material]);
       }
     });
@@ -79,6 +132,9 @@ const FormulaEditModal = () => {
     const newData = rawMaterials.filter((rawMaterial) => {
       return rawMaterial.selected !== true;
     });
+    // ingredients = ingredients.filter((ingredient) => {
+    //   return ingredient.selected !== true;
+    // });
     rawMaterials.map((rawMaterial) => {
       if (rawMaterial.selected) {
         rawMaterial.selected = false;
@@ -90,16 +146,22 @@ const FormulaEditModal = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    createFormula(rawMaterials);
+    // createFormula(rawMaterials);
+    if (isEditing) {
+      editFormula(rawMaterials);
+    } else {
+      createFormula();
+    }
   };
 
-  // console.log(materials); // imppppppppppppppppppppppppppppppp
   const handleListClick = (index, material) => {
     material.selected = !material.selected;
     setMaterials([...materials]);
   };
 
-  const handleInputChange = (index, ingredient, e) => {
+  const handleInputChange = (index, e) => {
+    // ingredients[index].weight = e.target.value;
+    // ingredients[index].materialID = ingredients[index]._id;
     rawMaterials[index].weight = e.target.value;
     rawMaterials[index].materialID = rawMaterials[index]._id;
     setRawMaterials([...rawMaterials]);
@@ -115,183 +177,40 @@ const FormulaEditModal = () => {
         <FaTimes onClick={closeModal} />
       </nav>
       <div className="modal-form__content">
-        <div className="modal-form__content__inputs">
-          <div className="cfi">
-            <FormRow
-              name="commonFormulaID"
-              labelText="Common Formula ID"
-              type="text"
-              value={commonFormulaID}
-              // handleChange={handleValuesChange}
-              handleChange={handleFormulaInput}
-            />
-          </div>
-          <div className="version">
-            <FormRow
-              name="formulaVersion"
-              labelText="Version"
-              type="text"
-              value={formulaVersion}
-              // handleChange={handleValuesChange}
-              handleChange={handleFormulaInput}
-            />
-          </div>
-          <div className="name">
-            <FormRow
-              name="formulaName"
-              labelText="Name"
-              type="text"
-              value={formulaName}
-              // handleChange={handleValuesChange}
-              handleChange={handleFormulaInput}
-            />
-          </div>
-          <div className="desc">
-            <FormRow
-              name="formulaDescription"
-              labelText="Description"
-              type="text"
-              value={formulaDescription}
-              // handleChange={handleValuesChange}
-              handleChange={handleFormulaInput}
-            />
-          </div>
-          <div className="batch-size">
-            <FormRow
-              name="formulaBatchSize"
-              labelText="Formula Batch Size"
-              type="text"
-              value={formulaBatchSize}
-              // handleChange={handleValuesChange}
-              handleChange={handleFormulaInput}
-            />
-          </div>
-          <div className="available">
-            {/* <CheckBox
-              name="formulaAvailable"
-              labelText="Available"
-              checked={formulaAvailable}
-              handleChange={handleFormulaInput}
-            /> */}
-            <FormRow
-              name="formulaAvailable"
-              labelText="Available"
-              type="checkbox"
-              value={formulaAvailable}
-              // handleChange={handleValuesChange}
-              handleChange={handleFormulaInput}
-            />
-          </div>
-        </div>
+        <FormulaDefinition
+          commonFormulaID={commonFormulaID}
+          formulaVersion={formulaVersion}
+          formulaName={formulaName}
+          formulaDescription={formulaDescription}
+          formulaBatchSize={formulaBatchSize}
+          formulaAvailable={formulaAvailable}
+          handleFormulaInput={handleFormulaInput}
+        />
         <div>
           <label className="form-label">Formulation</label>
           <div className="formulation">
-            <div className="list-ingredients">
-              <div className="list-header">
-                <div>
-                  <input type="checkbox" name="" id="" />
-                </div>
-                <div>Code</div>
-                <div>Name</div>
-                <div>Weight</div>
-              </div>
-              <ul className="ingredients">
-                {rawMaterials.map((rawMaterial, index) => {
-                  const { selected, commonMaterialID, name, description } =
-                    rawMaterial;
-                  // console.log(ingredient); // impppppppppppppppppppppppppppp
-                  return (
-                    <li
-                      className={`ingredients-list ${
-                        selected ? "list-active" : null
-                      }`}
-                      key={index}
-                      // onClick={() => handleListClick(index, ingredient)}
-                    >
-                      <div>
-                        <input
-                          type="checkbox"
-                          name=""
-                          id=""
-                          checked={selected}
-                          value="selected"
-                          onChange={() => handleListClick(index, rawMaterial)}
-                        />
-                      </div>
-                      <div>{commonMaterialID}</div>
-                      <div>
-                        {name}
-                        <div className="table-subTitle">{description}</div>
-                      </div>
-                      <input
-                        className="list-input"
-                        type="number"
-                        name={commonMaterialID}
-                        // name="weight"
-                        value={rawMaterials[index].weight}
-                        onChange={(e) =>
-                          handleInputChange(index, rawMaterial, e)
-                        }
-                      />
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-            <div className="buttons">
-              <BsChevronDoubleLeft />
-              <BsChevronLeft onClick={handleMoveLeft} />
-              <BsChevronRight onClick={handleMoveRight} />
-              <BsChevronDoubleRight />
-            </div>
-            <div className="list-materials">
-              <div className="list-header materials-list">
-                <div>
-                  <input type="checkbox" name="" id="" />
-                </div>
-                <div>Code</div>
-                <div>Name</div>
-              </div>
-              {isLoading && <Loading center />}
-              <ul className="ingredients">
-                {startLoading &&
-                  materials.map((material, index) => {
-                    const { selected, commonMaterialID, name, description } =
-                      material;
-                    // console.log(material); // imppppppppppppppppppppppppppppppppppp
-                    return (
-                      <li
-                        className={`ingredients-list materials-list ${
-                          selected ? "list-active" : null
-                        }`}
-                        key={index}
-                        // onClick={() => handleListClick(index, material)}
-                      >
-                        <div>
-                          <input
-                            type="checkbox"
-                            name=""
-                            id=""
-                            checked={selected}
-                            value="selected"
-                            onChange={() => handleListClick(index, material)}
-                          />
-                        </div>
-                        <div>{commonMaterialID}</div>
-                        <div>
-                          {name}
-                          <div className="table-subTitle">{description}</div>
-                        </div>
-                      </li>
-                    );
-                  })}
-              </ul>
-            </div>
+            <Formulation
+              rawMaterials={rawMaterials}
+              handleListClick={handleListClick}
+              handleInputChange={handleInputChange}
+            />
+            <ListControls
+              handleMoveLeft={handleMoveLeft}
+              handleMoveRight={handleMoveRight}
+            />
+            <AvailableMaterials
+              materials={materials}
+              handleListClick={handleListClick}
+            />
           </div>
         </div>
       </div>
       <div className="modal-form__footer">
-        <button className="btn" type="submit">
+        <button
+          className="btn"
+          type="submit"
+          disabled={availableMaterialsArr.length < 1}
+        >
           Submit
         </button>
       </div>

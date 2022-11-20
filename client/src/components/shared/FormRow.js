@@ -1,4 +1,12 @@
-const FormRow = ({ type, name, value, handleChange, labelText, className }) => {
+const FormRow = ({
+  type,
+  name,
+  value,
+  checked,
+  handleChange,
+  labelText,
+  className,
+}) => {
   return (
     <div className="form-row">
       <label htmlFor={name} className="form-label">
@@ -9,9 +17,13 @@ const FormRow = ({ type, name, value, handleChange, labelText, className }) => {
         name={name}
         value={value}
         onChange={handleChange}
-        className={`form-input ${className} ${
-          type === "checkbox" ? "styled-checkbox" : null
-        }`}
+        checked={checked}
+        // className={`form-input ${className} ${
+        //   type === "checkbox" ? "styled-checkbox" : null
+        // }`}
+        className={
+          type === "checkbox" ? "form-checkbox" : `form-input ${className}`
+        }
       />
     </div>
   );

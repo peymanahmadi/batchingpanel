@@ -294,6 +294,7 @@ const getWarehouseOperations = async (req, res, next) => {
       .find({})
       .populate("materialID", "name")
       .populate("descriptionID", "description");
+
     res.status(200).json({
       warehouseOperations,
       totalWarehouseOperations: warehouseOperations.length,

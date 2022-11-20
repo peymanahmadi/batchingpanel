@@ -53,19 +53,19 @@
       }
       .version {
         grid-column-start: 3;
-        grid-column-end: 4;
+        grid-column-end: 5;
       }
       .name {
-        grid-column-start: 4;
-        grid-column-end: 7;
+        grid-column-start: 5;
+        grid-column-end: 8;
       }
 
       .desc {
-        grid-column-start: 7;
-        grid-column-end: 10;
+        grid-column-start: 8;
+        grid-column-end: 11;
       }
       .batch-size {
-        grid-column-start: 10;
+        grid-column-start: 11;
         grid-column-end: 12;
       }
       .available {

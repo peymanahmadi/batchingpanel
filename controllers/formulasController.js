@@ -10,6 +10,7 @@ const createFormula = async (req, res, next) => {
     version,
     userID,
     formulaBatchSize,
+    available,
     ingredients,
   } = req.body;
 
@@ -22,6 +23,7 @@ const createFormula = async (req, res, next) => {
     version,
     name,
     description,
+    available,
   });
 
   const newFormulation = new formulationModel({
@@ -62,12 +64,73 @@ const getAllFormulas = async (req, res, next) => {
   }
 };
 
-const getFormulaByID = (req, res, next) => {
-  res.send("get formula by id");
+const getFormulaByID = async (req, res, next) => {
+  const { customerCodeName, formulaID } = req.body;
+
+  const conn = createTenantConnection(customerCodeName);
+  const formulaModel = conn.model("Formula");
+  const formulationModel = conn.model("Formulation");
+  try {
+    const formula = await formulaModel.findOne({ _id: formulaID });
+    const formulation = await formulationModel.find({ formulaID });
+    res.status(200).json({ formula, formulation });
+  } catch (error) {
+    return next(error);
+  }
 };
 
-const updateFormula = (req, res, next) => {
-  res.send("update formula");
+const updateFormula = async (req, res, next) => {
+  const {
+    customerCodeName,
+    formulaID,
+    commonFormulaID,
+    name,
+    description,
+    version,
+    userID,
+    available,
+    formulaBatchSize,
+    ingredients,
+  } = req.body;
+
+  if (!commonFormulaID || !name) {
+    const error = new BadRequestError("Please provide all required values");
+    return next(error);
+  }
+
+  const conn = createTenantConnection(customerCodeName);
+  const formulaModel = conn.model("Formula");
+  const formulationModel = conn.model("Formulation");
+
+  const formula = await formulaModel.findOne({ _id: formulaID });
+
+  if (!formula) {
+    const error = new NotFoundError(`No formula with id: ${formulaID}`);
+    return next(error);
+  }
+
+  try {
+    const session = await conn.startSession();
+    session.startTransaction();
+
+    const updatedFormula = await formulaModel.findOneAndUpdate(
+      { _id: formulaID },
+      { commonFormulaID, name, description, version, available },
+      { new: true, runValidators: true, session }
+    );
+
+    const updatedFormulation = await formulationModel.findOneAndUpdate(
+      { formulaID },
+      { formulaBatchSize, ingredients },
+      { new: true, runValidators: true, session }
+    );
+
+    session.commitTransaction();
+
+    res.status(200).json({ updatedFormula, updatedFormulation });
+  } catch (error) {
+    return next(error);
+  }
 };
 
 const deleteFormula = async (req, res, next) => {
@@ -86,7 +149,18 @@ const deleteFormula = async (req, res, next) => {
   }
 
   try {
-    await formulaModel.findByIdAndDelete(formulaID);
+    const session = await conn.startSession();
+    session.startTransaction();
+
+    await formulaModel.findOneAndDelete({ _id: formulaID }, { session });
+
+    const formulation = await formulationModel.findOne({ formulaID });
+
+    if (formulation) {
+      await formulationModel.findOneAndDelete({ formulaID }, { session });
+    }
+
+    session.commitTransaction();
     res.status(200).json({ msg: "Success! Formula removed" });
   } catch (error) {
     return next(error);
