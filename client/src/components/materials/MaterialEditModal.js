@@ -56,7 +56,9 @@ const MaterialEditModal = () => {
           <FaNutritionix />
           <h5>Add Material</h5>
         </div>
-        <FaTimes onClick={closeModal} />
+        <div className="close-btn">
+          <FaTimes onClick={closeModal} />
+        </div>
       </nav>
       <div className="modal-form__content">
         <FormRow

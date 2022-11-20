@@ -3,50 +3,42 @@ import { useTranslation } from "react-i18next";
 import { TbFileSpreadsheet } from "react-icons/tb";
 import { useAppContext } from "../../context/appContext";
 import StatsForm from "../stats/StatsForm";
+import Loading from "../shared/Loading";
 
 const MaterialInventory = () => {
   const { t } = useTranslation();
   const {
+    isLoadingWarehouseInventory,
     materialInventory,
     getWarehouses,
-    warehouses,
+    warehousesArr,
     getMaterialInventory,
     getAllInventory,
-    isLoadingWarehouseInventory,
-    warehouseInventory,
+    warehouseInventoryArr,
+    availableWarehousesArr,
   } = useAppContext();
 
-  const condition = {
-    customerCodeName: "goldasht",
-  };
-
-  const condition2 = {
-    customerCodeName: "goldasht",
-    warehouseID: "632b72c7c21ad43357939e06",
-  };
-
-  const header = ["Material", "Weight"];
+  const header = ["Name", "Weight(kg)"];
 
   useEffect(() => {
-    getWarehouses(condition);
+    getWarehouses();
   }, []);
 
   useEffect(() => {
-    if (warehouses) {
-      console.log(warehouses);
-      getAllInventory(condition2);
+    if (warehousesArr) {
+      getAllInventory();
     }
-  }, [warehouses]);
+  }, [warehousesArr]);
 
   return (
     <StatsForm
-      handler="inventory"
+      handler="material-inventory"
       color="red"
       icon={<TbFileSpreadsheet />}
       title={t("STATS.INVENTORY")}
     >
-      <select name="" id="">
-        {warehouses.map((warehouse, index) => {
+      {/* <select name="warehouse" id="">
+        {warehousesArr.map((warehouse, index) => {
           return (
             <option
               style={{ padding: "1rem" }}
@@ -57,8 +49,37 @@ const MaterialInventory = () => {
             </option>
           );
         })}
-      </select>
-      <table className="stats-form__table">
+      </select> */}
+
+      {isLoadingWarehouseInventory ? (
+        <Loading center />
+      ) : (
+        <table className="form-table">
+          <thead>
+            <tr className="table-header">
+              {header.map((title, index) => (
+                <th key={index}>{title}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {warehouseInventoryArr.map((material, index) => {
+              return (
+                <tr className="table-row" key={index}>
+                  <td className="table-row__text">
+                    <div className="table-row__text">{material.name}</div>
+                    <div className="table-subTitle">{material.description}</div>
+                  </td>
+                  <td className="table-row__text">{material.weight}</td>
+                  {/* <td className="table-row__text">{material.tolerance}</td> */}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      )}
+
+      {/* <table className="stats-form__table">
         <thead>
           <tr>
             {header.map((h, index) => (
@@ -67,7 +88,7 @@ const MaterialInventory = () => {
           </tr>
         </thead>
         <tbody>
-          {warehouseInventory.map((mat, index) => {
+          {warehouseInventoryArr.map((mat, index) => {
             return (
               <tr key={index}>
                 <td>{mat.name}</td>
@@ -76,7 +97,7 @@ const MaterialInventory = () => {
             );
           })}
         </tbody>
-      </table>
+      </table> */}
     </StatsForm>
   );
 };

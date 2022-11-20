@@ -24,7 +24,7 @@ const MaterialConsumptions = () => {
 
   const buttons = ["Day", "Week", "Month", "Year"];
 
-  const header = ["Material", "Weight", "Tolerance"];
+  const header = ["Name", "Weight(kg)", "Tolerance(kg)"];
 
   useEffect(() => {
     getMaterialConsumption(condition);

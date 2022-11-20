@@ -42,6 +42,8 @@ import {
   GET_DAILY_PRODUCTION_SUCCESS,
   GET_MATERIAL_TOLERANCE_BEGIN,
   GET_MATERIAL_TOLERANCE_SUCCESS,
+  GET_FORMULA_TOLERANCE_BEGIN,
+  GET_FORMULA_TOLERANCE_SUCCESS,
   // Materials
   GET_MATERIALS_BEGIN,
   GET_MATERIALS_SUCCESS,
@@ -63,7 +65,9 @@ import {
   CREATE_FORMULA_BEGIN,
   CREATE_FORMULA_SUCCESS,
   CREATE_FORMULA_ERROR,
-  SET_EDIT_FORMULA,
+  SET_DELETE_FORMULA,
+  SET_EDIT_FORMULA_BEIGN,
+  SET_EDIT_FORMULA_SUCCESS,
   EDIT_FORMULA_BEGIN,
   EDIT_FORMULA_SUCCESS,
   EDIT_FORMULA_ERROR,
@@ -129,6 +133,8 @@ const initialState = {
   //
   isLoadingMaterialTolerance: false,
   materialTolerance: [],
+  isLoadingFormulaTolerance: false,
+  formulaTolerance: [],
   //
   batchingNums: 0,
   batchingWeight: 0,
@@ -276,6 +282,7 @@ const AppProvider = ({ children }) => {
 
   const hideModal = () => {
     dispatch({ type: CLOSE_MODAL });
+    clearValues();
   };
 
   const showModalConfirm = () => {
@@ -529,6 +536,7 @@ const AppProvider = ({ children }) => {
         },
       });
     } catch (error) {
+      console.log(error);
       logoutUser();
     }
   };
@@ -592,6 +600,23 @@ const AppProvider = ({ children }) => {
       dispatch({
         type: GET_MATERIAL_TOLERANCE_SUCCESS,
         payload: { materialToleranceArr },
+      });
+    } catch (error) {
+      logoutUser();
+    }
+  };
+
+  const getFormulaTolerance = async (condition) => {
+    dispatch({ type: GET_FORMULA_TOLERANCE_BEGIN });
+    try {
+      const { data } = await authFetch.post(
+        "/customers/batching/formulatolerance",
+        condition
+      );
+      const { formulaTolerance } = data;
+      dispatch({
+        type: GET_FORMULA_TOLERANCE_SUCCESS,
+        payload: { formulaTolerance },
       });
     } catch (error) {
       logoutUser();
@@ -848,6 +873,7 @@ const AppProvider = ({ children }) => {
         ingredients,
       });
       dispatch({ type: CREATE_FORMULA_SUCCESS });
+      getFormulas();
       toast.update(id, {
         render: "New formula created",
         type: "success",
@@ -869,8 +895,12 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
+  const setDeleteFormula = (id) => {
+    dispatch({ type: SET_DELETE_FORMULA, payload: { id } });
+  };
+
   const setEditFormula = async (id) => {
-    // dispatch({ type: SET_EDIT_FORMULA, payload: { id } });
+    // dispatch({ type: SET_EDIT_FORMULA_BEIGN, payload: { id } });
     try {
       const { customerCodeName } = state;
       const { data } = await authFetch.post("/customers/formulas/id", {
@@ -879,7 +909,7 @@ const AppProvider = ({ children }) => {
       });
       const { formula, formulation } = data;
       dispatch({
-        type: SET_EDIT_FORMULA,
+        type: SET_EDIT_FORMULA_SUCCESS,
         payload: { id, formula, formulation },
       });
     } catch (error) {
@@ -914,6 +944,7 @@ const AppProvider = ({ children }) => {
       });
       dispatch({ type: EDIT_FORMULA_SUCCESS });
       dispatch({ type: CLEAR_VALUES });
+      getFormulas();
       toast.update(id, {
         render: "Formula updated",
         type: "success",
@@ -941,7 +972,6 @@ const AppProvider = ({ children }) => {
     let id = toast.loading("Deleting formula. Please wait...");
     try {
       const { customerCodeName, editFormulaID } = state;
-      console.log(editFormulaID);
       await authFetch.delete("/customers/formulas", {
         data: {
           customerCodeName,
@@ -949,6 +979,7 @@ const AppProvider = ({ children }) => {
         },
       });
       dispatch({ type: DELETE_FORMULA_SUCCESS });
+      getFormulas();
       toast.update(id, {
         render: "Formula deleted",
         type: "success",
@@ -1143,12 +1174,12 @@ const AppProvider = ({ children }) => {
       const { customerCodeName, editWarehouseID } = state;
       const { data } = await authFetch.post("/customers/inventory/all", {
         customerCodeName,
-        warehouseID: editWarehouseID,
+        warehouseID: "6352f926805f3ce6935d9d3a",
       });
-      const { allInventories } = data;
+      const { allInventories, ing } = data;
       dispatch({
         type: GET_WAREHOUSE_INVENTORY_SUCCESS,
-        payload: { allInventories },
+        payload: { ing },
       });
     } catch (error) {
       console.log(error);
@@ -1181,6 +1212,7 @@ const AppProvider = ({ children }) => {
         getMaterialInventory,
         getDailyBatching,
         getMaterialTolerance,
+        getFormulaTolerance,
         getMaterials,
         createMaterial,
         setEditMaterial,
@@ -1189,6 +1221,7 @@ const AppProvider = ({ children }) => {
         getFormulas,
         getFormulaByID,
         createFormula,
+        setDeleteFormula,
         setEditFormula,
         editFormula,
         deleteFormula,

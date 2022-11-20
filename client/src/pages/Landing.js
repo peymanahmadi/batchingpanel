@@ -9,12 +9,12 @@ const Landing = () => {
     <main className="landing-page">
       <nav>
         <Logo />
-        <div>
+        {/* <div>
           <select>
             <option>English</option>
             <option>فارسی</option>
           </select>
-        </div>
+        </div> */}
       </nav>
       <div className="container page">
         <div className="info">

@@ -191,7 +191,12 @@ const getAllInventory = async (req, res, next) => {
       allInventories.push(wList);
     }
 
-    res.status(200).json({ allInventories });
+    let ing = [];
+    if (allInventories.length > 0) {
+      ing = allInventories[0].inventory;
+    }
+
+    res.status(200).json({ allInventories, ing });
   } catch (error) {
     return next(error);
   }

@@ -6,19 +6,20 @@ import { Loading, Badge } from "../shared";
 const FormulasContainer = () => {
   const {
     getFormulas,
+    setDeleteFormula,
     setEditFormula,
     isLoadingFormulas,
     formulasArr,
     showModal,
     showModalConfirm,
-    alertType,
   } = useAppContext();
 
   const header = ["Name", "Common ID", "Available", "Actions"];
 
   useEffect(() => {
     getFormulas();
-  }, [alertType === "success"]);
+    // eslint-disable-next-line
+  }, []);
 
   const handleEditFormula = (_id) => {
     setEditFormula(_id);
@@ -26,7 +27,7 @@ const FormulasContainer = () => {
   };
 
   const handleDeleteFormula = (_id) => {
-    setEditFormula(_id);
+    setDeleteFormula(_id);
     showModalConfirm();
   };
 

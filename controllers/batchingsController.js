@@ -66,7 +66,6 @@ const createBatching = async (req, res, next) => {
         $lte: moment(dateTime).endOf("day"),
       },
     });
-    console.log(dailyBatching);
     if (!dailyBatching) {
       const newDailyBatching = new dailyBatchingModel({
         numOfBatches: 0,
@@ -196,6 +195,7 @@ const materialConsumption = async (req, res, next) => {
     for (let item of Object.entries(batchedFormulaObj)) {
       const batchedFormula = {};
       const formula = await formulaModel.findById(item[0]);
+      console.log(formula);
       batchedFormula["name"] = formula.name;
       batchedFormula["weight"] = item[1];
       batchedFormulaArr.push(batchedFormula);
@@ -291,9 +291,67 @@ const materialTolerance = async (req, res, next) => {
   }
 };
 
+const formulaTolerance = async (req, res, next) => {
+  const { customerCodeName, startDate, endDate } = req.body;
+
+  const customerConn = batchingTenantConn(customerCodeName);
+  const formulaToleranceModel = customerConn.model("FormulaTolerance");
+  const formulaModel = customerConn.model("Formula");
+
+  try {
+    const formulaTolerance = await formulaToleranceModel.find({
+      dateTime: { $gte: startDate, $lte: endDate },
+    });
+
+    let fTol = [];
+    let formulaTol = {};
+    let arrTol = [];
+    let tol = [];
+    for (let formula of formulaTolerance) {
+      console.log("f: ", formula);
+
+      if (fTol[formula.formulaID]) {
+        tol.push(formula.tolerance);
+        fTol[formula.formulaID] = tol;
+        // fTol["tol"] = formula.tolerance;
+        // tol = formula.tolerance;
+        formulaTol["tolerance"] = tol;
+      } else {
+        const formula1 = await formulaModel.findOne({ _id: formula.formulaID });
+        if (formula1) formulaTol["name"] = formula1.name;
+        // formulaTol["name"] = formula.formulaID;
+        tol = [];
+        tol.push(formula.tolerance);
+        fTol[formula.formulaID] = tol;
+        formulaTol["tolerance"] = tol;
+        // fTol["tol"] = formula.tolerance;
+      }
+      // tol.push(formula.tolerance);
+      //fTol["tol"] = tol;
+    }
+    arrTol.push(formulaTol);
+    // console.log(fTol);
+    // let formulaTol = {};
+    // for (let f in fTol) {
+    //   // console.log(f);
+    //   if (!formulaTol[f]) {
+    //     const formula = await formulaModel.findOne({ _id: f });
+    //     if (formula) formulaTol["name"] = formula.name;
+    //     formulaTol["tolerance"] = f.tol;
+    //   } else {
+    //   }
+    // }
+    console.log(formulaTol);
+    res.status(200).json({ fTol });
+  } catch (error) {
+    return next(error);
+  }
+};
+
 export {
   createBatching,
   materialConsumption,
   getDailyBatching,
   materialTolerance,
+  formulaTolerance,
 };

@@ -38,32 +38,32 @@ const links = [
     icon: <FaFlask />,
     type: "simple",
   },
-  {
-    id: 5,
-    // text: i18n.t("warehouses", "warehouses"),
-    text: "warehouses",
-    path: "",
-    icon: <FaWarehouse />,
-    type: "dropdown",
-    subMenus: [
-      {
-        id: 51,
-        text: "warehouse Operations",
-        path: "warehouses/operations",
-      },
-      {
-        id: 52,
-        text: "warehouse Inventory",
-        path: "warehouses/inventory",
-      },
-      {
-        id: 53,
-        text: "warehouses",
-        path: "warehouses",
-        // icon: <FaWarehouse />,
-      },
-    ],
-  },
+  // {
+  //   id: 5,
+  //   // text: i18n.t("warehouses", "warehouses"),
+  //   text: "warehouses",
+  //   path: "",
+  //   icon: <FaWarehouse />,
+  //   type: "dropdown",
+  //   subMenus: [
+  //     {
+  //       id: 51,
+  //       text: "warehouse Operations",
+  //       path: "warehouses/operations",
+  //     },
+  //     {
+  //       id: 52,
+  //       text: "warehouse Inventory",
+  //       path: "warehouses/inventory",
+  //     },
+  //     {
+  //       id: 53,
+  //       text: "warehouses",
+  //       path: "warehouses",
+  //       // icon: <FaWarehouse />,
+  //     },
+  //   ],
+  // },
   {
     id: 6,
     text: i18n.t("USERS", "users"),

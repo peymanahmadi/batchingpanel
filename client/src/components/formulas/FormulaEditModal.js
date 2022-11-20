@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { FaTimes, FaFlask } from "react-icons/fa";
+import { toast } from "react-toastify";
 import { useAppContext } from "../../context/appContext";
 import AvailableMaterials from "./AvailableMaterials";
 import Formulation from "./Formulation";
@@ -8,9 +9,8 @@ import FormulaDefinition from "./FormulaDefinition";
 
 const FormulaEditModal = () => {
   const {
-    isLoading,
+    isLoadingCreateFormula,
     isEditing,
-    editFormulaID,
     commonFormulaID,
     formulaVersion,
     formulaName,
@@ -19,22 +19,18 @@ const FormulaEditModal = () => {
     formulaAvailable,
     ingredients,
     handleChange,
-    hideModal,
     getMaterials,
     createFormula,
     editFormula,
     availableMaterialsArr,
     getFormulaByID,
-    formula,
     formulation,
+    hideModal,
+    clearValues,
   } = useAppContext();
 
   const [materials, setMaterials] = useState();
-  const [startLoading, setStartLoading] = useState();
   const [rawMaterials, setRawMaterials] = useState([]);
-
-  const [editMaterials, setEditMaterials] = useState();
-  const [editRawMaterials, setEditRawMaterials] = useState([]);
 
   const handleFormulaInput = (e) => {
     const type = e.target.type;
@@ -56,7 +52,6 @@ const FormulaEditModal = () => {
       availableMaterialsArr.length > 0
     ) {
       setMaterials(availableMaterialsArr);
-      setStartLoading(true);
     }
   }, [availableMaterialsArr]);
 
@@ -65,12 +60,8 @@ const FormulaEditModal = () => {
       getFormulaByID();
       // the function fills formula and formulation
     }
+    // eslint-disable-next-line
   }, [isEditing]);
-
-  // useEffect(() => {
-  //   console.log("formula: ", formula);
-  //   console.log("formulation: ", formulation);
-  // }, [formulation]);
 
   useEffect(() => {
     if (
@@ -96,8 +87,8 @@ const FormulaEditModal = () => {
   const closeModal = () => {
     setMaterials([]);
     setRawMaterials([]);
-    setStartLoading(false);
     hideModal();
+    clearValues();
   };
 
   const handleMoveLeft = () => {
@@ -110,17 +101,6 @@ const FormulaEditModal = () => {
         if (!isEditing) {
           material.weight = null;
           ingredients.push(material);
-        } else {
-          // material.weight = editRawMaterials[index].weight;
-          //material.weight = ingredients[index]?.weight;
-          //console.log(index, "Code runs here");
-          // if (ingredients[index]?.weight === undefined) {
-          //   material.weight = null;
-          //   ingredients.push(material);
-          //   console.log(ingredients);
-          // } else {
-          //   material.weight = ingredients[index]?.weight;
-          // }
         }
         setRawMaterials((prevState) => [...prevState, material]);
       }
@@ -132,9 +112,6 @@ const FormulaEditModal = () => {
     const newData = rawMaterials.filter((rawMaterial) => {
       return rawMaterial.selected !== true;
     });
-    // ingredients = ingredients.filter((ingredient) => {
-    //   return ingredient.selected !== true;
-    // });
     rawMaterials.map((rawMaterial) => {
       if (rawMaterial.selected) {
         rawMaterial.selected = false;
@@ -146,7 +123,10 @@ const FormulaEditModal = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // createFormula(rawMaterials);
+    if (!commonFormulaID || !formulaName) {
+      notify();
+      return;
+    }
     if (isEditing) {
       editFormula(rawMaterials);
     } else {
@@ -160,21 +140,26 @@ const FormulaEditModal = () => {
   };
 
   const handleInputChange = (index, e) => {
-    // ingredients[index].weight = e.target.value;
-    // ingredients[index].materialID = ingredients[index]._id;
     rawMaterials[index].weight = e.target.value;
     rawMaterials[index].materialID = rawMaterials[index]._id;
     setRawMaterials([...rawMaterials]);
   };
 
+  const notify = () => toast.error("Please provide all required values!");
+
   return (
-    <form className="modal-form" onSubmit={handleSubmit}>
+    <form
+      className={`modal-form ${isLoadingCreateFormula ? "form-loading" : ""}`}
+      onSubmit={handleSubmit}
+    >
       <nav className="modal-form__header">
         <div className="modal-form__header__title">
           <FaFlask />
           <h5>Add Formula</h5>
         </div>
-        <FaTimes onClick={closeModal} />
+        <div className="close-btn">
+          <FaTimes onClick={closeModal} />
+        </div>
       </nav>
       <div className="modal-form__content">
         <FormulaDefinition

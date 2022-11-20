@@ -20,10 +20,13 @@
 @forward "./stats/statsContainer";
 @forward "./stats/statsForm";
 // Stats
+@forward "./stats/batchedFormula";
 @forward "./stats/batchingMessages";
 @forward "./stats/productionChart";
 @forward "./stats/materialConsumption";
+@forward "./stats/materialInventory";
 @forward "./stats/materialTolerance";
+@forward "./stats/formulaTolerance";
 // Warehouse
 @forward "./warehouse/warehouseContainer";
 @forward "./warehouse/inventoryChart";

@@ -40,6 +40,8 @@ import {
   GET_DAILY_PRODUCTION_SUCCESS,
   GET_MATERIAL_TOLERANCE_BEGIN,
   GET_MATERIAL_TOLERANCE_SUCCESS,
+  GET_FORMULA_TOLERANCE_BEGIN,
+  GET_FORMULA_TOLERANCE_SUCCESS,
   GET_WAREHOUSE_INVENTORY_BEGIN,
   GET_WAREHOUSE_INVENTORY_SUCCESS,
   WAREHOUSE_OPERATIONS_BEGIN,
@@ -66,7 +68,9 @@ import {
   CREATE_FORMULA_BEGIN,
   CREATE_FORMULA_SUCCESS,
   CREATE_FORMULA_ERROR,
-  SET_EDIT_FORMULA,
+  SET_DELETE_FORMULA,
+  SET_EDIT_FORMULA_BEIGN,
+  SET_EDIT_FORMULA_SUCCESS,
   EDIT_FORMULA_BEGIN,
   EDIT_FORMULA_SUCCESS,
   EDIT_FORMULA_ERROR,
@@ -135,6 +139,7 @@ const reducer = (state, action) => {
       formulaBatchSize: "",
       formulaAvailable: true,
       availableMaterialsArr: [],
+      ingredients: [],
       commonUserID: "",
       firstName: "",
       lastName: "",
@@ -392,6 +397,16 @@ const reducer = (state, action) => {
       materialTolerance: action.payload.materialToleranceArr,
     };
   }
+  if (action.type === GET_FORMULA_TOLERANCE_BEGIN) {
+    return { ...state, isLoadingFormulaTolerance: true };
+  }
+  if (action.type === GET_FORMULA_TOLERANCE_SUCCESS) {
+    return {
+      ...state,
+      isLoadingFormulaTolerance: false,
+      formulaTolerance: action.payload.formulaTolerance,
+    };
+  }
 
   // Materials
   if (action.type === GET_MATERIALS_BEGIN) {
@@ -524,7 +539,13 @@ const reducer = (state, action) => {
       alertText: action.payload.msg,
     };
   }
-  if (action.type === SET_EDIT_FORMULA) {
+  if (action.type === SET_DELETE_FORMULA) {
+    return { ...state, editFormulaID: action.payload.id };
+  }
+  if (action.type === SET_EDIT_FORMULA_BEIGN) {
+    return { ...state, isEditing: true, editFormulaID: action.payload.id };
+  }
+  if (action.type === SET_EDIT_FORMULA_SUCCESS) {
     const { commonFormulaID, version, name, description, available } =
       action.payload.formula;
     const { formulaBatchSize, ingredients } = action.payload.formulation[0];
@@ -540,38 +561,14 @@ const reducer = (state, action) => {
       formulaBatchSize,
       ingredients,
     };
-    // const formula = state.formulasArr.find(
-    //   (formula) => formula._id === action.payload.id
-    // );
-    // const {
-    //   _id,
-    //   commonFormulaID,
-    //   version,
-    //   name,
-    //   description,
-    //   formulaBatchSize,
-    //   available,
-    // } = formula;
-    // return {
-    //   ...state,
-    //   isEditing: true,
-    //   editFormulaID: _id,
-    //   commonFormulaID,
-    //   formulaVersion: version,
-    //   formulaName: name,
-    //   formulaDescription: description,
-    //   formulaBatchSize,
-    //   formulaAvailable: available,
-    //   // ingredients,
-    // };
   }
   if (action.type === EDIT_FORMULA_BEGIN) {
-    return { ...state, isLoading: true };
+    return { ...state, isLoadingCreateFormula: true };
   }
   if (action.type === EDIT_FORMULA_SUCCESS) {
     return {
       ...state,
-      isLoading: false,
+      isLoadingCreateFormula: false,
       isEditing: false,
       showAlert: true,
       alertType: "success",
@@ -582,7 +579,7 @@ const reducer = (state, action) => {
   if (action.type === EDIT_FORMULA_ERROR) {
     return {
       ...state,
-      isLoading: false,
+      isLoadingCreateFormula: false,
       isEditing: false,
       showAlert: true,
       alertType: "danger",
@@ -590,12 +587,12 @@ const reducer = (state, action) => {
     };
   }
   if (action.type === DELETE_FORMULA_BEGIN) {
-    return { ...state, isLoading: true };
+    return { ...state, isLoadingCreateFormula: true };
   }
   if (action.type === DELETE_FORMULA_SUCCESS) {
     return {
       ...state,
-      isLoading: false,
+      isLoadingCreateFormula: false,
       showAlert: true,
       alertType: "success",
       alertText: "Formula Deleted!",
@@ -605,7 +602,7 @@ const reducer = (state, action) => {
   if (action.type === DELETE_FORMULA_ERROR) {
     return {
       ...state,
-      isLoading: false,
+      isLoadingCreateFormula: false,
       showAlert: true,
       alertType: "danger",
       alertText: action.payload.msg,
@@ -720,7 +717,8 @@ const reducer = (state, action) => {
     return {
       ...state,
       isLoadingWarehouseInventory: false,
-      warehouseInventoryArr: action.payload.allInventories,
+      // warehouseInventoryArr: action.payload.allInventories,
+      warehouseInventoryArr: action.payload.ing,
     };
   }
   throw new Error(`no such action: ${action.type}`);

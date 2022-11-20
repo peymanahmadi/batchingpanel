@@ -20,7 +20,7 @@ const FormulasOptions = () => {
         </div>
       </div>
       <div className="navbar-controls">
-        <input placeholder={t("SEARCH")} />
+        {/* <input placeholder={t("SEARCH")} /> */}
         <button className="btn" onClick={handleOpenForm}>
           {t("FORMULAS.ADDFORMULA")}
         </button>

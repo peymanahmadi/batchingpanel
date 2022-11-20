@@ -2,11 +2,11 @@ import React from "react";
 import { useAppContext } from "../../context/appContext";
 
 const Message = ({ content, onClose, onDelete }) => {
-  const { isLoadingCreateMaterial } = useAppContext();
+  const { isLoadingCreateMaterial, isLoadingCreateFormula } = useAppContext();
   return (
     <div
       className={`message-container ${
-        isLoadingCreateMaterial ? "form-loading" : ""
+        isLoadingCreateMaterial || isLoadingCreateFormula ? "form-loading" : ""
       }`}
     >
       <p>{content}</p>

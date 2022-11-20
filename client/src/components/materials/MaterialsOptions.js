@@ -20,7 +20,7 @@ const MaterialsOptions = () => {
             <Badge type="badge-success" content={totalMaterials} />
           </div>
         </div>
-        <input placeholder={t("SEARCH")} />
+        {/* <input placeholder={t("SEARCH")} /> */}
       </div>
       <div className="navbar-controls">
         <button className="btn" onClick={handleOpenForm}>

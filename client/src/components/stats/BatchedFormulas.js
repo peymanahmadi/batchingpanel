@@ -2,19 +2,47 @@ import { useTranslation } from "react-i18next";
 import { useAppContext } from "../../context/appContext";
 import StatsForm from "./StatsForm";
 import { TbFlask2 } from "react-icons/tb";
+import Loading from "../shared/Loading";
 
 const BatchedFormulas = () => {
-  const { batchedFormulaArr } = useAppContext();
+  const { batchedFormulaArr, isLoading } = useAppContext();
   const { t } = useTranslation();
-  const header = ["Formulas", "Weight"];
+  const header = ["Name", "Weight(kg)"];
   return (
     <StatsForm
-      handler="formula"
+      handler="batched-formula"
       color="secondary"
       icon={<TbFlask2 />}
       title={t("STATS.BATCHEDFORMULAS")}
     >
-      <table className="stats-form__table">
+      {isLoading ? (
+        <Loading center />
+      ) : (
+        <table className="form-table">
+          <thead>
+            <tr className="table-header">
+              {header.map((title, index) => (
+                <th key={index}>{title}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {batchedFormulaArr.map((material, index) => {
+              return (
+                <tr className="table-row" key={index}>
+                  <td className="table-row__text">
+                    <div className="table-row__text">{material.name}</div>
+                    <div className="table-subTitle">{material.description}</div>
+                  </td>
+                  <td className="table-row__text">{material.weight}</td>
+                  {/* <td className="table-row__text">{material.tolerance}</td> */}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      )}
+      {/* <table className="stats-form__table">
         <thead>
           <tr>
             {header.map((h, index) => (
@@ -32,7 +60,7 @@ const BatchedFormulas = () => {
             );
           })}
         </tbody>
-      </table>
+      </table> */}
     </StatsForm>
   );
 };

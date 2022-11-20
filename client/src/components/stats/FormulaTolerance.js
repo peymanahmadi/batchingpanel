@@ -7,11 +7,11 @@ import StatsForm from "./StatsForm";
 import { Loading, ButtonGroup } from "../shared/index";
 import moment from "moment";
 
-const ProductionTolerance = () => {
+const FormulaTolerance = () => {
   const {
-    isLoadingMaterialTolerance,
-    getMaterialTolerance,
-    materialTolerance,
+    isLoadingFormulaTolerance,
+    getFormulaTolerance,
+    formulaTolerance,
     customerCodeName,
   } = useAppContext();
   const { t } = useTranslation();
@@ -23,14 +23,14 @@ const ProductionTolerance = () => {
   };
 
   useEffect(() => {
-    getMaterialTolerance(condition);
+    getFormulaTolerance(condition);
   }, [startDate]);
 
   const state = {
     series: [
       {
-        name: materialTolerance.map((pt) => pt.name),
-        data: materialTolerance.map((pt) => pt.tolerance),
+        name: formulaTolerance.map((pt) => pt.name),
+        data: formulaTolerance.map((pt) => pt.tolerance),
       },
     ],
     options: {
@@ -121,23 +121,22 @@ const ProductionTolerance = () => {
   const handlePeriodClick = (newDate) => {
     setStartDate(newDate);
   };
-
   return (
     <StatsForm
-      handler="material-tolerance"
+      handler="formula-tolerance"
       color="primary"
       icon={<BsPercent />}
-      title={t("STATS.MATERIALTOLERANCE")}
+      title={t("STATS.FORMULATOLERANCE")}
       btnGroup={true}
       buttons={buttons}
       onPeriodClick={handlePeriodClick}
     >
-      {isLoadingMaterialTolerance ? (
+      {isLoadingFormulaTolerance ? (
         <Loading center />
       ) : (
         <>
-          {materialTolerance.map((pt, index) => {
-            console.log("materialTolerance: ", materialTolerance);
+          {formulaTolerance.map((pt, index) => {
+            console.log(formulaTolerance);
             return (
               <div key={index} className="material-tolerance__chart">
                 {/* <div className={`${pt.length > 30 ? "full-width" : "half-width"}`}> */}
@@ -146,8 +145,10 @@ const ProductionTolerance = () => {
                     <div key={index} className="subTitle2 space-between">
                       <div>{pt.name}</div>
                       <div className="badge">
-                        {pt.length}{" "}
-                        <span>{pt.length > 1 ? "batches" : "batch"}</span>
+                        {formulaTolerance.length}{" "}
+                        <span>
+                          {formulaTolerance.length > 1 ? "batches" : "batch"}
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -168,4 +169,4 @@ const ProductionTolerance = () => {
   );
 };
 
-export default ProductionTolerance;
+export default FormulaTolerance;
