@@ -8,7 +8,7 @@ const NavLinks = ({ toggleSidebar }) => {
   return (
     <div className="nav-links">
       {links.map((link) => {
-        const { text, path, id, icon, subMenu } = link;
+        const { text, path, id, icon, subMenu, type } = link;
         return (
           <NavLink
             to={path}
