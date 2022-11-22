@@ -1,5 +1,5 @@
 const errorHandlerMiddleware = (err, req, res, next) => {
-  console.log(err);
+  // console.log(err);
 
   const defaultError = {
     // 500 - The server encountered an unexpected condition that prevented it from fulfilling the request.

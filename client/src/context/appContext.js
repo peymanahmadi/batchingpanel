@@ -211,7 +211,7 @@ const AppProvider = ({ children }) => {
 
   // create axios request config - to prevent sending token to external resources
   const authFetch = axios.create({
-    baseURL: "http://localhost:5000/api/v1",
+    baseURL: "/api/v1",
   });
 
   // request
@@ -231,7 +231,7 @@ const AppProvider = ({ children }) => {
       return response;
     },
     (error) => {
-      console.log(error);
+      // console.log(error);
       if (error.response.status === 401) {
         logoutUser();
       }
@@ -320,7 +320,7 @@ const AppProvider = ({ children }) => {
     let id = toast.loading("Login...");
     try {
       const { data } = await axios.post(
-        `http://localhost:5000/api/v1/auth/${endPoint}`,
+        `/api/v1/auth/${endPoint}`,
         currentUser
       );
       const { user, token, customerName, customerCodeName, customerID } = data;
@@ -427,7 +427,7 @@ const AppProvider = ({ children }) => {
   const verifyToken = async () => {
     dispatch({ type: VERIFY_TOKEN_BEGIN });
     try {
-      await axios.post("http://localhost:5000/api/v1/auth/verify-email", {
+      await axios.post("/api/v1/auth/verify-email", {
         verificationToken: query.get("token"),
         email: query.get("email"),
       });
@@ -447,7 +447,7 @@ const AppProvider = ({ children }) => {
     let id = toast.loading("Sending Forgot Password Reset Link...");
     try {
       const { forgotEmail } = state;
-      await axios.post("http://localhost:5000/api/v1/auth/forgot-password", {
+      await axios.post("/api/v1/auth/forgot-password", {
         email: forgotEmail,
       });
       dispatch({ type: FORGOT_PASSWORD_SUCCESS });
@@ -475,7 +475,7 @@ const AppProvider = ({ children }) => {
     let id = toast.loading("Reseting password...");
     try {
       const { newPassword } = state;
-      await axios.post("http://localhost:5000/api/v1/auth/reset-password", {
+      await axios.post("/api/v1/auth/reset-password", {
         password: newPassword,
         token: query.get("token"),
         email: query.get("email"),
@@ -755,8 +755,8 @@ const AppProvider = ({ children }) => {
       });
     } catch (error) {
       console.log(error.response);
-      // logoutUser();
-      console.log(error);
+      logoutUser();
+      // console.log(error);
     }
     clearAlert();
   };
@@ -807,7 +807,7 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
 
-  const deleteUser = async () => {};
+  // const deleteUser = async () => {};
 
   // Formulas
 
