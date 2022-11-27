@@ -99,6 +99,7 @@ import {
   GET_USERS_SUCCESS,
   HANDLE_CHANGE,
   CLEAR_VALUES,
+  CHANGE_PAGE,
 } from "./actions";
 
 const token = localStorage.getItem("token");
@@ -627,10 +628,10 @@ const AppProvider = ({ children }) => {
   // Materials
 
   const getMaterials = async () => {
-    const { customerCodeName, materialSearch } = state;
-    let url = "/customers/materials/all";
+    const { customerCodeName, materialSearch, page } = state;
+    let url = `/customers/materials/all?page=${page}`;
     if (materialSearch) {
-      url = `/customers/materials/all?search=${materialSearch}`;
+      url = url + `&search=${materialSearch}`;
     }
     try {
       dispatch({ type: GET_MATERIALS_BEGIN });
@@ -1191,6 +1192,10 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  const changePage = (page) => {
+    dispatch({ type: CHANGE_PAGE, payload: { page } });
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -1238,6 +1243,7 @@ const AppProvider = ({ children }) => {
         getWarehouseOperations,
         warehouseOperations,
         getAllInventory,
+        changePage,
       }}
     >
       {children}

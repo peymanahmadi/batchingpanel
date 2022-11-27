@@ -9,6 +9,7 @@ import Badge from "./Badge";
 import CheckBox from "./CheckBox";
 import Toast from "./Toast";
 import Message from "./Message";
+import PageBtnContainer from "./PageBtnContainer";
 // import Form from "./Form";
 import Modal from "./Modal";
 import MessageModal from "./MessageModal";
@@ -59,6 +60,7 @@ export {
   CheckBox,
   Toast,
   Message,
+  PageBtnContainer,
   // Form,
   Modal,
   MessageModal,

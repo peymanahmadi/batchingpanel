@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { MdEdit, MdDelete } from "react-icons/md";
 import { useAppContext } from "../../context/appContext";
-import { Loading, Badge } from "../shared";
+import { Loading, Badge, PageBtnContainer } from "../shared";
 
 const MaterialsContainer = () => {
   const {
@@ -12,13 +12,15 @@ const MaterialsContainer = () => {
     showModal,
     showModalConfirm,
     materialSearch,
+    numOfPages,
+    page,
   } = useAppContext();
 
   const header = ["Name", "Common ID", "Available", "Actions"];
 
   useEffect(() => {
     getMaterials();
-  }, [materialSearch]);
+  }, [page, materialSearch]);
 
   const handleEditMaterial = (_id) => {
     setEditMaterial(_id);
@@ -82,6 +84,7 @@ const MaterialsContainer = () => {
           </tbody>
         </table>
       )}
+      {numOfPages > 1 && <PageBtnContainer />}
     </div>
   );
 };

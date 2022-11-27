@@ -1,0 +1,57 @@
+@use "../../abstracts/index" as *;
+
+.btn-page-container {
+  height: 4rem;
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  flex-wrap: wrap;
+  gap: 1rem;
+
+  .btn-container {
+    background: $green-100;
+    border-radius: $border-radius;
+  }
+
+  .pageBtn {
+    background: transparent;
+    border-color: transparent;
+    width: 50px;
+    height: 30px;
+    font-weight: 700;
+    font-size: 1rem;
+    color: $green-500;
+    transition: $transition;
+    border-radius: $border-radius;
+    cursor: pointer;
+  }
+  .active {
+    background: $green-500;
+    color: $white;
+  }
+
+  .prev-btn,
+  .next-btn {
+    width: 100px;
+    height: 35px;
+    background: $white;
+    border-color: transparent;
+    border-radius: $border-radius;
+    color: $green-500;
+    text-transform: capitalize;
+    letter-spacing: $letter-spacing;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: $transition;
+  }
+
+  .prev-btn:hover,
+  .next-btn:hover {
+    background: $green-100;
+    // color: $white;
+  }
+}

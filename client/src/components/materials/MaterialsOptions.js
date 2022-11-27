@@ -4,6 +4,7 @@ import { Badge } from "../shared";
 
 const MaterialsOptions = () => {
   const {
+    isLoading,
     showModal,
     clearValues,
     totalMaterials,
@@ -18,6 +19,7 @@ const MaterialsOptions = () => {
   };
 
   const handleSearch = (e) => {
+    if (isLoading) return;
     handleChange({ name: e.target.name, value: e.target.value });
   };
 

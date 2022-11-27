@@ -92,6 +92,7 @@ import {
   DELETE_WAREHOUSE_ERROR,
   GET_WAREHOUSE_OPERATIONS_BEGIN,
   GET_WAREHOUSE_OPERATIONS_SUCCESS,
+  CHANGE_PAGE,
 } from "./actions";
 
 import { initialState } from "./appContext";
@@ -118,9 +119,13 @@ const reducer = (state, action) => {
   }
   if (action.type === HANDLE_CHANGE) {
     if (action.payload.type === "checkbox") {
-      return { ...state, [action.payload.name]: action.payload.checked };
+      return {
+        ...state,
+        page: 1,
+        [action.payload.name]: action.payload.checked,
+      };
     }
-    return { ...state, [action.payload.name]: action.payload.value };
+    return { ...state, page: 1, [action.payload.name]: action.payload.value };
   }
   if (action.type === CLEAR_VALUES) {
     const initialState = {
@@ -720,6 +725,9 @@ const reducer = (state, action) => {
       // warehouseInventoryArr: action.payload.allInventories,
       warehouseInventoryArr: action.payload.ing,
     };
+  }
+  if (action.type === CHANGE_PAGE) {
+    return { ...state, page: action.payload.page };
   }
   throw new Error(`no such action: ${action.type}`);
 };

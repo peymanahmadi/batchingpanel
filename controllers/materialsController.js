@@ -6,22 +6,24 @@ const getAllMaterials = async (req, res, next) => {
   const { search } = req.query;
   const { customerCodeName } = req.body;
   const conn = createTenantConnection(customerCodeName);
+  const allMaterials = await conn.model("Material");
   const queryObject = {};
-  // add stuff based on condition
   if (search) {
     queryObject.name = { $regex: search, $options: "i" };
   }
 
   try {
-    // NO AWAIT
-    let result = conn.model("Material").find(queryObject);
-
-    // chain sort condition
+    let result = allMaterials.find(queryObject);
+    const totalMaterials = await allMaterials.countDocuments(queryObject);
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+    result = result.skip(skip).limit(limit);
     const materials = await result;
-    // const materials = await conn.model("Material").find({});
-    res
-      .status(200)
-      .json({ materials, totalMaterials: materials.length, numOfPages: 1 });
+
+    const numOfPages = Math.ceil(totalMaterials / limit);
+
+    res.status(200).json({ materials, totalMaterials, numOfPages });
   } catch (error) {
     return next(error);
   }
