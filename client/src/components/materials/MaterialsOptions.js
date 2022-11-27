@@ -3,12 +3,22 @@ import { useAppContext } from "../../context/appContext";
 import { Badge } from "../shared";
 
 const MaterialsOptions = () => {
-  const { showModal, clearValues, totalMaterials } = useAppContext();
+  const {
+    showModal,
+    clearValues,
+    totalMaterials,
+    materialSearch,
+    handleChange,
+  } = useAppContext();
   const { t } = useTranslation();
 
   const handleOpenForm = () => {
     clearValues();
     showModal();
+  };
+
+  const handleSearch = (e) => {
+    handleChange({ name: e.target.name, value: e.target.value });
   };
 
   return (
@@ -20,7 +30,13 @@ const MaterialsOptions = () => {
             <Badge type="badge-success" content={totalMaterials} />
           </div>
         </div>
-        {/* <input placeholder={t("SEARCH")} /> */}
+        <input
+          type="text"
+          name="materialSearch"
+          value={materialSearch}
+          onChange={handleSearch}
+          placeholder={t("SEARCH")}
+        />
       </div>
       <div className="navbar-controls">
         <button className="btn" onClick={handleOpenForm}>

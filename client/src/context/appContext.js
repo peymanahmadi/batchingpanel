@@ -153,6 +153,7 @@ const initialState = {
   materialName: "",
   materialDescription: "",
   materialAvailable: true,
+  materialSearch: "",
   // Formulas
   isLoadingFormulas: false,
   formulasArr: [],
@@ -626,10 +627,14 @@ const AppProvider = ({ children }) => {
   // Materials
 
   const getMaterials = async () => {
-    dispatch({ type: GET_MATERIALS_BEGIN });
+    const { customerCodeName, materialSearch } = state;
+    let url = "/customers/materials/all";
+    if (materialSearch) {
+      url = `/customers/materials/all?search=${materialSearch}`;
+    }
     try {
-      const { customerCodeName } = state;
-      const { data } = await authFetch.post("/customers/materials/all", {
+      dispatch({ type: GET_MATERIALS_BEGIN });
+      const { data } = await authFetch.post(url, {
         customerCodeName,
       });
       const { materials, totalMaterials, numOfPages } = data;

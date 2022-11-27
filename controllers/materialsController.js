@@ -3,10 +3,22 @@ import createTenantConnection from "../db/batchingTenant.js";
 import checkIfThereIsRefToThisObjectInWholeModel from "../middleware/ref-finder.js";
 
 const getAllMaterials = async (req, res, next) => {
+  const { search } = req.query;
   const { customerCodeName } = req.body;
   const conn = createTenantConnection(customerCodeName);
+  const queryObject = {};
+  // add stuff based on condition
+  if (search) {
+    queryObject.name = { $regex: search, $options: "i" };
+  }
+
   try {
-    const materials = await conn.model("Material").find({});
+    // NO AWAIT
+    let result = conn.model("Material").find(queryObject);
+
+    // chain sort condition
+    const materials = await result;
+    // const materials = await conn.model("Material").find({});
     res
       .status(200)
       .json({ materials, totalMaterials: materials.length, numOfPages: 1 });

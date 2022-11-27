@@ -11,13 +11,14 @@ const MaterialsContainer = () => {
     materialsArr,
     showModal,
     showModalConfirm,
+    materialSearch,
   } = useAppContext();
 
   const header = ["Name", "Common ID", "Available", "Actions"];
 
   useEffect(() => {
     getMaterials();
-  }, []);
+  }, [materialSearch]);
 
   const handleEditMaterial = (_id) => {
     setEditMaterial(_id);
