@@ -7,7 +7,7 @@ import BigSidebar from "./BigSidebar";
 import ButtonGroup from "./ButtonGroup";
 import Badge from "./Badge";
 import CheckBox from "./CheckBox";
-import Toast from "./Toast";
+// import Toast from "./Toast";
 import Message from "./Message";
 import PageBtnContainer from "./PageBtnContainer";
 // import Form from "./Form";
@@ -58,7 +58,7 @@ export {
   ButtonGroup,
   Badge,
   CheckBox,
-  Toast,
+  // Toast,
   Message,
   PageBtnContainer,
   // Form,
