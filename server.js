@@ -22,8 +22,6 @@ import errorHandlerMiddleware from "./middleware/error-handler.js";
 import notFoundMiddleware from "./middleware/not-found.js";
 import authenticateUser from "./middleware/auth.js";
 
-// app.use(cors());
-
 if (process.env.NODE_ENV !== "production") {
   app.use(morgan("dev"));
 }
