@@ -2,7 +2,7 @@ import { IoBarChartSharp } from "react-icons/io5";
 // import { MdQueryStats } from "react-icons/md";
 import { FaWpforms } from "react-icons/fa";
 import { ImProfile } from "react-icons/im";
-import { FaWarehouse } from "react-icons/fa";
+// import { FaWarehouse } from "react-icons/fa";
 import { FaNutritionix } from "react-icons/fa";
 import { FaFlask } from "react-icons/fa";
 import { ImUsers } from "react-icons/im";
@@ -17,13 +17,13 @@ const links = [
     icon: <IoBarChartSharp />,
     type: "simple",
   },
-  // {
-  //   id: 2,
-  //   text: i18n.t("reports", "reports"),
-  //   path: "reports",
-  //   icon: <FaWpforms />,
-  //   type: "simple",
-  // },
+  {
+    id: 2,
+    text: i18n.t("reports", "reports"),
+    path: "reports",
+    icon: <FaWpforms />,
+    type: "simple",
+  },
   {
     id: 3,
     text: i18n.t("materials", "materials"),

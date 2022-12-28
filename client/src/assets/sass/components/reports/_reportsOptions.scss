@@ -1,0 +1,24 @@
+@use "../../abstracts/index" as *;
+
+.reports-options {
+  background: $white;
+
+  .reports-filter {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .calendar {
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    border-radius: $border-radius;
+    background: $background-color;
+    border: 1px solid $gray-200;
+    outline: none;
+    height: 35px;
+
+    &:active {
+      border: 1px solid $gray-200;
+    }
+  }
+}

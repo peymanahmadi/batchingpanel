@@ -233,7 +233,8 @@ const AppProvider = ({ children }) => {
       return response;
     },
     (error) => {
-      // console.log(error);
+      console.log("authFetch response");
+      console.log(error); // Comment
       if (error.response.status === 401) {
         logoutUser();
       }
@@ -538,8 +539,8 @@ const AppProvider = ({ children }) => {
         },
       });
     } catch (error) {
-      console.log(error);
-      logoutUser();
+      console.log("getMaterialConsumption", error);
+      // logoutUser();
     }
   };
 
@@ -557,7 +558,7 @@ const AppProvider = ({ children }) => {
       });
     } catch (error) {
       // logoutUser();
-      console.log(error);
+      console.log("getMaterialInventory", error);
     }
   };
 
@@ -577,6 +578,7 @@ const AppProvider = ({ children }) => {
           : todayBatching[0].numOfBatches;
       const totalBatchingWeight =
         todayBatching[0]?.weight === undefined ? 0 : todayBatching[0].weight;
+      console.log(dailyBatching);
       dispatch({
         type: GET_DAILY_PRODUCTION_SUCCESS,
         payload: {
@@ -586,8 +588,8 @@ const AppProvider = ({ children }) => {
         },
       });
     } catch (error) {
-      // console.log(error);
-      logoutUser();
+      console.log("getDailyBatching", error);
+      // logoutUser();
     }
   };
 
@@ -604,7 +606,8 @@ const AppProvider = ({ children }) => {
         payload: { materialToleranceArr },
       });
     } catch (error) {
-      logoutUser();
+      console.log("getMaterialTolerance", error);
+      // logoutUser();
     }
   };
 
@@ -621,7 +624,8 @@ const AppProvider = ({ children }) => {
         payload: { formulaTolerance },
       });
     } catch (error) {
-      logoutUser();
+      console.log("getFormulaTolerance", error);
+      // logoutUser();
     }
   };
 
@@ -651,7 +655,8 @@ const AppProvider = ({ children }) => {
         payload: { materials, availableMaterials, totalMaterials, numOfPages },
       });
     } catch (error) {
-      logoutUser();
+      console.log("getMaterials", error);
+      // logoutUser();
     }
   };
 
@@ -761,8 +766,8 @@ const AppProvider = ({ children }) => {
       });
     } catch (error) {
       console.log(error.response);
-      logoutUser();
-      // console.log(error);
+      // logoutUser();
+      console.log("getUsers", error);
     }
     clearAlert();
   };
@@ -830,7 +835,8 @@ const AppProvider = ({ children }) => {
         payload: { formulas, totalFormulas, numOfPages },
       });
     } catch (error) {
-      logoutUser();
+      console.log("getFormulas", error);
+      // logoutUser();
     }
   };
 
@@ -848,7 +854,8 @@ const AppProvider = ({ children }) => {
         payload: { formula, formulation },
       });
     } catch (error) {
-      logoutUser();
+      console.log("getFormulaByID", error);
+      // logoutUser();
     }
   };
 
@@ -919,7 +926,7 @@ const AppProvider = ({ children }) => {
         payload: { id, formula, formulation },
       });
     } catch (error) {
-      console.log("errrror", error);
+      console.log("setEditFormula", error);
     }
   };
 
@@ -1028,7 +1035,7 @@ const AppProvider = ({ children }) => {
         },
       });
     } catch (error) {
-      console.log(error);
+      console.log("getWarehouses", error);
     }
   };
 
@@ -1139,7 +1146,7 @@ const AppProvider = ({ children }) => {
         payload: { warehouseOperations, totalWarehouseOperations, numOfPages },
       });
     } catch (error) {
-      console.log(error);
+      console.log("getWarehouseOperations", error);
     }
   };
 
@@ -1188,7 +1195,7 @@ const AppProvider = ({ children }) => {
         payload: { ing },
       });
     } catch (error) {
-      console.log(error);
+      console.log("getAllInventory", error);
     }
   };
 

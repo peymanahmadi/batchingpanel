@@ -45,6 +45,8 @@ import {
   getWarehouseOperations,
 } from "../controllers/warehousesController.js";
 
+import { getReportMaterialConsumptionByFormulaAndDate } from "../controllers/reportsController.js";
+
 // Customers
 router.route("/").get(getAllCustomers).post(createCustomer);
 
@@ -77,5 +79,10 @@ router.route("/warehouses/opdesc").post(createWarehouseOpDesc);
 router.route("/warehouses-operations/ops").post(warehouseOperations);
 router.route("/inventory/all").post(getAllInventory);
 router.route("/warehouses-operations/get").post(getWarehouseOperations);
+
+// Reports
+router
+  .route("/reports/materialconsumption")
+  .post(getReportMaterialConsumptionByFormulaAndDate);
 
 export default router;

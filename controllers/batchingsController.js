@@ -235,6 +235,7 @@ const getDailyBatching = async (req, res, next) => {
     const dailyBatching = await dailyBatchingModel.find({
       date: { $gte: startDate, $lte: endDate },
     });
+    console.log(dailyBatching);
     const todayBatching = await dailyBatchingModel.find({
       date: { $gte: moment().startOf("day"), $lte: moment().endOf("day") },
     });

@@ -12,6 +12,7 @@
 @forward "../components/shared/btnGroup";
 @forward "../components/shared/dashboardFormPage";
 @forward "../components/shared/pageBtnContainer";
+@forward "../components/shared/chartToolTip";
 @forward "./form";
 @forward "./smallSidebar";
 @forward "./select";
@@ -34,3 +35,5 @@
 @forward "./warehouse/warehouseToolbar";
 // Profile
 @forward "./profile/profile";
+// Reports
+@forward "./reports/reportsOptions";

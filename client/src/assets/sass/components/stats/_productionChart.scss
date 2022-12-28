@@ -63,10 +63,10 @@
 
   .production-chart__chart {
     grid-column: 2/6;
-    .chart-canvas {
-      height: 220px;
-      width: 100%;
-      border-radius: $border-radius;
-    }
+    // .chart-canvas {
+    //   height: 220px;
+    //   width: 100%;
+    //   border-radius: $border-radius;
+    // }
   }
 }

@@ -70,7 +70,9 @@ const MaterialInventory = () => {
                     <div className="table-row__text">{material.name}</div>
                     <div className="table-subTitle">{material.description}</div>
                   </td>
-                  <td className="table-row__text">{material.weight}</td>
+                  <td className="table-row__text">
+                    {material.weight.toLocaleString()}
+                  </td>
                   {/* <td className="table-row__text">{material.tolerance}</td> */}
                 </tr>
               );

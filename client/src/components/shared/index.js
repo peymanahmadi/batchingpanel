@@ -1,5 +1,6 @@
 import Logo from "./Logo";
 import FormRow from "./FormRow";
+import FormRowSelect from "./FormRowSelect";
 import Alert from "./Alert";
 import Navbar from "./Navbar";
 import SmallSidebar from "./SmallSidebar";
@@ -47,10 +48,14 @@ import WarehouseOpsContainer from "../warehouse/WarehouseOpsContainer";
 import WarehouseOpsEditModal from "../warehouse/WarehouseOpsEditModal";
 import InventoryOptions from "../warehouse/InventoryOptions";
 import InventoryContainer from "../warehouse/InventoryContainer";
+// Reports
+import ReportsOptions from "../reports/ReportsOptions";
+import ReportsContainer from "../reports/ReportsContainer";
 
 export {
   Logo,
   FormRow,
+  FormRowSelect,
   Alert,
   Navbar,
   SmallSidebar,
@@ -98,4 +103,7 @@ export {
   // Profile
   ProfileOptions,
   ProfileContainer,
+  // Reports
+  ReportsOptions,
+  ReportsContainer,
 };

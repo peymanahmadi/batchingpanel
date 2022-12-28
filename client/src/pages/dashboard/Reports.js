@@ -1,5 +1,12 @@
+import { ReportsContainer, ReportsOptions } from "../../components/shared";
+
 const Reports = () => {
-  return <div>Reports</div>;
+  return (
+    <>
+      <ReportsOptions />
+      <ReportsContainer />
+    </>
+  );
 };
 
 export default Reports;

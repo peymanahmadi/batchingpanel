@@ -14,10 +14,10 @@ const Stats = () => {
     <div className="stats-container">
       <ProductionChart />
       <BatchingMessages />
-      <MaterialConsumptions />
-      <BatchedFormulas />
-      <MaterialTolerance />
-      <MaterialInventory />
+      {/* <MaterialConsumptions /> */}
+      {/* <BatchedFormulas /> */}
+      {/* <MaterialTolerance /> */}
+      {/* <MaterialInventory /> */}
       {/* <FormulaTolerance /> */}
       {/* <InventoryChart /> */}
     </div>
