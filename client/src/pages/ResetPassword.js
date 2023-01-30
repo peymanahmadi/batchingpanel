@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { Logo, FormRow } from "../components/shared";
 import { useAppContext } from "../context/appContext";
+import { FormRow } from "../components/shared";
+import { Navbar } from "./index";
 
 const ResetPassword = () => {
   const navigate = useNavigate();
@@ -30,9 +31,7 @@ const ResetPassword = () => {
 
   return (
     <main className="landing-page">
-      <nav>
-        <Logo />
-      </nav>
+      <Navbar />
       <section className="login-page">
         <form
           className={isLoading ? `form form-loading` : `form`}

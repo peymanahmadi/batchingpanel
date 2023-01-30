@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Logo, FormRow } from "../components/shared";
+import { useTranslation } from "react-i18next";
+import { FormRow } from "../components/shared";
 import { useAppContext } from "../context/appContext";
 import { toast } from "react-toastify";
+import { Navbar } from "./index";
 
 const initialState = {
   email: "",
@@ -10,6 +12,7 @@ const initialState = {
 };
 
 const Login = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [values, setValues] = useState(initialState);
   const { user, isLoading, loginUser } = useAppContext();
@@ -45,9 +48,7 @@ const Login = () => {
 
   return (
     <main className="landing-page">
-      <nav>
-        <Logo />
-      </nav>
+      <Navbar />
       {/* <section className="login-page full-page"> */}
       <section className="login-page">
         <form
@@ -55,9 +56,10 @@ const Login = () => {
           onSubmit={onSubmit}
         >
           {/* <Logo /> */}
-          <h4>Login</h4>
+          <h4>{t("LOGIN.Title")}</h4>
           {/* email input */}
           <FormRow
+            labelText={t("LOGIN.Email")}
             type="email"
             name="email"
             value={values.email}
@@ -65,18 +67,42 @@ const Login = () => {
           />
           {/* password input */}
           <FormRow
+            labelText={t("LOGIN.Password")}
             type="password"
             name="password"
             value={values.password}
             handleChange={handleChange}
           />
-          <button type="submit" className="btn btn-block" disabled={isLoading}>
-            login
+          <button
+            type="submit"
+            className="btn btn-primary btn-block"
+            disabled={isLoading}
+          >
+            {t("LOGIN.Title")}
+          </button>
+          <button
+            type="submit"
+            className="btn btn-secondary btn-block"
+            disabled={isLoading}
+            onClick={(e) => {
+              e.preventDefault();
+              const currentUser = {
+                email: "demo@thingssolution.com",
+                password: "demouser",
+              };
+              loginUser({
+                currentUser,
+                endPoint: "login",
+                alertText: "Login Successful! Redirecting...",
+              });
+            }}
+          >
+            {t("LOGIN.Demo")}
           </button>
           <p>
-            Forgot your password?{" "}
+            {t("LOGIN.ForgetPassword")}{" "}
             <Link to="/forgot-password" className="member-btn">
-              Reset Password
+              {t("LOGIN.ResetPassword")}
             </Link>
           </p>
         </form>

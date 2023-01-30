@@ -16,66 +16,60 @@ const customerModel = conn.model("Customer");
 const register = async (req, res, next) => {
   const {
     customerID,
-    commonUserID,
     firstName,
     lastName,
     email,
     password,
     jobTitle,
     available,
-    accessLevel,
-    createdBy,
+    userType,
   } = req.body;
 
   if (!firstName || !lastName || !email || !password || !customerID) {
-    const error = new BadRequestError("Please provide all required values");
+    const error = new BadRequestError("please provide all required values.");
     return next(error);
   }
 
-  if (commonUserID) {
-    const cuIDAlreadyExists = await userModel.findOne({ commonUserID });
-    if (cuIDAlreadyExists) {
-      const error = new BadRequestError("commonUserID already in use");
-      return next(error);
-    }
+  const emailAlreadyExists = await userModel.findOne({ email });
+  if (emailAlreadyExists) {
+    const error = new BadRequestError("user already exists.");
+    return next(error);
   }
 
   const customer = await customerModel.findById(customerID);
   if (!customer) {
-    const error = new BadRequestError(`customer not found`);
+    const error = new BadRequestError(`customer not found.`);
     return next(error);
   }
 
-  const isAdmin = await userModel.findOne({ customerID });
-  if (!isAdmin) {
-    accessLevel.isAdmin = true;
-  }
+  // const isAdmin = await userModel.findOne({ customerID });
+  // if (!isAdmin) {
+  //   accessLevel.isAdmin = true;
+  // }
 
-  const userAlreadyExists = await userModel.findOne({ email });
-  if (userAlreadyExists) {
-    const error = new BadRequestError("email already in use");
-    return next(error);
-  }
+  // const userAlreadyExists = await userModel.findOne({ email });
+  // if (userAlreadyExists) {
+  //   const error = new BadRequestError("email already in use");
+  //   return next(error);
+  // }
 
-  if (accessLevel.isAdmin) {
-    for (let keys in accessLevel) {
-      accessLevel[keys] = true;
-    }
-  }
+  // if (accessLevel.isAdmin) {
+  //   for (let keys in accessLevel) {
+  //     accessLevel[keys] = true;
+  //   }
+  // }
 
   const verificationToken = crypto.randomBytes(40).toString("hex");
 
   const newUser = new userModel({
-    commonUserID,
     firstName,
     lastName,
     email,
     password,
     jobTitle,
+    userType,
     available,
     customerID,
-    accessLevel,
-    createdBy,
     verificationToken,
   });
 
@@ -90,7 +84,6 @@ const register = async (req, res, next) => {
     session.commitTransaction();
 
     const origin = "http://localhost:3000";
-
     // const tempOrigin = req.get('origin');
     // const protocol = req.protocol;
     // const host = req.get('host');
@@ -115,7 +108,7 @@ const register = async (req, res, next) => {
         // customerID: newUser.customerID,
         // accessLevel: newUser.accessLevel,
         // createdBy: newUser.createdBy,
-        msg: "Success! Please check your email to verify your account",
+        msg: "success! please check your email to verify your account.",
       },
     });
   } catch (error) {

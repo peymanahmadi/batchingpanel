@@ -5,6 +5,7 @@ import ResetPassword from "./ResetPassword";
 import Error from "./Error";
 import Landing from "./Landing";
 import ProtectedRoute from "./ProtectedRoute";
+import Navbar from "./components/Navbar";
 
 export {
   Login,
@@ -14,4 +15,5 @@ export {
   Error,
   Landing,
   ProtectedRoute,
+  Navbar,
 };

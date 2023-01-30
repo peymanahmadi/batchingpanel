@@ -1,27 +1,22 @@
 import main from "../assets/images/main.svg";
-import { Logo } from "../components/shared";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import { Navbar } from "./index";
 
 const Landing = () => {
   const { t } = useTranslation();
+
   return (
     <main className="landing-page">
-      <nav>
-        <Logo />
-        {/* <div>
-          <select>
-            <option>English</option>
-            <option>فارسی</option>
-          </select>
-        </div> */}
-      </nav>
+      <Navbar />
       <div className="container page">
         <div className="info">
-          <h1>{t("landingTitle")}</h1>
+          <h1>{t("LANDING.Title")}</h1>
           <p>{t("LANDING.MESSAGE")}</p>
           <Link to="/login">
-            <button className="btn btn-hero">{t("LANDING.GETSTARTED")}</button>
+            <button className="btn btn-primary btn-hero">
+              {t("LANDING.LOGIN")}
+            </button>
           </Link>
         </div>
         <img

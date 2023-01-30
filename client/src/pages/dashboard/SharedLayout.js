@@ -1,4 +1,4 @@
-import { Outlet, Link } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { Navbar, BigSidebar, SmallSidebar } from "../../components/shared";
 
 const SharedLayout = () => {

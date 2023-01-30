@@ -1,0 +1,143 @@
+@use "../../abstracts/index" as *;
+
+.navbar {
+  height: $nav-height;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 0px 0px rgba(0, 0, 0, 0.1);
+  // box-shadow: $shadow-1;
+  z-index: 1;
+  background: $white;
+  // background: $agri-yellow-light;
+
+  .logo {
+    display: none;
+  }
+
+  // .logo {
+  //   display: flex;
+  //   align-items: center;
+  //   width: 100px;
+  // }
+
+  .nav-center {
+    display: flex;
+    width: 90vw;
+    align-items: center;
+    justify-content: space-between;
+
+    .toggle-btn {
+      background: transparent;
+      border-color: transparent;
+      font-size: 1.5rem;
+      color: $agri-green;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      transition: $transition;
+      animation-name: identifier;
+      animation-duration: 4s;
+      @keyframes identifier {
+        from {
+          rotate: 0;
+        }
+        to {
+          rotate: 180;
+        }
+      }
+    }
+
+    .btn-container {
+      position: relative;
+
+      // .btn {
+      //   display: flex;
+      //   align-items: center;
+      //   justify-content: center;
+      //   gap: 0 0.5rem;
+      //   position: relative;
+      //   box-shadow: $shadow-2;
+      // }
+
+      // .dropdown {
+      //   position: absolute;
+      //   top: 40px;
+      //   left: 0;
+      //   width: 100%;
+      //   background: $primary-50;
+      //   box-shadow: $shadow-2;
+      //   padding: 0.5rem;
+      //   text-align: center;
+      //   visibility: hidden;
+      //   border-radius: $border-radius;
+      // }
+
+      // .show-dropdown {
+      //   visibility: visible;
+      // }
+
+      // .dropdown-btn {
+      //   background: transparent;
+      //   border-color: transparent;
+      //   color: $primary-500;
+      //   text-transform: capitalize;
+      //   cursor: pointer;
+      // }
+    }
+
+    .logo-text {
+      display: block;
+      font-size: 0.875rem;
+    }
+
+    // .logo-text {
+    //   display: none;
+    //   margin: 0;
+    // }
+  }
+
+  @media (min-width: 992px) {
+    position: sticky;
+    top: 0;
+
+    .nav-center {
+      width: 95%;
+
+      .logo-text {
+        display: block;
+        font-size: 1rem;
+      }
+    }
+
+    .logo {
+      display: none;
+    }
+  }
+}
+
+.user {
+  //   background: lime;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: auto;
+  gap: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: $border-radius;
+  transition: $transition;
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  &:hover {
+    background: $gray-100;
+  }
+
+  &:active {
+    background: $gray-100;
+  }
+}

@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import { Logo, FormRow } from "../components/shared";
+import { FormRow } from "../components/shared";
 import { useAppContext } from "../context/appContext";
+import { Navbar } from "./index";
 
 const ForgotPassword = () => {
   const { isLoading, forgotPassword, forgotEmail, handleChange } =
@@ -26,9 +27,7 @@ const ForgotPassword = () => {
 
   return (
     <main className="landing-page">
-      <nav>
-        <Logo />
-      </nav>
+      <Navbar />
       <section className="login-page">
         <form
           className={isLoading ? `form form-loading` : `form`}

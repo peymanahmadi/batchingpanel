@@ -34,12 +34,13 @@ const App = () => {
     document.dir = i18n.dir();
     document.documentElement.lang = i18n.language;
     changeLanguage(i18n.language);
+    // i18n.changeLanguage();
 
     document.title = i18n.t("documentTitle");
   }, [i18n, i18n.language]);
 
   return (
-    <div className={i18n.language === "en" ? "english-font" : "farsi-font"}>
+    <div className={i18n.language === "en-US" ? "english-font" : "farsi-font"}>
       <Routes>
         <Route
           path="/"

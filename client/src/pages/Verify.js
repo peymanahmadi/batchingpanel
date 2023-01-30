@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Logo } from "../components/shared";
 import { useAppContext } from "../context/appContext";
 import { MdGppGood, MdGppBad } from "react-icons/md";
+import { Navbar } from "./index";
 
 const Verify = () => {
   const { verificationStatus, isLoading, verifyToken } = useAppContext();
@@ -13,9 +13,7 @@ const Verify = () => {
 
   return (
     <main className="landing-page">
-      <nav>
-        <Logo />
-      </nav>
+      <Navbar />
       <div>
         <div className="verification">
           {isLoading && <h5>Loading...</h5>}

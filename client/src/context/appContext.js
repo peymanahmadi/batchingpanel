@@ -1,6 +1,7 @@
 import React, { useReducer, useContext } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 import reducer from "./reducer";
 import { toast } from "react-toastify";
 
@@ -208,6 +209,7 @@ const useQuery = () => {
 const AppContext = React.createContext();
 
 const AppProvider = ({ children }) => {
+  const { t, i18n } = useTranslation();
   const [state, dispatch] = useReducer(reducer, initialState);
   const query = useQuery();
 
@@ -345,8 +347,14 @@ const AppProvider = ({ children }) => {
         customerCodeName,
         customerID,
       });
+      // toast.update(id, {
+      //   render: "Login Successful! Redirecting...",
+      //   type: "success",
+      //   isLoading: false,
+      //   autoClose: 4000,
+      // });
       toast.update(id, {
-        render: "Login Successful! Redirecting...",
+        render: i18n.t("LOGIN.Message"),
         type: "success",
         isLoading: false,
         autoClose: 4000,

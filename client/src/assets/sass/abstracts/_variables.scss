@@ -130,6 +130,21 @@ $gray-800: #424242;
 $gray-900: #212121;
 
 // rest of the colors
+
+$agri-green: #4ba064;
+$agri-green-light: #6fb383;
+$agri-green-dark: #347046;
+$agri-green-darker: #033323;
+$agri-green-darkest: #02261a;
+$agri-red: #ff5e5e;
+$agri-yellow: #f7c500;
+$agri-yellow-light: #f8d033;
+$agri-yellow-dark: #d4a936;
+$agri-yellow-darker: #ac8900;
+$agri-gray: #f3f1ef;
+$agri-gray-dark: #e7e3e0;
+$agri-blue: #14a2ed;
+
 $black: #222;
 $white: #fff;
 
@@ -142,7 +157,8 @@ $green-dark: #0f5132;
 $blue-light: #6d89cb;
 $blue-dark: #2a4f96;
 
-$background-color: $gray-50;
+// $background-color: $gray-50;
+$background-color: $agri-gray;
 $text-color: $gray-900;
 
 // box shadow

@@ -1,6 +1,5 @@
 @forward "../components/shared/btn";
 @forward "../components/shared/logo";
-@forward "../components/shared/navbar";
 @forward "../components/shared/table";
 @forward "../components/shared/bigSidebar";
 @forward "../components/shared/modalForm";
@@ -37,3 +36,7 @@
 @forward "./profile/profile";
 // Reports
 @forward "./reports/reportsOptions";
+// Header
+@forward "./header/navbar";
+@forward "./header/usermenu";
+@forward "./header/navbar";

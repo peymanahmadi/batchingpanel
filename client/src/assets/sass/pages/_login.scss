@@ -10,7 +10,8 @@
   // }
   .form {
     max-width: 400px;
-    border-top: 5px solid $green-500;
+    // border-top: 5px solid $green-500;
+    border-top: 5px solid $agri-green;
     // border: 1px solid $green-200;
     box-shadow: $shadow-1;
   }
@@ -18,7 +19,9 @@
     text-align: center;
     margin-bottom: 0.5rem;
   }
-  .btn {
+  .btn,
+  .btn-outline,
+  .btn-orange {
     margin-top: 1rem;
   }
   p {

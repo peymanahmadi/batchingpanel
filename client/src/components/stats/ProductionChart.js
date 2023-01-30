@@ -242,29 +242,28 @@ const ProductionChart = () => {
   };
 
   const CustomTooltip = ({ payload, label, active }) => {
-    console.log("payload: ", payload);
-    console.log("label: ", label);
-    console.log("payload length: ", payload.length);
-    if (active && payload && payload.length > 0) {
-      const numOfBatches = payload[0].payload.numOfBatches;
-      const weight = payload[0].payload.weight;
-      return (
-        <div className="barchart-tooltip">
-          {/* <p className="label">{`${moment(label).format()} : ${
-            payload[0].value
-          }`}</p> */}
-          <p className="label">{`${moment(label).format("YYYY-MM-DD")}`}</p>
-          <div className="details">
-            <p>{`${weight} kg`}</p>
-            <p>{`${numOfBatches} ${numOfBatches > 1 ? "batches" : "batch"}`}</p>
-          </div>
-          {/* <p className="intro">{getIntroOfPage(label)}</p> */}
-          {/* <p className="desc">Anything you want can be displayed here.</p> */}
-        </div>
-      );
-    }
-
-    return null;
+    // console.log("payload: ", payload);
+    // console.log("label: ", label);
+    // console.log("payload length: ", payload.length);
+    // if (active && payload && payload.length > 0) {
+    //   const numOfBatches = payload[0].payload.numOfBatches;
+    //   const weight = payload[0].payload.weight;
+    //   return (
+    //     <div className="barchart-tooltip">
+    //       {/* <p className="label">{`${moment(label).format()} : ${
+    //         payload[0].value
+    //       }`}</p> */}
+    //       <p className="label">{`${moment(label).format("YYYY-MM-DD")}`}</p>
+    //       <div className="details">
+    //         <p>{`${weight} kg`}</p>
+    //         <p>{`${numOfBatches} ${numOfBatches > 1 ? "batches" : "batch"}`}</p>
+    //       </div>
+    //       {/* <p className="intro">{getIntroOfPage(label)}</p> */}
+    //       {/* <p className="desc">Anything you want can be displayed here.</p> */}
+    //     </div>
+    //   );
+    // }
+    // return null;
   };
 
   return (
