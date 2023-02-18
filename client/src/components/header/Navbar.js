@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { FaAlignLeft, FaUserCircle, FaCaretDown } from "react-icons/fa";
-import { GrShift } from "react-icons/gr";
+import { FaUserCircle } from "react-icons/fa";
 import { BsGithub, BsChevronDoubleLeft } from "react-icons/bs";
 import { useAppContext } from "../../context/appContext";
 import Logo from "../shared/Logo";
@@ -31,29 +30,6 @@ const Navbar = () => {
           className="btn-container"
           style={{ display: "flex", alignItems: "center", gap: "10px" }}
         >
-          <a
-            href="https://github.com/peymanahmadi/batchingpanel"
-            target="_blank"
-            style={{ color: "inherit" }}
-          >
-            <span className="icon" style={{ fontSize: "1.5rem" }}>
-              <BsGithub />
-            </span>
-          </a>
-          {/* <div
-            className="user"
-            ref={ref}
-            // onMouseOver={() => setShowLogout(true)}
-            // onMouseLeave={() => setShowLogout(false)}
-            onClick={() => setShowLogout((prev) => !prev)}
-          >
-            <FaUserCircle />
-            <p>{`${user?.firstName} ${user?.lastName}`}</p>
-            <FaCaretDown />
-          </div>
-          {showLogout && (
-            <UserMenu firstName={user?.firstName} lastName={user?.lastName} />
-          )} */}
           <button
             ref={ref}
             type="button"
@@ -61,17 +37,8 @@ const Navbar = () => {
             onClick={() => setShowLogout((prev) => !prev)}
           >
             <FaUserCircle />
-            {user?.firstName} {user?.lastName}
-            <FaCaretDown />
           </button>
-          {showLogout && (
-            <UserMenu firstName={user?.firstName} lastName={user?.lastName} />
-          )}
-          {/* <div className={showLogout ? "dropdown show-dropdown" : "dropdown"}>
-            <button type="button" className="dropdown-btn" onClick={logoutUser}>
-              logout
-            </button>
-          </div> */}
+          {showLogout && <UserMenu />}
         </div>
       </div>
     </nav>

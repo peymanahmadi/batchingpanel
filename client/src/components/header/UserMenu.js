@@ -1,16 +1,20 @@
 import { useTranslation } from "react-i18next";
 import { FaRegUser, FaGithub, FaLanguage, FaSignOutAlt } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import { useAppContext } from "../../context/appContext";
 
 const UserMenu = ({ firstName, lastName }) => {
   const { i18n } = useTranslation();
-  const { user } = useAppContext();
+  const { user, logout } = useAppContext();
   const handleHeaderClick = (event) => {
     // do something
 
     event.stopPropagation();
   };
-  const languageHandler = () => {};
+  const languageHandler = (e) => {
+    i18n.changeLanguage(e.target.value);
+  };
+
   return (
     <>
       <div className="usermenu" onClick={handleHeaderClick}>
@@ -23,10 +27,10 @@ const UserMenu = ({ firstName, lastName }) => {
         <hr />
         <ul>
           <li>
-            <div className="usermenu__title">
+            <Link to="/" className="usermenu__title">
               <FaRegUser />
               <p>My Profile</p>
-            </div>
+            </Link>
           </li>
           <li className="usermenu__language">
             <div className="usermenu__title">
@@ -41,14 +45,18 @@ const UserMenu = ({ firstName, lastName }) => {
             </select>
           </li>
           <li>
-            <div className="usermenu__title">
+            <a
+              href="https://github.com/peymanahmadi/batchingpanel"
+              target="_blank"
+              className="usermenu__title"
+            >
               <FaGithub />
               <p>Github</p>
-            </div>
+            </a>
           </li>
           <hr />
           <li>
-            <div className="usermenu__title">
+            <div href="#" className="usermenu__title">
               <FaSignOutAlt />
               <p>Sign out</p>
             </div>
